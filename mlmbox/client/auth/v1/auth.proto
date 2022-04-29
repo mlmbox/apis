@@ -36,8 +36,8 @@ message SignAttachRequest {
   string locale = 4; // language identifier (en-US, ...)
 }
 message RecoveryPasswordRequest {
-  mlmbox.type.Agent agent = 1; // данные об клиет-агенте с которого выполняется запрос
-  mlmbox.type.Contact contact = 2; // канал через который осуществляется идентификация
+  mlmbox.type.Agent agent = 1; // data about the client-agent from which the request is made
+  mlmbox.type.Contact contact = 2; // channel through which identification is carried out
 }
 message AuthResponse {
   enum Status {
