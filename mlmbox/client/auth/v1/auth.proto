@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package mlmbox.client.auth.v1;
+
+import "mlmbox/type/agent.proto";
+import "mlmbox/type/contact.proto";
+import "mlmbox/type/profile.proto";
+import "mlmbox/type/confirmation.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/auth/v1;service_client_auth_pb";
+
+service Auth {
+  rpc SignIn (SignInRequest) returns (AuthResponse) {} // authorization
+  rpc SignUp (SignUpRequest) returns (AuthResponse) {} // registration
+  rpc SignAttach (SignAttachRequest) returns (AuthResponse) {} // fix registration data
+  rpc RecoveryPassword (RecoveryPasswordRequest) returns (AuthResponse) {} // recovery password
+  rpc TokenValidate (TokenValidateRequest) returns (TokenValidateResponse) {} // token validity check
+}
+
+message SignInRequest {
+  mlmbox.type.Agent agent = 1; // data about the client-agent from which the request is made
+  mlmbox.type.Contact contact = 2; // channel through which identification is carried out
+  string password = 3; // account password
+}
+message SignUpRequest {
+  mlmbox.type.Agent agent = 1; // data about the client-agent from which the request is made
+  mlmbox.type.Contact contact = 2; // channel through which identification is carried out
+  mlmbox.type.Profile profile = 3; // user profile data
+  string password = 4; // account password
+  string locale = 5; // language identifier (en-US, ...)
+}
+message SignAttachRequest {
+  mlmbox.type.Contact contact = 1; // channel through which identification is carried out
+  mlmbox.type.Profile profile = 2; // user profile data
+  string password = 3; // account password
+  string locale = 4; // language identifier (en-US, ...)
+}
+message RecoveryPasswordRequest {
+  mlmbox.type.Agent agent = 1; // данные об клиет-агенте с которого выполняется запрос
+  mlmbox.type.Contact contact = 2; // канал через который осуществляется идентификация
+}
+message AuthResponse {
+  enum Status {
+    SUCCESS = 0; // Successfully. Redirect to dashboard page
+    ATTACH_STEP = 1; // go to the registration data binding stage
+    CONFIRMATION_STEP = 2; // go to the confirmation form validation stage
+  }
+  Status status = 1;
+  string access_token = 2; // the token is used in the "authorization: X.Y.Z" header to make authorized API requests
+  mlmbox.type.Confirmation confirmation = 3; // confirmation form
+}
+message TokenValidateRequest {
+  string access_token = 1;
+}
+message TokenValidateResponse {
+  enum Status {
+    VALIDATED = 0;
+    EXPIRED = 1;
+    INVALID = 2;
+  }
+  Status status = 1;
+}
