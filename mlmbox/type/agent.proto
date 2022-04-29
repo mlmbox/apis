@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package mlmbox.type;
+import "mlmbox/type/device.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/agent;agent_pb";
+
+message Agent {
+  string name = 1;
+  string version = 2;
+  Device device = 3;
+}

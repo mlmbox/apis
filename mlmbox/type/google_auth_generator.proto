@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/google_auth_generator;google_auth_generator_pb";
+
+message GoogleAuthGenerator {
+  message Status {
+    enum ID {
+      DEACTIVATED = 0;
+      ACTIVATED = 1;
+      REQUESTED = 2;
+    }
+    ID status_id = 1;
+  }
+  message SecretCode {
+    string secret_code = 1;
+  }
+  message VerifiedCode {
+    message Status {
+      enum ID {
+        UNKNOWN = 0;
+        APPROVED = 1;
+        REJECTED = 2;
+        WRONG_CODE = 3;
+      }
+      ID status_id = 1;
+    }
+    string verified_code = 1;
+  }
+  Status.ID status = 1;
+  uint32 modified_at = 2;
+}
