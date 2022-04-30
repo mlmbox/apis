@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/limit;limit_pb";
+
+message Limit {
+  bool unlimited = 1;
+  uint32 value = 2;
+}

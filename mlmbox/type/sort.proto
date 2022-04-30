@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+import "mlmbox/type/limit.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/sort;sort_pb";
+
+message Sort {
+  enum Side {
+    ASC = 0;
+    DESC = 1;
+  }
+  Side side = 1; // sorting direction
+  mlmbox.type.Limit limit = 2; // limit of records returned (min:1)
+}
