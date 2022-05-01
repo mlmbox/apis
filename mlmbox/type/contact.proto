@@ -5,10 +5,10 @@ package mlmbox.type;
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/contact;contact_pb";
 
 message Contact {
-  enum Type {
+  enum Kind {
     LOGIN = 0;
     EMAIL = 1;
   }
-  Type type_id = 1;
+  Kind kind = 1;
   string value = 2;
 }
