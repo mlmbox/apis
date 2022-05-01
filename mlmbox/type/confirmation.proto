@@ -54,7 +54,7 @@ message Confirmation {
     Notification notification = 5; // используется при CONTACT_CONFIRM_CODE
   }
   message Option {
-    string option_name = 1;
+    uint32 option_id = 1;
     repeated uint32 field_ids = 2; // list of field identifiers "field_id" required for form submission
   }
 

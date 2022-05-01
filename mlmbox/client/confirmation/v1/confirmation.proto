@@ -30,7 +30,8 @@ message ConfirmationGenerateOneTimePasswordRequest {
 message ConfirmationConfirmRequest {
   mlmbox.type.Agent agent = 1; // data about the client-agent from which the request is made
   mlmbox.type.Confirmation.ID confirmation = 2; // confirmation form ID
-  map<uint32, string> field_values = 3; // map key is "field_id"
+  uint32 option_id = 3;
+  map<uint32, string> field_values = 4; // map key is "field_id"
 }
 message ConfirmationConfirmResponse {
   bool success = 1;
