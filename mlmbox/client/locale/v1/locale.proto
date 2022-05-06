@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package mlmbox.client.locale.v1;
+
+import "mlmbox/type/locale.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/locale/v1;service_client_locale_pb";
+
+service Locale {
+  rpc Get (mlmbox.type.Locale.ID) returns (mlmbox.type.Locale) {} // отобразить язык коммуникации
+  rpc List (google.protobuf.Empty) returns (stream mlmbox.type.Locale) {} // список языков коммуникации
+}

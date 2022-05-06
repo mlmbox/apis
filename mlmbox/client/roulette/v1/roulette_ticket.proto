@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package mlmbox.client.roulette_ticket.v1;
+
+import "mlmbox/type/roulette_ticket.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/roulette_ticket/v1;service_client_roulette_ticket_pb";
+
+service RouletteTicket {
+  rpc Get (mlmbox.type.RouletteTicket.ID) returns (mlmbox.type.RouletteTicket) {} // display card details
+  rpc All (google.protobuf.Empty) returns (stream mlmbox.type.RouletteTicket) {} // list of all available cards
+  rpc Generate (mlmbox.type.RouletteTicket.ID) returns (mlmbox.type.RouletteTicket) {} // generate gift for card
+}

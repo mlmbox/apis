@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package mlmbox.client.session.v1;
+
+import "mlmbox/type/session.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/session/v1;service_client_session_pb";
+
+service Session {
+  rpc StateGet (google.protobuf.Empty) returns (SessionStateGetResponse) {} // State of all account sessions
+  rpc Deactivate(mlmbox.type.Session.ID) returns (google.protobuf.Empty) {} // deactivate the selected session
+  rpc DeactivateAll(google.protobuf.Empty) returns (google.protobuf.Empty) {} // deactivate all active sessions
+  rpc DeactivateOther(google.protobuf.Empty) returns (google.protobuf.Empty) {} // deactivate all active sessions except the current one
+  rpc DeactivateCurrent(google.protobuf.Empty) returns (google.protobuf.Empty) {} // deactivate the current session
+}
+
+message SessionStateGetResponse {
+  mlmbox.type.Session current = 1;
+  repeated mlmbox.type.Session others = 2;
+}

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package mlmbox.client.voucher.v1;
+
+import "mlmbox/type/confirmation.proto";
+import "mlmbox/type/voucher.proto";
+import "mlmbox/type/product.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/voucher/v1;service_client_voucher_pb";
+
+service Voucher {
+  rpc Get (mlmbox.type.Voucher.ID) returns (mlmbox.type.Voucher) {} // отобразить выбранный ваучер владельца
+  rpc Find (mlmbox.type.Voucher.ID) returns (mlmbox.type.Voucher) {} // отобразить выбранный ваучер доступный для активации
+  rpc All (google.protobuf.Empty) returns (stream mlmbox.type.Voucher) {} // список ваучеров владельца
+  rpc Create (VoucherCreateRequest) returns (mlmbox.type.Voucher) {} // создать ваучер
+  rpc Reject (mlmbox.type.Voucher.ID) returns (mlmbox.type.Confirmation) {} // отменить созданный ваучер
+  rpc Activate (VoucherActivateRequest) returns (mlmbox.type.Confirmation) {} // активировать ваучер
+}
+
+message VoucherCreateRequest {
+  repeated mlmbox.type.Voucher.Recipient recipients = 1;
+  mlmbox.type.Voucher.Activation activation = 2;
+  repeated mlmbox.type.Product.Object product_objects = 3;
+}
+message VoucherActivateRequest {
+  mlmbox.type.Voucher.ID voucher = 1;
+  string activation_code = 2;
+}

@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/until;until_pb";
+
+message TimePoint {
+  bool infinity = 1; // без ограничения
+  uint32 at = 2; // значение ограничения времени действия
+}

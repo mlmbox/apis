@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/partner;partner_pb";
+
+message Partner {
+  uint32 account_id = 1;
+  string account_login = 2;
+  bool subscribe_activated = 3;
+  string profile_name = 4;
+  string profile_surname = 5;
+  uint32 partners_quantity = 6;
+  uint32 team_quantity = 7;
+  uint32 team_subscribe_activated_quantity = 8;
+  uint32 current_rank_id = 9;
+  uint32 current_plan_farming_package_id = 10;
+}

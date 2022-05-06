@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+import "mlmbox/type/plan.proto";
+import "mlmbox/type/nft.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/product;product_pb";
+
+message Product {
+  message Object {
+    message Money {
+      uint32 asset_id = 1;
+      string value = 2;
+    }
+    message ID {
+      oneof unique_field {
+        uint32 plan_subscribe_ticket_id = 1;
+        uint32 plan_cinema_ticket_id = 2;
+        mlmbox.type.NFT.ID nft = 3;
+        Money money = 4;
+      }
+    }
+
+    message Value {
+      oneof unique_field {
+        mlmbox.type.PlanSubscribe.Ticket plan_subscribe_ticket = 1;
+        mlmbox.type.PlanCinema.Ticket plan_cinema_ticket = 2;
+        mlmbox.type.NFT nft = 3;
+        Money money = 4;
+      }
+    }
+    message Settings {
+      bool voucher_transmitted = 1;
+    }
+
+    Value value = 1;
+    Settings settings = 2;
+    uint32 quantity = 3;
+  }
+}

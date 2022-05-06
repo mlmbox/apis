@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+import "mlmbox/type/nft.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/profile;profile_pb";
+
+message RouletteTicket {
+  message ID {
+    uint32 ticket_id = 1;
+  }
+
+  uint32 ticket_id = 1;
+  uint32 counter_limit = 2; // displays the limit of available
+  uint32 counter_value = 3; // displays the number of used
+  bool active = 4;
+  uint32 created_at = 5;
+  uint32 available_at = 6;
+  uint32 modified_at = 7;
+  mlmbox.type.NFT nft = 8;
+}

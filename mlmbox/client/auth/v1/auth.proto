@@ -3,7 +3,6 @@ syntax = "proto3";
 package mlmbox.client.auth.v1;
 
 import "mlmbox/type/agent.proto";
-import "mlmbox/type/contact.proto";
 import "mlmbox/type/profile.proto";
 import "mlmbox/type/confirmation.proto";
 
@@ -12,32 +11,29 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/auth/v1;service
 service Auth {
   rpc SignIn (SignInRequest) returns (AuthResponse) {} // authorization
   rpc SignUp (SignUpRequest) returns (AuthResponse) {} // registration
-  rpc SignAttach (SignAttachRequest) returns (AuthResponse) {} // fix registration data
+  rpc SignAttach (SignAttachRequest) returns (AuthResponse) {} // attach registration data
   rpc RecoveryPassword (RecoveryPasswordRequest) returns (AuthResponse) {} // recovery password
   rpc TokenValidate (TokenValidateRequest) returns (TokenValidateResponse) {} // token validity check
 }
 
 message SignInRequest {
-  mlmbox.type.Agent agent = 1; // data about the client-agent from which the request is made
-  mlmbox.type.Contact contact = 2; // channel through which identification is carried out
-  string password = 3; // account password
+  string id = 1; // login or email
+  string password = 2; // account password
 }
 message SignUpRequest {
-  mlmbox.type.Agent agent = 1; // data about the client-agent from which the request is made
-  mlmbox.type.Contact contact = 2; // channel through which identification is carried out
-  mlmbox.type.Profile profile = 3; // user profile data
+  string referral = 1; // user referral login
+  string login = 2; // user login
+  string email = 3; // account email
   string password = 4; // account password
   string locale = 5; // language identifier (en-US, ...)
 }
 message SignAttachRequest {
-  mlmbox.type.Contact contact = 1; // channel through which identification is carried out
-  mlmbox.type.Profile profile = 2; // user profile data
-  string password = 3; // account password
-  string locale = 4; // language identifier (en-US, ...)
+  string email = 1; // account email
+  string password = 2; // account password
+  string locale = 3; // language identifier (en-US, ...)
 }
 message RecoveryPasswordRequest {
-  mlmbox.type.Agent agent = 1; // data about the client-agent from which the request is made
-  mlmbox.type.Contact contact = 2; // channel through which identification is carried out
+  string email = 1; // account email
 }
 message AuthResponse {
   enum Status {
@@ -53,10 +49,16 @@ message TokenValidateRequest {
   string access_token = 1;
 }
 message TokenValidateResponse {
+  enum Kind {
+    ACCOUNT = 0;
+    ACCOUNT_ATTACH = 1;
+    CONFIRMATION = 2;
+  }
   enum Status {
     VALIDATED = 0;
     EXPIRED = 1;
     INVALID = 2;
   }
-  Status status = 1;
+  Kind kind = 1;
+  Status status = 2;
 }

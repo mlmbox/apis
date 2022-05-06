@@ -12,8 +12,7 @@ message Profile {
   }
   string name = 1;
   string surname = 2;
-  string patronymic = 3;
-  Gender gender = 4;
-  uint32 birthday = 5; // date format is "YYYYMMDD"
-  string national = 6;
+  Gender gender = 3;
+  uint32 birthday = 4; // date format is "YYYYMMDD"
+  string national = 5;
 }

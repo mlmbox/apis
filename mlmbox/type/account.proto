@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package mlmbox.type;
+//import "mlmbox/type/career.proto";
+//import "mlmbox/type/contact.proto";
+//import "mlmbox/type/condition.proto";
+
+import "mlmbox/type/google_auth_generator.proto";
+import "mlmbox/type/locale.proto";
+import "mlmbox/type/profile.proto";
+import "mlmbox/type/time_point.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/account;account_pb";
+
+message Account {
+  message ID {
+    oneof unique_field {
+      uint32 account_id = 1;
+      string account_login = 2;
+    }
+  }
+
+  /*message Career {
+    message ID {
+      Account.ID account = 1;
+      mlmbox.type.Career.ID rank_system = 2;
+    }
+    message Rank {
+      message ID {
+        Account.ID account = 1;
+        mlmbox.type.Rank.ID rank = 2;
+      }
+      mlmbox.type.Rank.Header header = 1;
+      mlmbox.type.Career.Header rank_system = 2;
+      mlmbox.type.Condition condition = 3;
+      bool achieved = 4;
+      uint32 achieved_at = 5;
+      bool activated = 6;
+    }
+    mlmbox.type.Career.Header header = 1;
+    repeated Rank ranks = 2;
+  }*/
+
+  uint32 account_id = 1;
+  string account_login = 2;
+  string referral_login = 3;
+  mlmbox.type.Profile profile = 4;
+  mlmbox.type.GoogleAuthGenerator security_google_auth_generator = 5;
+  uint32 password_modified_at = 6;
+  string email = 7; // account email
+  string locale = 8; // language identifier (en-US, ...)
+  mlmbox.type.TimePoint subscribe_activated_time_point = 9;
+}
+
+message Partner {
+  message Profile {
+    string name = 1;
+    string surname = 2;
+    string patronymic = 3;
+  }
+  uint32 account_id = 1;
+  string account_login = 2;
+  bool subscribe_activated = 3;
+  Profile profile = 4;
+  uint32 partners_quantity = 5;
+  uint32 team_quantity = 6;
+  uint32 team_activated_quantity = 7;
+}

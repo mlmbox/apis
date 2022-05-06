@@ -14,7 +14,7 @@ service Confirmation {
   rpc Get (mlmbox.type.Confirmation.ID) returns (mlmbox.type.Confirmation) {} // display the data of the selected confirmation form
   rpc List (ConfirmationListRequest) returns (stream mlmbox.type.Confirmation) {} // list of confirmation forms
   rpc GenerateOneTimePassword (ConfirmationGenerateOneTimePasswordRequest) returns (mlmbox.type.Confirmation.Field.Notification) {} // generate "One Time Password" for the selected confirmation form field
-  rpc Confirm (ConfirmationConfirmRequest) returns (ConfirmationConfirmResponse) {} // verify the selected confirmation form
+  rpc Confirm (ConfirmationConfirmRequest) returns (mlmbox.type.ConfirmationConfirmResponse) {} // verify the selected confirmation form
   rpc Cancel (mlmbox.type.Confirmation.ID) returns (google.protobuf.Empty) {} // cancel the selected confirmation form
 }
 
@@ -23,18 +23,11 @@ message ConfirmationListRequest {
   mlmbox.type.Sort sort = 2;
 }
 message ConfirmationGenerateOneTimePasswordRequest {
-  mlmbox.type.Agent agent = 1; // data about the client-agent from which the request is made
-  mlmbox.type.Confirmation.ID confirmation = 2; // confirmation form ID
-  uint32 field_id = 3; // field identifier
+  mlmbox.type.Confirmation.ID confirmation = 1; // confirmation form ID
+  uint32 field_id = 2; // field identifier
 }
 message ConfirmationConfirmRequest {
-  mlmbox.type.Agent agent = 1; // data about the client-agent from which the request is made
-  mlmbox.type.Confirmation.ID confirmation = 2; // confirmation form ID
-  uint32 option_id = 3;
-  map<uint32, string> field_values = 4; // map key is "field_id"
-}
-message ConfirmationConfirmResponse {
-  bool success = 1;
-  map<uint32, mlmbox.type.Confirmation.Field.Status> field_statuses = 2; // map key is "field_id"
-  google.protobuf.Any metadata = 3;
+  mlmbox.type.Confirmation.ID confirmation = 1; // confirmation form ID
+  uint32 option_id = 2;
+  map<uint32, string> field_values = 3; // map key is "field_id"
 }

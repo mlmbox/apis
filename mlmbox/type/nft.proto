@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+import "google/protobuf/struct.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/profile;profile_pb";
+
+message NFT {
+  message ID {
+    uint32 collection_id = 1;
+    uint32 object_id = 2;
+  }
+  message Collection {
+    uint32 id = 1;
+    string title = 2;
+  }
+  Collection collection = 1;
+  uint32 object_id = 2;
+  string img_src = 3;
+  google.protobuf.Struct properties = 4;
+}

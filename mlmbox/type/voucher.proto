@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+import "mlmbox/type/account.proto";
+import "mlmbox/type/asset.proto";
+import "mlmbox/type/product.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/voucher;voucher_pb";
+
+message Voucher {
+  message ID {
+    uint32 voucher_id = 1;
+  }
+  message Status {
+    enum ID {
+      EMITTED = 0; // создан и доступен
+      UTILIZED = 1; // использован и не доступен
+      REJECTED = 2; // отменен владельцем
+    }
+    ID status_id = 1;
+  }
+  message Owner {
+    message Kind {
+      enum ID {
+        COMPANY = 0; // владелец ваучером является компания
+        PARTNER = 1; // владелец ваучером является пользователь
+      }
+      ID kind_id = 1;
+    }
+    Kind.ID kind_id = 1;
+    mlmbox.type.Partner partner = 2;
+  }
+  message Recipient {
+    message Kind {
+      enum ID {
+        EVERYBODY = 0; // доступ на активацию без ограничений
+        ACCOUNT = 1; // доступ на активацию для выбранного аккаунта
+        ACCOUNT_NETWORK_TEAM = 2; // доступ на активацию для выбранного аккаунта и его команды
+      }
+      ID kind_id = 1;
+    }
+    message ID {
+      Kind.ID kind_id = 1;
+      mlmbox.type.Account.ID account = 2;
+    }
+    Kind.ID kind_id = 1;
+    mlmbox.type.Partner partner = 2;
+  }
+  message Activation {
+    message Method {
+      enum ID {
+        ACTIVATION_CODE = 0; // активация через код
+        PAYMENT_PRICE = 1; // активация через оплату
+      }
+      ID method_id = 1;
+    }
+    message PaymentValue {
+      mlmbox.type.Asset.ID asset = 1;
+      string price = 2;
+    }
+    Method.ID method_id = 1;
+    oneof unique_field {
+      string activation_code = 2;
+      PaymentValue payment_value = 3;
+    }
+  }
+  message ViewFields {
+    enum ID {
+      VOUCHER_ID = 0;
+      STATUS_ID = 1;
+      OWNER = 2;
+      RECIPIENTS = 3;
+      ACTIVATION = 4;
+      PRODUCT_OBJECTS = 5;
+      CREATED_AT = 6;
+    }
+    bool all = 1;
+    repeated ID fields = 2;
+  }
+
+  uint32 voucher_id = 1; // идентификатор ваучера
+  Status.ID status_id = 2; // статус ваучера
+  Owner owner = 3; // владелец ваучера
+  repeated Recipient recipients = 4; // получатели с достпом активации
+  Activation activation = 5; // инструкция активации ваучера
+  repeated mlmbox.type.Product.Object product_objects = 6; // товары получаемые после активации
+  uint32 created_at = 7; // время создания ваучера
+  uint32 rejected_at = 8; // время действия ваучера до подтверждения отмены
+}

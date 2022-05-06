@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package mlmbox.client.confirmation.v1;
+
+import "mlmbox/type/agent.proto";
+import "mlmbox/type/confirmation.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/confirmation/v1;service_client_confirmation_pb";
+
+service ConfirmationGuest {
+  rpc Get (google.protobuf.Empty) returns (mlmbox.type.Confirmation) {} // display the data of the selected confirmation form
+  rpc GenerateOneTimePassword (ConfirmationGuestGenerateOneTimePasswordRequest) returns (mlmbox.type.Confirmation.Field.Notification) {} // generate "One Time Password" for the selected confirmation form field
+  rpc Confirm (ConfirmationGuestConfirmRequest) returns (mlmbox.type.ConfirmationConfirmResponse) {} // verify the selected confirmation form
+  rpc Cancel (google.protobuf.Empty) returns (google.protobuf.Empty) {} // cancel the selected confirmation form
+}
+
+message ConfirmationGuestGenerateOneTimePasswordRequest {
+  uint32 field_id = 1;
+}
+message ConfirmationGuestConfirmRequest {
+  uint32 option_id = 1;
+  map<uint32, string> field_values = 2; // map key is "field_id"
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package mlmbox.client.voucher.v1;
+
+import "mlmbox/type/confirmation.proto";
+import "mlmbox/type/voucher.proto";
+import "mlmbox/type/product.proto";
+import "mlmbox/type/plan.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/voucher/v1;service_client_voucher_pb";
+
+service Plans {
+  rpc FarmingGet (mlmbox.type.PlanFarming.Package.ID) returns (mlmbox.type.PlanFarming.Package) {}
+  rpc FarmingAll (google.protobuf.Empty) returns (stream mlmbox.type.PlanFarming.Package) {}
+  rpc SubscribeGet (mlmbox.type.PlanSubscribe.Package.ID) returns (mlmbox.type.PlanSubscribe.Package) {}
+  rpc SubscribeAll (google.protobuf.Empty) returns (stream mlmbox.type.PlanSubscribe.Package) {}
+}

@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/asset;asset_pb";
+
+message Asset {
+  message ID {
+    oneof unique_field {
+      uint32 asset_id = 1;
+      string asset_name = 2;
+    }
+  }
+
+  uint32 asset_id = 1;
+  string asset_name = 2;
+  string asset_title = 3;
+  uint32 decimal = 4;
+  repeated string tags = 5;
+}
+
+message AssetPair {
+  message ID {
+    message Assets {
+      mlmbox.type.Asset.ID source_asset = 1;
+      mlmbox.type.Asset.ID target_asset = 2;
+    }
+    oneof unique_field {
+      uint32 asset_pair_id = 1;
+      string asset_pair_name = 2;
+      Assets assets = 3;
+    }
+  }
+
+  uint32 asset_pair_id = 1;
+  string asset_pair_name = 2;
+  uint32 source_asset_id = 3;
+  uint32 target_asset_id = 4;
+}
+
+message ExchangerRate {
+  mlmbox.type.AssetPair asset_pair = 2;
+  string rate_sell = 3;
+  string rate_buy = 4;
+  uint32 modified_at = 5;
+}

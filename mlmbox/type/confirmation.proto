@@ -2,14 +2,13 @@ syntax = "proto3";
 
 package mlmbox.type;
 
-import "mlmbox/type/contact.proto";
 import "google/protobuf/any.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/confirmation;confirmation_pb";
 
 message Confirmation {
   enum Status {
-    CREATED = 0;
+    ACTIVATED = 0;
     APPROVED = 1;
     REJECT = 2;
     CANCELED = 3;
@@ -27,8 +26,8 @@ message Confirmation {
       PASSWORD = 1; // пароль
       PASSWORD_NEW = 2; // новый пароль (используется при смене пароля)
       GOOGLE_AUTHENTICATOR_CODE = 3; // 2FA код
-      CONTACT_CONFIRM_CODE = 4; // подтвердить код отправленный на указанный контакт
-      CONTACT_FILL = 5; // заполнить значение контакта (например: sm***el@gmail.com - требуется заполнить поле без маски с звездочками)
+      EMAIL_CONFIRM_CODE = 4; // подтвердить код отправленный на указанный контакт
+      EMAIL_FILL = 5; // заполнить значение контакта (например: sm***el@gmail.com - требуется заполнить поле без маски с звездочками)
     }
     message Status {
       enum ID {
@@ -50,7 +49,7 @@ message Confirmation {
     uint32 field_id = 1; // идентификатор поля
     Kind kind_id = 2; // тип поля
     Status status = 3; // статус поля
-    mlmbox.type.Contact contact = 4; // контакт, используется при CONTACT_CONFIRM_CODE и CONTACT_FILL
+    string email = 4; // контакт, используется при CONTACT_CONFIRM_CODE и CONTACT_FILL
     Notification notification = 5; // используется при CONTACT_CONFIRM_CODE
   }
   message Option {
@@ -69,4 +68,17 @@ message Confirmation {
   map<uint32, Field> fields = 9; // map key is "field_id"
   repeated Option options = 10;
   google.protobuf.Any meta = 11;
+}
+
+message ConfirmationConfirmResponse {
+  enum Status {
+    WRONG = 0;
+    APPROVED = 1;
+    REJECT = 2;
+    CANCELED = 3;
+    EXPIRED = 4;
+  }
+  Status status = 1;
+  map<uint32, mlmbox.type.Confirmation.Field.Status> field_statuses = 2; // map key is "field_id"
+  google.protobuf.Any metadata = 3;
 }

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package mlmbox.client.asset.v1;
+
+import "mlmbox/type/asset.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/asset/v1;service_client_asset_pb";
+
+service AssetPair {
+  rpc ExchangerRateGet (mlmbox.type.AssetPair.ID) returns (mlmbox.type.ExchangerRate) {} // display the rate of the selected currency pair
+  rpc ExchangerRateAll (google.protobuf.Empty) returns (stream mlmbox.type.ExchangerRate) {} // list of exchange rates
+}

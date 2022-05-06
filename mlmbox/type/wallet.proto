@@ -1,0 +1,132 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+import "mlmbox/type/account.proto";
+import "mlmbox/type/asset.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/wallet;wallet_pb";
+
+message Wallet {
+  message Processing {
+    message ID {
+      oneof unique_field {
+        uint32 processing_id = 1;
+        string processing_name = 2;
+      }
+    }
+    message Asset {
+      message Deposit {
+        bool enabled = 1;
+      }
+      message Withdrawal {
+        bool enabled = 1;
+      }
+      message Transaction {
+        message Status {
+          enum ID {
+            STOPPED = 0; // ожидает одобрения
+            REJECTED = 1; // заявка отклонена
+            APPROVED = 2; // заявка подтверждена
+            PROCESSING = 3; // заявка в процессе обработки
+            SUCCESS = 4; // заявка обработана успешно
+            CANCELED = 5; // заявка отменена
+            BURIED = 6; // заявка похоронена
+          }
+          ID status_id = 1;
+        }
+        message Deposit {
+          message ID {
+            oneof unique_field {
+              uint32 request_id = 1;
+              string unique_hash = 2;
+            }
+          }
+          message Status {
+            enum ID {
+              PROCESSING = 0; // заявка в процессе обработки
+              APPROVED = 1; // заявка подтверждена
+              REJECTED = 2; // заявка отклонена
+            }
+            ID status_id = 1;
+          }
+          uint32 request_id = 1;
+          string unique_hash = 2;
+          Status.ID status_id = 3;
+          string amount = 4;
+          uint32 transaction_id = 5;
+          map<string, string> metadata = 6;
+        }
+        message Withdrawal {
+          message ID {
+            uint32 request_id = 1;
+          }
+          uint32 request_id = 1;
+          string amount = 2;
+          Status.ID status_id = 3;
+          mlmbox.type.Account account = 4;
+//          mlmbox.type.Wallet.Asset.Transaction transaction = 5;
+        }
+      }
+      mlmbox.type.Asset asset = 1;
+      Deposit deposit = 2;
+      Withdrawal withdrawal = 3;
+      bool activated = 4;
+      bool published = 5;
+    }
+
+    uint32 processing_id = 1;
+    string processing_name = 2;
+  }
+
+  message Asset {
+    message Balance {
+      string total = 1; // баланс всего
+      string hold = 2; // баланс замороженных средств на значение "total". (чистый баланс = total - hold)
+    }
+    message Settings {
+      bool activated = 1;
+      bool deposit_enabled = 2;
+      bool withdrawal_enabled = 3;
+    }
+    message Transaction {
+      message ID {
+        uint32 transaction_id = 1;
+      }
+      message Kind {
+        enum ID {
+          REVOKE = 0; // отмена операции
+          EARNED = 1; // заработано
+          SPENT = 2; // потрачено
+          DEPOSIT = 3; // пополнение
+          WITHDRAWAL = 4; // вывод
+          VOUCHER_DEPOSIT = 5; // пополнение через ваучер
+          VOUCHER_WITHDRAWAL = 6; // вывод через создание ваучера
+          WALLET_TRANSFER_DEPOSIT = 7; // перевод между кошельками (получение)
+          WALLET_TRANSFER_WITHDRAWAL = 8; // перевод между кошельками (отправка)
+        }
+        ID kind_id = 1;
+      }
+      uint32 transaction_id = 1;
+      Kind.ID kind_id = 2;
+      string amount = 3;
+      string fee = 4;
+      string balance = 5;
+      mlmbox.type.Asset operation_asset = 6;
+      string operation_amount = 7;
+      bool hold = 8;
+      string comment = 9;
+      uint32 created_at = 10;
+      google.protobuf.Any description = 11;
+    }
+    mlmbox.type.Asset asset = 1;
+    bool activated = 2;
+    bool published = 3;
+  }
+
+//  uint32 wallet_id = 1;
+//  string wallet_name = 2;
+//  bool activated = 3;
+//  bool published = 4;
+}

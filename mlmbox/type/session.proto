@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package mlmbox.type;
+import "mlmbox/type/agent.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/session;session_pb";
+
+message Session {
+  message ID {
+    uint32 session_id = 1;
+  }
+  enum Status {
+    ACTIVATED = 0;
+    NOT_CONFIRMED = 1;
+    EXPIRED = 2;
+    CANCELED = 3;
+  }
+  message Metadata {
+    string ip_init = 1;
+    mlmbox.type.Agent agent = 2;
+  }
+
+  uint32 session_id = 1;
+  Status status_id = 2;
+  uint32 created_at = 3;
+  uint32 expires_at = 4;
+  Metadata metadata = 5;
+}

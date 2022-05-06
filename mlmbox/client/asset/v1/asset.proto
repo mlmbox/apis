@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package mlmbox.client.asset.v1;
+
+import "mlmbox/type/asset.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/asset/v1;service_client_asset_pb";
+
+service Asset {
+  rpc Get (mlmbox.type.Asset.ID) returns (mlmbox.type.Asset) {} // display currency
+  rpc All (google.protobuf.Empty) returns (stream mlmbox.type.Asset) {} // list of currencies
+}
