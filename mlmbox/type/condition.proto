@@ -7,13 +7,19 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/condition;conditi
 message Condition {
   message Template {
     message Rank {
-      double team_subscribe_activated_branch_filter_percent = 1;
-      uint32 team_subscribe_activated_branch_filter_total_quantity = 2;
+      uint32 rank_id = 1;
+    }
+    message TeamSubscribeActivatedBranch {
+      double filter_percent = 1;
+      uint32 filter_total_quantity = 2;
     }
   }
   message Execution {
     message Rank {
-      uint32 team_subscribe_activated_branch_filter_total_quantity = 1;
+      uint32 rank_id = 1;
+    }
+    message TeamSubscribeActivatedBranch {
+      uint32 filter_total_quantity = 1;
     }
   }
 }

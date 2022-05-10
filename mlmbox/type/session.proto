@@ -15,14 +15,14 @@ message Session {
     EXPIRED = 2;
     CANCELED = 3;
   }
-  message Metadata {
+  message Description {
     string ip_init = 1;
-    mlmbox.type.Agent agent = 2;
+     mlmbox.type.Agent agent = 2;
   }
 
   uint32 session_id = 1;
   Status status_id = 2;
   uint32 created_at = 3;
   uint32 expires_at = 4;
-  Metadata metadata = 5;
+  Description description = 5;
 }

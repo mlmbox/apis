@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package mlmbox.client.auth.v1;
 
-import "mlmbox/type/agent.proto";
-import "mlmbox/type/profile.proto";
 import "mlmbox/type/confirmation.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/auth/v1;service_client_auth_pb";

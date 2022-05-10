@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package mlmbox.client.binary.v1;
+
+import "mlmbox/type/binary.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/binary/v1;service_client_binary_pb";
+
+service Binary {
+  rpc Info (mlmbox.type.Binary.Position.ID) returns (mlmbox.type.Binary) {}
+  rpc SettingsSideSet (BinarySettingsSideSetRequest) returns (mlmbox.type.Binary.Position.Settings) {}
+}
+
+message BinarySettingsSideSetRequest {
+  uint32 user_side = 1;
+}

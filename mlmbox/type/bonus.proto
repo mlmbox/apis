@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/bonus;bonus_pb";
+
+message Bonus {
+  enum Kind {
+    DIRECT = 0;
+    BINARY = 1;
+    BINARY_MATCHING = 2;
+    FARMING = 3;
+  }
+  message ID {
+    Kind bonus_id = 1;
+  }
+  message Limit {
+    uint32 duration = 1;
+    string counter_limit = 2;
+    string counter_value = 3;
+    uint32 start_at = 4;
+  }
+  Kind bonus_id = 1;
+  string earned_value = 2;
+  string burned_value = 3;
+  repeated Limit limits = 4;
+}

@@ -2,12 +2,10 @@ syntax = "proto3";
 
 package mlmbox.type;
 
-import "mlmbox/type/asset.proto";
 import "mlmbox/type/payment.proto";
 import "mlmbox/type/product.proto";
-import "mlmbox/type/time_point.proto";
 
-option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/activity;activity_pb";
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/plan;plan_pb";
 
 message PlanFarming {
   message Package {
@@ -16,10 +14,10 @@ message PlanFarming {
     }
     uint32 package_id = 1;
     uint32 package_title = 2;
-    double token_bonus = 3;
-    double staking_percent = 4;
-    uint32 staking_interval = 5;
-    uint32 lockup_interval = 6;
+    double farming_percent = 3;
+    uint32 farming_duration = 4;
+    uint32 lockup_duration = 5;
+    double lockup_bonus_percent = 6;
     double direct_bonus = 7;
     double binary_bonus = 8;
     uint32 binary_limit_asset_id = 9;
@@ -29,7 +27,6 @@ message PlanFarming {
     mlmbox.type.PaymentPriceRange payment_price_range = 13;
   }
 }
-
 message PlanSubscribe {
   message Package {
     message ID {
@@ -37,23 +34,22 @@ message PlanSubscribe {
     }
     uint32 package_id = 1;
     uint32 package_title = 2;
-    uint32 time_action = 3;
+    uint32 duration = 3;
     mlmbox.type.PaymentPrice payment_price = 4;
   }
   message Ticket {
     uint32 ticket_id = 1;
     uint32 package_id = 2;
-    uint32 time_action = 3;
+    uint32 duration = 3;
     uint32 expired_at = 4;
     bool is_gift = 5;
   }
 }
-
 message PlanCinema {
   message Ticket {
     uint32 ticket_id = 1;
     uint32 package_id = 2;
-    uint32 time_action = 3;
+    uint32 duration = 3;
     uint32 expired_at = 4;
     bool is_gift = 5;
   }

@@ -2,19 +2,16 @@ syntax = "proto3";
 
 package mlmbox.type;
 
-import "mlmbox/type/asset.proto";
-import "mlmbox/type/wallet.proto";
-
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/payment;payment_pb";
 
 message PaymentPrice {
-  mlmbox.type.Asset.ID price_asset = 1;
-  string price_value = 2;
+  uint32 asset_id = 1;
+  string price = 2;
   repeated uint32 options_asset_ids = 3;
 }
 message PaymentPriceRange {
-  mlmbox.type.Asset.ID price_asset = 1;
-  string price_value_from = 2;
-  string price_value_to = 3;
+  uint32 asset_id = 1;
+  string price_from = 2;
+  string price_to = 3;
   repeated uint32 options_asset_ids = 4;
 }

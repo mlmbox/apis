@@ -4,7 +4,7 @@ package mlmbox.type;
 
 import "mlmbox/type/nft.proto";
 
-option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/profile;profile_pb";
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/roulette_ticket;roulette_ticket_pb";
 
 message RouletteTicket {
   message ID {

@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package mlmbox.type;
-import "mlmbox/type/account.proto";
+import "mlmbox/type/partner.proto";
 import "mlmbox/type/condition.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/career;career_pb";
@@ -13,12 +13,12 @@ message Career {
     }
     uint32 rank_id = 1;
     string rank_title = 2;
-    mlmbox.type.Condition.Template.Rank condition_template = 3;
+    mlmbox.type.Condition.Template.TeamSubscribeActivatedBranch condition_template = 3;
   }
 
   uint32 current_rank_id = 1;
   uint32 team_subscribe_activated_quantity = 2;
   repeated Rank ranks = 3;
-  map<uint32, mlmbox.type.Condition.Execution.Rank> rank_achievements = 4; // key is 'rank_id'
+  map<uint32, mlmbox.type.Condition.Execution.TeamSubscribeActivatedBranch> rank_achievements = 4; // key is 'rank_id'
   repeated mlmbox.type.Partner partners = 5;
 }

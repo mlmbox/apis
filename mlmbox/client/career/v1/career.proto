@@ -8,6 +8,6 @@ import "google/protobuf/empty.proto";
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/career/v1;service_client_career_pb";
 
 service Career {
-  rpc Get (mlmbox.type.Career.Rank.ID) returns (mlmbox.type.Career.Rank) {} // display ranking system
-  rpc All (google.protobuf.Empty) returns (stream mlmbox.type.Career.Rank) {} // display list of ranking system
+  rpc RankGet (mlmbox.type.Career.Rank.ID) returns (mlmbox.type.Career.Rank) {} // display ranking system
+  rpc RankAll (google.protobuf.Empty) returns (stream mlmbox.type.Career.Rank) {} // display list of ranking system
 }

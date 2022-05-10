@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package mlmbox.type;
 
-option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/until;until_pb";
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/time_point;time_point_pb";
 
 message TimePoint {
-  bool infinity = 1; // без ограничения
-  uint32 at = 2; // значение ограничения времени действия
+  bool infinity = 1; // no limit
+  uint32 at = 2; // time limit value
 }

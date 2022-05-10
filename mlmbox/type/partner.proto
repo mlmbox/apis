@@ -5,14 +5,30 @@ package mlmbox.type;
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/partner;partner_pb";
 
 message Partner {
+  message Booking {
+    uint32 account_id = 1;
+    string account_login = 2;
+    string password = 3;
+    uint32 created_at = 4;
+    bool activated = 5;
+    uint32 activated_at = 6;
+  }
+  enum RelationType {
+    SELF = 0;
+    PARTNER = 1;
+    TEAM = 2;
+    OUTSIDER = 3;
+    REFERRAL = 4;
+  }
   uint32 account_id = 1;
   string account_login = 2;
   bool subscribe_activated = 3;
   string profile_name = 4;
   string profile_surname = 5;
-  uint32 partners_quantity = 6;
-  uint32 team_quantity = 7;
-  uint32 team_subscribe_activated_quantity = 8;
-  uint32 current_rank_id = 9;
-  uint32 current_plan_farming_package_id = 10;
+  uint32 current_rank_id = 6;
+  uint32 current_plan_farming_package_id = 7;
+  uint32 partners_quantity = 8;
+  uint32 team_quantity = 9;
+  uint32 team_subscribe_activated_quantity = 10;
+  RelationType relation_type = 11;
 }

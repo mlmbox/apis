@@ -10,12 +10,12 @@ import "google/protobuf/empty.proto";
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/voucher/v1;service_client_voucher_pb";
 
 service Voucher {
-  rpc Get (mlmbox.type.Voucher.ID) returns (mlmbox.type.Voucher) {} // отобразить выбранный ваучер владельца
-  rpc Find (mlmbox.type.Voucher.ID) returns (mlmbox.type.Voucher) {} // отобразить выбранный ваучер доступный для активации
-  rpc All (google.protobuf.Empty) returns (stream mlmbox.type.Voucher) {} // список ваучеров владельца
-  rpc Create (VoucherCreateRequest) returns (mlmbox.type.Voucher) {} // создать ваучер
-  rpc Reject (mlmbox.type.Voucher.ID) returns (mlmbox.type.Confirmation) {} // отменить созданный ваучер
-  rpc Activate (VoucherActivateRequest) returns (mlmbox.type.Confirmation) {} // активировать ваучер
+  rpc Get (mlmbox.type.Voucher.ID) returns (mlmbox.type.Voucher) {} // display selected owner voucher
+  rpc Find (mlmbox.type.Voucher.ID) returns (mlmbox.type.Voucher) {} // display selected voucher available for activation
+  rpc All (google.protobuf.Empty) returns (stream mlmbox.type.Voucher) {} // list of owner's vouchers
+  rpc Create (VoucherCreateRequest) returns (mlmbox.type.Voucher) {} // create a voucher
+  rpc Reject (mlmbox.type.Voucher.ID) returns (mlmbox.type.Confirmation) {} // cancel the generated voucher
+  rpc Activate (VoucherActivateRequest) returns (mlmbox.type.Confirmation) {} // activate voucher
 }
 
 message VoucherCreateRequest {

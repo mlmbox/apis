@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package mlmbox.client.plan.v1;
+
+import "mlmbox/type/plan.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/plan/v1;service_client_plan_pb";
+
+service Plan {
+  rpc FarmingPackageGet (mlmbox.type.PlanFarming.Package.ID) returns (mlmbox.type.PlanFarming.Package) {}
+  rpc FarmingPackageBuy (PlanFarmingPackageBuyRequest) returns (google.protobuf.Empty) {}
+  rpc FarmingPackagesAll (google.protobuf.Empty) returns (stream mlmbox.type.PlanFarming.Package) {}
+
+  rpc SubscribePackageGet (mlmbox.type.PlanSubscribe.Package.ID) returns (mlmbox.type.PlanSubscribe.Package) {}
+  rpc SubscribePackageBuy (PlanSubscribePackageBuyRequest) returns (google.protobuf.Empty) {}
+  rpc SubscribePackagesAll (google.protobuf.Empty) returns (stream mlmbox.type.PlanSubscribe.Package) {}
+}
+
+message PlanFarmingPackageBuyRequest {
+  uint32 package_id = 1;
+  uint32 asset_id = 2;
+  string price_value = 3;
+}
+message PlanSubscribePackageBuyRequest {
+  uint32 package_id = 1;
+  uint32 asset_id = 2;
+  string price_value = 3;
+  bool auto_activate = 4;
+}

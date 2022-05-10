@@ -67,7 +67,7 @@ message Confirmation {
   uint32 counter_value = 8;
   map<uint32, Field> fields = 9; // map key is "field_id"
   repeated Option options = 10;
-  google.protobuf.Any meta = 11;
+  google.protobuf.Any description = 11;
 }
 
 message ConfirmationConfirmResponse {
@@ -80,5 +80,5 @@ message ConfirmationConfirmResponse {
   }
   Status status = 1;
   map<uint32, mlmbox.type.Confirmation.Field.Status> field_statuses = 2; // map key is "field_id"
-  google.protobuf.Any metadata = 3;
+  google.protobuf.Any description = 3;
 }

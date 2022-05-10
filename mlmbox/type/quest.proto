@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+import "mlmbox/type/condition.proto";
+import "mlmbox/type/product.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/quest;quest_pb";
+
+message Quest {
+  message ID {
+    uint32 quest_id = 1;
+  }
+
+  uint32 quest_id = 1;
+  string quest_title = 2;
+  bool accessed = 3;
+  bool done = 4;
+  uint32 accessed_at = 5;
+  uint32 done_at = 6;
+  uint32 expired_at = 7;
+  mlmbox.type.Condition.Template.Rank access_condition_template = 8;
+  mlmbox.type.Condition.Execution.Rank access_condition_execution = 9;
+  mlmbox.type.Condition.Template.TeamSubscribeActivatedBranch done_condition_template = 10;
+  mlmbox.type.Condition.Execution.TeamSubscribeActivatedBranch done_condition_execution = 11;
+  repeated mlmbox.type.Product.Object objects = 12;
+}

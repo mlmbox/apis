@@ -3,6 +3,7 @@ syntax = "proto3";
 package mlmbox.client.account.v1;
 
 import "mlmbox/type/account.proto";
+import "mlmbox/type/bonus.proto";
 import "mlmbox/type/career.proto";
 import "mlmbox/type/confirmation.proto";
 import "mlmbox/type/google_auth_generator.proto";
@@ -14,16 +15,18 @@ import "google/protobuf/empty.proto";
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/account/v1;service_client_account_pb";
 
 service Account {
-  rpc Info (google.protobuf.Empty) returns (mlmbox.type.Account) {} // отобразить данные об аккаунте
-  rpc ProfileSet (mlmbox.type.Profile) returns (mlmbox.type.Profile) {} // обновлить профиль
-  rpc SecurityGoogleAuthGenerate (google.protobuf.Empty) returns (mlmbox.type.GoogleAuthGenerator.SecretCode) {} // сгенерировать 2FA
-  rpc SecurityGoogleAuthActivate (mlmbox.type.GoogleAuthGenerator.VerifiedCode) returns (mlmbox.type.GoogleAuthGenerator.VerifiedCode.Status) {} // актививаровать 2FA
-  rpc SecurityGoogleAuthDeactivate (google.protobuf.Empty) returns (mlmbox.type.Confirmation) {} // деактививаровать 2FA
-  rpc PasswordSet (AccountPasswordSetRequest) returns (mlmbox.type.Confirmation) {} // изменить пароль
-  rpc EmailSet (AccountEmailSetRequest) returns (mlmbox.type.Confirmation) {} // заменить основной контакт новым контактом
-  rpc LocaleSet (mlmbox.type.Locale.ID) returns (mlmbox.type.Locale) {} // обновлить язык коммуникации
+  rpc Info (google.protobuf.Empty) returns (mlmbox.type.Account) {} // display account information
+  rpc ProfileSet (mlmbox.type.Profile) returns (mlmbox.type.Profile) {} // update profile
+  rpc SecurityGoogleAuthGenerate (google.protobuf.Empty) returns (mlmbox.type.GoogleAuthGenerator.SecretCode) {} // generate 2FA
+  rpc SecurityGoogleAuthActivate (mlmbox.type.GoogleAuthGenerator.VerifiedCode) returns (mlmbox.type.GoogleAuthGenerator.VerifiedCode.Status) {} // activate 2FA
+  rpc SecurityGoogleAuthDeactivate (google.protobuf.Empty) returns (mlmbox.type.Confirmation) {} // deactivate 2FA
+  rpc PasswordSet (AccountPasswordSetRequest) returns (mlmbox.type.Confirmation) {} // change password
+  rpc EmailSet (AccountEmailSetRequest) returns (mlmbox.type.Confirmation) {} // replace the main contact with a new contact
+  rpc LocaleSet (mlmbox.type.Locale.ID) returns (mlmbox.type.Locale) {} // update the language of communication
+
   rpc CareerInfo (google.protobuf.Empty) returns (mlmbox.type.Career) {} // display ranking system
   rpc PortfolioInfo (google.protobuf.Empty) returns (stream mlmbox.type.Product.Object) {} // display list of portfolio products
+  rpc BonusesInfo (google.protobuf.Empty) returns (stream mlmbox.type.Bonus) {} // display a list of bonuses
 }
 
 message AccountPasswordSetRequest {
