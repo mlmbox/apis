@@ -3,7 +3,6 @@ syntax = "proto3";
 package mlmbox.type;
 
 import "mlmbox/type/payment.proto";
-import "mlmbox/type/product.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/plan;plan_pb";
 
@@ -23,8 +22,7 @@ message PlanFarming {
     uint32 binary_limit_asset_id = 9;
     string binary_limit_value = 10;
     map<uint32, double> matching_bonus = 11; // key is 'level'
-    repeated mlmbox.type.Product.Object objects = 12;
-    mlmbox.type.PaymentPriceRange payment_price_range = 13;
+    mlmbox.type.PaymentPriceRange payment_price_range = 12;
   }
 }
 message PlanSubscribe {

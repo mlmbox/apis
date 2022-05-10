@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package mlmbox.type;
 
-import "mlmbox/type/account.proto";
-import "mlmbox/type/asset.proto";
-import "mlmbox/type/bonus.proto";
-import "mlmbox/type/plan.proto";
-import "google/protobuf/any.proto";
+//import "mlmbox/type/account.proto";
+//import "mlmbox/type/asset.proto";
+//import "mlmbox/type/bonus.proto";
+//import "mlmbox/type/plan.proto";
+//import "google/protobuf/any.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/wallet;wallet_pb";
 

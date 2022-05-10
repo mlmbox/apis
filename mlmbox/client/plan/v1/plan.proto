@@ -3,24 +3,33 @@ syntax = "proto3";
 package mlmbox.client.plan.v1;
 
 import "mlmbox/type/plan.proto";
+import "mlmbox/type/product.proto";
 import "google/protobuf/empty.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/plan/v1;service_client_plan_pb";
 
 service Plan {
-  rpc FarmingPackageGet (mlmbox.type.PlanFarming.Package.ID) returns (mlmbox.type.PlanFarming.Package) {}
+  rpc FarmingPackageGet (mlmbox.type.PlanFarming.Package.ID) returns (PlanFarmingPackage) {}
   rpc FarmingPackageBuy (PlanFarmingPackageBuyRequest) returns (google.protobuf.Empty) {}
-  rpc FarmingPackagesAll (google.protobuf.Empty) returns (stream mlmbox.type.PlanFarming.Package) {}
+  rpc FarmingPackagesAll (google.protobuf.Empty) returns (stream PlanFarmingPackage) {}
 
-  rpc SubscribePackageGet (mlmbox.type.PlanSubscribe.Package.ID) returns (mlmbox.type.PlanSubscribe.Package) {}
+  rpc SubscribePackageGet (mlmbox.type.PlanSubscribe.Package.ID) returns (PlanSubscribePackage) {}
   rpc SubscribePackageBuy (PlanSubscribePackageBuyRequest) returns (google.protobuf.Empty) {}
-  rpc SubscribePackagesAll (google.protobuf.Empty) returns (stream mlmbox.type.PlanSubscribe.Package) {}
+  rpc SubscribePackagesAll (google.protobuf.Empty) returns (stream PlanSubscribePackage) {}
 }
 
+message PlanFarmingPackage {
+  mlmbox.type.PlanFarming.Package package = 1;
+  repeated mlmbox.type.Product.Object objects = 2;
+}
 message PlanFarmingPackageBuyRequest {
   uint32 package_id = 1;
   uint32 asset_id = 2;
   string price_value = 3;
+}
+message PlanSubscribePackage {
+  mlmbox.type.PlanSubscribe.Package package = 1;
+  repeated mlmbox.type.Product.Object objects = 2;
 }
 message PlanSubscribePackageBuyRequest {
   uint32 package_id = 1;
