@@ -9,6 +9,10 @@ message AccessToken {
     uint32 account_id = 1;
     uint32 session_id = 2;
   }
+  message Confirmation {
+    uint32 account_id = 1;
+    uint32 confirmation_id = 2;
+  }
   message ConfirmationGuest {
     string email = 1;
     uint32 confirmation_id = 2;
