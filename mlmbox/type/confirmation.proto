@@ -49,8 +49,8 @@ message Confirmation {
     uint32 field_id = 1; // идентификатор поля
     Kind kind_id = 2; // тип поля
     Status status = 3; // статус поля
-    string email = 4; // контакт, используется при CONTACT_CONFIRM_CODE и CONTACT_FILL
-    Notification notification = 5; // используется при CONTACT_CONFIRM_CODE
+    string email = 4; // контакт, используется при EMAIL_CONFIRM_CODE и EMAIL_FILL
+    Notification notification = 5; // используется при EMAIL_CONFIRM_CODE
   }
   message Option {
     uint32 option_id = 1;
