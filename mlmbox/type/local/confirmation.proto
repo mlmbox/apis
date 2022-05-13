@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package mlmbox.type.local;
+
+import "google/protobuf/any.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/local/confirmation;local_confirmation_pb";
+
+message Confirmation {
+  enum Status {
+    ACTIVATED = 0;
+    APPROVED = 1;
+    REJECT = 2;
+    CANCELED = 3;
+    EXPIRED = 4;
+  }
+  message Method {
+    enum ID {
+      UNKNOWN = 0;
+      SIGN_IN = 1; // авторизация
+      SIGN_UP = 2; // регистрация
+      SIGN_ATTACH = 3; // привязать регистрационные данные
+      RECOVERY_PASSWORD = 4; // восстановить пароль
+      RECOVERY_GOOGLE_AUTHENTICATOR = 5; // восстановить 2FA
+      CHANGE_PASSWORD = 12; // изменить пароль
+      ACTIVATE_SECURITY_GOOGLE_AUTHENTICATOR = 13; // активировать 2FA
+      DEACTIVATE_SECURITY_GOOGLE_AUTHENTICATOR = 14; // деактивировать 2FA
+    }
+    ID method_id = 2;
+  }
+  message ID {
+    oneof unique_field {
+      uint32 confirmation_id = 1;
+      string method_name = 2;
+    }
+  }
+  message Field {
+    enum Kind {
+      UNKNOWN = 0;
+      PASSWORD = 1; // пароль
+      PASSWORD_NEW = 2; // новый пароль (используется при смене пароля)
+      GOOGLE_AUTHENTICATOR_CODE = 3; // 2FA код
+      EMAIL_CONFIRM_CODE = 4; // подтвердить код отправленный на указанный контакт
+      EMAIL_FILL = 5; // заполнить значение контакта (например: sm***el@gmail.com - требуется заполнить поле без маски с звездочками)
+    }
+    message Status {
+      enum ID {
+        OK = 0;
+        EMPTY = 1;
+        WRONG = 2;
+        EXPIRED = 3;
+      }
+      ID id = 1;
+      string comment = 2;
+    }
+    message Notification {
+      uint32 next_at = 1; // displays the allowed time after which it is possible to send a new code
+      uint32 created_at = 2; // displays the creation time of the current code
+      uint32 expires_at = 3; // displays the time after which the sent token will not be valid
+      uint32 counter_limit = 4; // displays the limit of available notifications
+      uint32 counter_value = 5; // displays the number of sent notifications with confirmation code
+    }
+    uint32 field_id = 1; // идентификатор поля
+    Kind kind_id = 2; // тип поля
+    Status status = 3; // статус поля
+    string email = 4; // контакт, используется при EMAIL_CONFIRM_CODE и EMAIL_FILL
+    Notification notification = 5; // используется при EMAIL_CONFIRM_CODE
+    repeated uint32 option_ids = 6;
+  }
+
+  uint32 confirmation_id = 1;
+  Method.ID method_id = 2;
+  Status status_id = 3;
+  uint32 created_at = 4;
+  uint32 expires_at = 5;
+  uint32 modified_at = 6;
+  uint32 counter_limit = 7;
+  uint32 counter_value = 8;
+  map<uint32, Field> fields = 9; // map key is "field_id"
+  google.protobuf.Any descriptionPublic = 10;
+  google.protobuf.Any descriptionPrivate = 11;
+}
+
+message ConfirmationConfirmResponse {
+  enum Status {
+    WRONG = 0;
+    APPROVED = 1;
+    REJECT = 2;
+    CANCELED = 3;
+    EXPIRED = 4;
+  }
+  Status status = 1;
+  map<uint32, mlmbox.type.local.Confirmation.Field.Status> field_statuses = 2; // map key is "field_id"
+  google.protobuf.Any descriptionPublic = 3;
+  google.protobuf.Any descriptionPrivate = 4;
+}
