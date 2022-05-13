@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package mlmbox.type.local;
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/local/data;local_data_pb";
+
+message Data {
+  message SignAttach {
+    string email = 1;
+    string password_hash = 2;
+    string locale = 3;
+  }
+}
