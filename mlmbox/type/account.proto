@@ -9,7 +9,6 @@ import "mlmbox/type/time_point.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/account;account_pb";
 
-//TODO: проверить использование идентификатора в других модулях
 message Account {
   message ID {
     oneof unique_field {

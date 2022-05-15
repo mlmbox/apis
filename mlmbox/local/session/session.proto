@@ -7,13 +7,13 @@ import "mlmbox/local/type/session.proto";
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/session;service_local_session_pb";
 
 service Session {
-  rpc Get (mlmbox.local.type.Session.ID) returns (SessionResponse) {}
-  rpc Create (SessionCreateRequest) returns (SessionResponse) {}
-  rpc IsActivated (mlmbox.local.type.Session.ID) returns (SessionIsActivatedResponse) {}
-  rpc AllByAccount (mlmbox.local.type.Account.ID) returns (SessionAllByAccountResponse) {}
-  rpc DeactivateByAccount (mlmbox.local.type.Session.ID) returns (SessionDeactivateResponse) {}
-  rpc DeactivateAllByAccount (mlmbox.local.type.Account.ID) returns (SessionDeactivateResponse) {}
-  rpc DeactivateOtherByAccount (mlmbox.local.type.Session.ID) returns (SessionDeactivateResponse) {}
+  rpc Get (Request) returns (Response) {}
+  rpc Create (SessionCreateRequest) returns (Response) {}
+  rpc IsActivated (mlmbox.local.type.Session.ID) returns (IsActivatedResponse) {}
+  rpc AllByAccount (AllByAccountRequest) returns (AllByAccountResponse) {}
+  rpc DeactivateByAccount (mlmbox.local.type.Session.ID) returns (DeactivateResponse) {}
+  rpc DeactivateAllByAccount (mlmbox.local.type.Account.ID) returns (DeactivateResponse) {}
+  rpc DeactivateOtherByAccount (mlmbox.local.type.Session.ID) returns (DeactivateResponse) {}
 }
 
 message Error {
@@ -22,11 +22,15 @@ message Error {
     SESSION_UNKNOWN = 1;
     SESSION_NOT_FOUND = 2;
     ACCOUNT_UNKNOWN = 3;
-    ACCOUNT_NOT_FOUND = 4;
   }
   ID error_id = 1;
 }
-message SessionResponse {
+message Request {
+  uint32 account_id = 1;
+  uint32 session_id = 2;
+  bool show_description = 3;
+}
+message Response {
   Error.ID error_id = 1;
   mlmbox.local.type.Session session = 2;
 }
@@ -35,16 +39,21 @@ message SessionCreateRequest {
   uint32 created_at = 2;
   uint32 expires_at = 3;
   mlmbox.local.type.Session.Description description = 4;
+  bool show_description = 5;
 }
-message SessionIsActivatedResponse {
+message IsActivatedResponse {
   Error.ID error_id = 1;
   bool activated = 2;
 }
-message SessionAllByAccountResponse {
+message AllByAccountRequest {
+  uint32 account_id = 1;
+  bool show_description = 2;
+}
+message AllByAccountResponse {
   Error.ID error_id = 1;
   repeated mlmbox.local.type.Session sessions = 2;
 }
-message SessionDeactivateResponse {
+message DeactivateResponse {
   Error.ID error_id = 1;
   uint32 quantity = 2;
 }
