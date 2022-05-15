@@ -48,15 +48,9 @@ message TokenValidateRequest {
 }
 message TokenValidateResponse {
   enum Kind {
-    ACCOUNT = 0;
-    ACCOUNT_ATTACH = 1;
-    CONFIRMATION = 2;
-  }
-  enum Status {
-    VALIDATED = 0;
-    EXPIRED = 1;
-    INVALID = 2;
+    SESSION = 0;
+    SIGN_ATTACH = 1;
+    CONFIRMATION_GUEST = 2;
   }
   Kind kind = 1;
-  Status status = 2;
 }

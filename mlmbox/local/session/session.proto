@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package mlmbox.local.session;
+import "mlmbox/local/type/account.proto";
+import "mlmbox/local/type/session.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/session;service_local_session_pb";
+
+service Session {
+  rpc Get (mlmbox.local.type.Session.ID) returns (SessionResponse) {}
+  rpc Create (SessionCreateRequest) returns (SessionResponse) {}
+  rpc IsActivated (mlmbox.local.type.Session.ID) returns (SessionIsActivatedResponse) {}
+  rpc AllByAccount (mlmbox.local.type.Account.ID) returns (SessionAllByAccountResponse) {}
+  rpc DeactivateByAccount (mlmbox.local.type.Session.ID) returns (SessionDeactivateResponse) {}
+  rpc DeactivateAllByAccount (mlmbox.local.type.Account.ID) returns (SessionDeactivateResponse) {}
+  rpc DeactivateOtherByAccount (mlmbox.local.type.Session.ID) returns (SessionDeactivateResponse) {}
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    SESSION_UNKNOWN = 1;
+    SESSION_NOT_FOUND = 2;
+    ACCOUNT_UNKNOWN = 3;
+    ACCOUNT_NOT_FOUND = 4;
+  }
+  ID error_id = 1;
+}
+message SessionResponse {
+  Error.ID error_id = 1;
+  mlmbox.local.type.Session session = 2;
+}
+message SessionCreateRequest {
+  uint32 account_id = 1;
+  uint32 created_at = 2;
+  uint32 expires_at = 3;
+  mlmbox.local.type.Session.Description description = 4;
+}
+message SessionIsActivatedResponse {
+  Error.ID error_id = 1;
+  bool activated = 2;
+}
+message SessionAllByAccountResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.local.type.Session sessions = 2;
+}
+message SessionDeactivateResponse {
+  Error.ID error_id = 1;
+  uint32 quantity = 2;
+}

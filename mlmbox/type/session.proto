@@ -11,9 +11,8 @@ message Session {
   }
   enum Status {
     ACTIVATED = 0;
-    NOT_CONFIRMED = 1;
-    EXPIRED = 2;
-    CANCELED = 3;
+    EXPIRED = 1;
+    CANCELED = 2;
   }
   message Description {
     string ip_init = 1;

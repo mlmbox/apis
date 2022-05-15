@@ -1,13 +1,44 @@
 syntax = "proto3";
 
 package mlmbox.type.local;
+import "mlmbox/type/agent.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/local/data;local_data_pb";
 
 message Data {
+  message SignIn {
+    string ip_init = 1;
+    mlmbox.type.Agent agent = 2;
+  }
+  message SignUp {
+    uint32 referral_id = 1;
+    string login = 2;
+    string email = 3;
+    string password_hash = 4;
+    string locale = 5;
+    string ip_init = 6;
+    mlmbox.type.Agent agent = 7;
+  }
   message SignAttach {
     string email = 1;
     string password_hash = 2;
     string locale = 3;
+    string ip_init = 4;
+    mlmbox.type.Agent agent = 5;
+  }
+  message RecoveryPassword {
+    string email = 1;
+    string ip_init = 2;
+    mlmbox.type.Agent agent = 3;
+  }
+  message PasswordSet {
+    string password_hash = 1;
+    string ip_init = 2;
+    mlmbox.type.Agent agent = 3;
+  }
+  message EmailSet {
+    string email = 1;
+    string ip_init = 2;
+    mlmbox.type.Agent agent = 3;
   }
 }
