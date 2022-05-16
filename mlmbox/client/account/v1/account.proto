@@ -22,7 +22,7 @@ service Account {
   rpc SecurityGoogleAuthDeactivate (google.protobuf.Empty) returns (mlmbox.type.Confirmation) {} // deactivate 2FA
   rpc PasswordSet (AccountPasswordSetRequest) returns (mlmbox.type.Confirmation) {} // change password
   rpc EmailSet (AccountEmailSetRequest) returns (mlmbox.type.Confirmation) {} // replace the main contact with a new contact
-  rpc LocaleSet (mlmbox.type.Locale.ID) returns (mlmbox.type.Locale) {} // update the language of communication
+  rpc LocaleSet (mlmbox.type.Locale.ID) returns (google.protobuf.Empty) {} // update the language of communication
 
   rpc CareerInfo (google.protobuf.Empty) returns (mlmbox.type.Career) {} // display ranking system
   rpc PortfolioInfo (google.protobuf.Empty) returns (stream mlmbox.type.Product.Object) {} // display list of portfolio products

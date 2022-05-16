@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package mlmbox.local.locale;
+
+import "mlmbox/type/locale.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/locale;service_local_locale_pb";
+
+service Locale {
+  rpc Get (mlmbox.type.Locale.ID) returns (LocaleResponse) {}
+  rpc All (google.protobuf.Empty) returns (LocaleAllResponse) {}
+  rpc DefaultValue (google.protobuf.Empty) returns (LocaleResponse) {}
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    LOCALE_UNKNOWN = 2;
+    LOCALE_NOT_FOUND = 3;
+  }
+  ID error_id = 1;
+}
+message LocaleResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Locale locale = 2;
+}
+message LocaleAllResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.type.Locale locales = 2;
+}

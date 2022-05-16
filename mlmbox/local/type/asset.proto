@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package mlmbox.local.type;
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/type/asset;local_asset_pb";
+
+message Asset {
+  message ID {
+    uint32 asset_id = 1;
+  }
+  message Name {
+    string asset_name = 1;
+  }
+}
+
+message AssetPair {
+  message ID {
+    uint32 asset_pair_id = 1;
+  }
+  message Name {
+    string asset_pair_name = 1;
+  }
+  message Assets {
+    uint32 source_asset_id = 1;
+    uint32 target_asset_id = 2;
+  }
+}

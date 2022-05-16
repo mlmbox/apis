@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package mlmbox.local.asset;
+import "mlmbox/local/type/asset.proto";
+import "mlmbox/type/asset.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/asset;service_local_asset_pb";
+
+service AssetPair {
+  rpc ExchangerRateGetByID(mlmbox.local.type.AssetPair.ID) returns (AssetPairExchangerRateResponse) {}
+  rpc ExchangerRateGetByName(mlmbox.local.type.AssetPair.Name) returns (AssetPairExchangerRateResponse) {}
+  rpc ExchangerRateGetByAssetPairs(mlmbox.local.type.AssetPair.Assets) returns (AssetPairExchangerRateResponse) {}
+  rpc ExchangerRateAll(google.protobuf.Empty) returns (AssetPairExchangerRateAllResponse) {}
+}
+
+message AssetPairError {
+  enum ID {
+    OK = 0;
+    ASSET_PAIR_UNKNOWN = 1;
+    ASSET_PAIR_NOT_FOUND = 2;
+  }
+  ID error_id = 1;
+}
+message AssetPairExchangerRateResponse {
+  AssetPairError.ID error_id = 1;
+  mlmbox.type.ExchangerRate exchanger_rate = 2;
+}
+message AssetPairExchangerRateAllResponse {
+  AssetPairError.ID error_id = 1;
+  repeated mlmbox.type.ExchangerRate exchanger_rates = 2;
+}

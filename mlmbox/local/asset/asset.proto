@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package mlmbox.local.asset;
+import "mlmbox/local/type/asset.proto";
+import "mlmbox/type/asset.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/asset;service_local_asset_pb";
+
+service Asset {
+  rpc GetByID(mlmbox.local.type.Asset.ID) returns (AssetResponse) {}
+  rpc GetByName(mlmbox.local.type.Asset.Name) returns (AssetResponse) {}
+  rpc All(google.protobuf.Empty) returns (AssetAllResponse) {}
+}
+
+message AssetError {
+  enum ID {
+    OK = 0;
+    ASSET_UNKNOWN = 1;
+    ASSET_NOT_FOUND = 2;
+  }
+  ID error_id = 1;
+}
+message AssetResponse {
+  AssetError.ID error_id = 1;
+  mlmbox.type.Asset asset = 2;
+}
+message AssetAllResponse {
+  AssetError.ID error_id = 1;
+  repeated mlmbox.type.Asset assets = 2;
+}
