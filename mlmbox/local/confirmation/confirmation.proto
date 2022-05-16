@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package mlmbox.local.confirmation;
+
+import "mlmbox/local/type/account.proto";
+import "mlmbox/type/confirmation.proto";
+import "mlmbox/local/type/confirmation.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/confirmation;service_local_confirmation_pb";
+
+service Confirmation {
+  rpc GetByID (mlmbox.local.type.Confirmation.ID) returns (Response) {}
+  rpc GetByMethod (mlmbox.local.type.Confirmation.Method) returns (Response) {}
+  rpc AllByAccountID (mlmbox.local.type.Account.ID) returns (AllByAccountIDResponse) {}
+  rpc SetNextPasswordByEmail (SetNextPasswordRequest) returns (SetNextPasswordResponse) {}
+  rpc StatusSet (StatusSetRequest) returns (Error) {}
+  rpc Create (CreateRequest) returns (Response) {}
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    ACCOUNT_NOT_FOUND = 1;
+    CONFIRMATION_NOT_FOUND = 2;
+    CONFIRMATION_NOT_ACTIVATED = 3;
+    CONFIRMATION_EMAIL_CONFIRM_CODE_FIELD_UNAVAILABLE = 4;
+  }
+  ID error_id = 1;
+}
+message Response {
+  Error.ID error_id = 1;
+  mlmbox.local.type.Confirmation confirmation = 2;
+}
+message AllByAccountIDResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.local.type.Confirmation confirmations = 2;
+}
+message StatusSetRequest {
+  uint32 account_id = 1;
+  uint32 confirmation_id = 2;
+  mlmbox.type.Confirmation.Status status_id = 3;
+}
+message SetNextPasswordRequest {
+  uint32 account_id = 1;
+  uint32 confirmation_id = 2;
+  uint32 field_id = 3;
+  uint32 now = 4;
+  uint32 duration_next = 5;
+  uint32 duration_expires = 6;
+  string password = 7;
+}
+message SetNextPasswordResponse {
+  Error.ID error_id = 1;
+  mlmbox.local.type.Confirmation.Field.Notification notification = 2;
+}
+message CreateRequest {
+  message Field {
+    uint32 field_id = 1; // идентификатор поля
+    mlmbox.type.Confirmation.Field.Kind kind_id = 2; // тип поля
+    string email = 4; // контакт, используется при EMAIL_CONFIRM_CODE и EMAIL_FILL
+    mlmbox.local.type.Confirmation.Field.Notification notification = 5; // используется при EMAIL_CONFIRM_CODE
+  }
+  uint32 account_id = 1;
+  mlmbox.local.type.Confirmation.Method.ID method_id = 2;
+  uint32 created_at = 3;
+  uint32 expires_at = 4;
+  uint32 counter_limit = 5;
+  repeated Field fields = 6;
+  repeated mlmbox.type.Confirmation.Option options = 7;
+  mlmbox.local.type.Confirmation.Data data = 8;
+  google.protobuf.Any description = 9;
+}

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package mlmbox.local.type;
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/type/access_token;local_access_token_pb";
+
+message AccessToken {
+  uint32 account_id = 1;
+  uint32 session_id = 2;
+  uint32 confirmation_id = 3;
+}
