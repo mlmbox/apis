@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package mlmbox.local.google_authenticator;
+
+import "mlmbox/local/type/account.proto";
+import "mlmbox/local/type/google_authenticator.proto";
+import "mlmbox/type/google_authenticator.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/google_authenticator;service_local_google_authenticator_pb";
+
+service GoogleAuthenticator {
+  rpc Get (mlmbox.local.type.Account.ID) returns (Response) {}
+  rpc Set (SetRequest) returns (Error) {}
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    ACCOUNT_UNKNOWN = 1;
+    ACCOUNT_NOT_FOUND = 2;
+    SECRET_CODE_UNKNOWN = 3;
+  }
+  ID error_id = 1;
+}
+message Response {
+  Error.ID error_id = 1;
+  mlmbox.local.type.GoogleAuthenticator google_authenticator = 2;
+}
+message SetRequest {
+  uint32 account_id = 1;
+  mlmbox.type.GoogleAuthenticator.Status.ID status = 2;
+  string secret_code = 3;
+}

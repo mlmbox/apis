@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package mlmbox.local.type;
+import "mlmbox/type/google_authenticator.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/type/google_authenticator;local_google_authenticator_pb";
+
+message GoogleAuthenticator {
+  uint32 account_id = 1;
+  mlmbox.type.GoogleAuthenticator.Status.ID status = 2;
+  string secret_code = 3;
+  uint32 modified_at = 4;
+}
