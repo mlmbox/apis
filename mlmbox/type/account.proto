@@ -3,7 +3,7 @@ syntax = "proto3";
 package mlmbox.type;
 import "mlmbox/type/bonus.proto";
 import "mlmbox/type/farming.proto";
-import "mlmbox/type/google_auth_generator.proto";
+import "mlmbox/type/google_authenticator.proto";
 import "mlmbox/type/profile.proto";
 import "mlmbox/type/time_point.proto";
 
@@ -20,7 +20,7 @@ message Account {
   string account_login = 2;
   string referral_login = 3;
   mlmbox.type.Profile profile = 4;
-  mlmbox.type.GoogleAuthGenerator security_google_auth_generator = 5;
+  mlmbox.type.GoogleAuthenticator google_authenticator = 5;
   uint32 password_modified_at = 6;
   string email = 7; // account email
   string locale = 8; // language identifier (en-US, ...)

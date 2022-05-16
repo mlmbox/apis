@@ -6,7 +6,7 @@ import "mlmbox/type/account.proto";
 import "mlmbox/type/bonus.proto";
 import "mlmbox/type/career.proto";
 import "mlmbox/type/confirmation.proto";
-import "mlmbox/type/google_auth_generator.proto";
+import "mlmbox/type/google_authenticator.proto";
 import "mlmbox/type/locale.proto";
 import "mlmbox/type/profile.proto";
 import "mlmbox/type/product.proto";
@@ -17,8 +17,8 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/account/v1;serv
 service Account {
   rpc Info (google.protobuf.Empty) returns (mlmbox.type.Account) {} // display account information
   rpc ProfileSet (mlmbox.type.Profile) returns (mlmbox.type.Profile) {} // update profile
-  rpc SecurityGoogleAuthGenerate (google.protobuf.Empty) returns (mlmbox.type.GoogleAuthGenerator.SecretCode) {} // generate 2FA
-  rpc SecurityGoogleAuthActivate (mlmbox.type.GoogleAuthGenerator.VerifiedCode) returns (mlmbox.type.GoogleAuthGenerator.VerifiedCode.Status) {} // activate 2FA
+  rpc SecurityGoogleAuthGenerate (google.protobuf.Empty) returns (mlmbox.type.GoogleAuthenticator.SecretCode) {} // generate 2FA
+  rpc SecurityGoogleAuthActivate (mlmbox.type.GoogleAuthenticator.VerifiedCode) returns (mlmbox.type.GoogleAuthenticator.VerifiedCode.Status) {} // activate 2FA
   rpc SecurityGoogleAuthDeactivate (google.protobuf.Empty) returns (mlmbox.type.Confirmation) {} // deactivate 2FA
   rpc PasswordSet (AccountPasswordSetRequest) returns (mlmbox.type.Confirmation) {} // change password
   rpc EmailSet (AccountEmailSetRequest) returns (mlmbox.type.Confirmation) {} // replace the main contact with a new contact

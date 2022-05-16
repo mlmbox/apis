@@ -23,8 +23,8 @@ message Confirmation {
       RECOVERY_PASSWORD = 4; // восстановить пароль
       RECOVERY_GOOGLE_AUTHENTICATOR = 5; // восстановить 2FA
       CHANGE_PASSWORD = 12; // изменить пароль
-      ACTIVATE_SECURITY_GOOGLE_AUTHENTICATOR = 13; // активировать 2FA
-      DEACTIVATE_SECURITY_GOOGLE_AUTHENTICATOR = 14; // деактивировать 2FA
+      ACTIVATE_GOOGLE_AUTHENTICATOR = 13; // активировать 2FA
+      DEACTIVATE_GOOGLE_AUTHENTICATOR = 14; // деактивировать 2FA
     }
     ID method_id = 2;
   }
