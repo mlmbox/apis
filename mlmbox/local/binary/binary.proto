@@ -7,7 +7,7 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/binary;service_l
 
 service Binary {
   rpc Info (PositionRequest) returns (InfoResponse) {}
-  rpc SettingsSideSet (SettingsSideSetRequest) returns (mlmbox.type.Binary.Position.Settings) {}
+  rpc SettingsSideSet (SettingsSideSetRequest) returns (SettingsSideSetResponse) {}
 }
 
 message Error {
@@ -17,8 +17,7 @@ message Error {
     ACCOUNT_NOT_FOUND = 2;
     VIEW_POSITION_NOT_FOUND = 3;
     VIEW_POSITION_NOT_ACCESS = 4;
-    POSITION_USER_SIDE_UNKNOWN = 5;
-    POSITION_USER_SIDE_NOT_FOUND = 6;
+    POSITION_USER_SIDE_WRONG_VALUE = 5;
   }
   ID error_id = 1;
 }
