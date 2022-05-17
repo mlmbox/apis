@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package mlmbox.local.farming;
+
+import "mlmbox/local/type/account.proto";
+import "mlmbox/type/farming.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/farming;service_local_farming_pb";
+
+service Farming {
+  rpc Info (mlmbox.local.type.Account.ID) returns (InfoResponse) {}
+  rpc ContractGet (ContractRequest) returns (ContractGetResponse) {}
+  rpc ContractEventsAll (ContractRequest) returns (ContractEventsAllResponse) {}
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    ACCOUNT_UNKNOWN = 1;
+    ACCOUNT_NOT_FOUND = 2;
+    Contract_UNKNOWN = 3;
+    Contract_NOT_FOUND = 4;
+  }
+  ID error_id = 1;
+}
+message ContractRequest {
+  uint32 account_id = 1;
+  uint32 contract_id = 2;
+}
+message InfoResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Farming farming = 2;
+}
+message ContractGetResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Farming.Contract contract = 2;
+}
+message ContractEventsAllResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.type.Farming.Contract.Event events = 2;
+}
