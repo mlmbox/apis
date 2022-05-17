@@ -19,12 +19,11 @@ message Confirmation {
       SIGN_IN = 1; // авторизация
       SIGN_UP = 2; // регистрация
       SIGN_ATTACH = 3; // привязать регистрационные данные
-      RECOVERY_PASSWORD = 4; // восстановить пароль
-      RECOVERY_GOOGLE_AUTHENTICATOR = 5; // восстановить 2FA
-      CHANGE_PASSWORD = 6; // изменить пароль
-      CHANGE_EMAIL = 7; // изменить пароль
-      ACTIVATE_GOOGLE_AUTHENTICATOR = 8; // активировать 2FA
-      DEACTIVATE_GOOGLE_AUTHENTICATOR = 9; // деактивировать 2FA
+      PASSWORD_RECOVERY = 4; // восстановить пароль
+      PASSWORD_CHANGE = 5; // изменить пароль
+      EMAIL_CHANGE = 6; // изменить пароль
+      GOOGLE_AUTHENTICATOR_ACTIVATE = 7; // активировать 2FA
+      GOOGLE_AUTHENTICATOR_DEACTIVATE = 8; // деактивировать 2FA
     }
     uint32 account_id = 1;
     ID method_id = 2;
@@ -66,10 +65,9 @@ message Confirmation {
       string ip_init = 4;
       mlmbox.type.Agent agent = 5;
     }
-    message RecoveryPassword {
-      string email = 1;
-      string ip_init = 2;
-      mlmbox.type.Agent agent = 3;
+    message PasswordRecovery {
+      string ip_init = 1;
+      mlmbox.type.Agent agent = 2;
     }
     message PasswordSet {
       string password_hash = 1;
@@ -86,7 +84,7 @@ message Confirmation {
       SignIn sign_in = 1;
       SignUp sign_up = 2;
       SignAttach sign_attach = 3;
-      RecoveryPassword recovery_password = 4;
+      PasswordRecovery password_recovery = 4;
       PasswordSet password_set = 5;
       EmailSet email_set = 6;
     }

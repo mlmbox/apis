@@ -14,11 +14,12 @@ message Partner {
     uint32 activated_at = 6;
   }
   enum RelationType {
-    SELF = 0;
-    PARTNER = 1;
-    TEAM = 2;
-    OUTSIDER = 3;
-    REFERRAL = 4;
+    UNKNOWN = 0;
+    SELF = 1;
+    PARTNER = 2;
+    TEAM = 3;
+    OUTSIDER = 4;
+    REFERRAL = 5;
   }
   uint32 account_id = 1;
   string account_login = 2;

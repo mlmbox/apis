@@ -10,7 +10,7 @@ service Auth {
   rpc SignIn (SignInRequest) returns (AuthResponse) {} // authorization
   rpc SignUp (SignUpRequest) returns (AuthResponse) {} // registration
   rpc SignAttach (SignAttachRequest) returns (AuthResponse) {} // attach registration data
-  rpc RecoveryPassword (RecoveryPasswordRequest) returns (AuthResponse) {} // recovery password
+  rpc PasswordRecovery (PasswordRecoveryRequest) returns (AuthResponse) {} // recovery password
   rpc TokenValidate (TokenValidateRequest) returns (TokenValidateResponse) {} // token validity check
 }
 
@@ -30,7 +30,7 @@ message SignAttachRequest {
   string password = 2; // account password
   string locale = 3; // language identifier (en-US, ...)
 }
-message RecoveryPasswordRequest {
+message PasswordRecoveryRequest {
   string email = 1; // account email
 }
 message AuthResponse {
@@ -53,4 +53,5 @@ message TokenValidateResponse {
     CONFIRMATION_GUEST = 2;
   }
   Kind kind = 1;
+  bool validated = 2;
 }

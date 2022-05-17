@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package mlmbox.local.binary;
+import "mlmbox/type/binary.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/binary;service_local_binary_pb";
+
+service Binary {
+  rpc Info (PositionRequest) returns (InfoResponse) {}
+  rpc SettingsSideSet (SettingsSideSetRequest) returns (mlmbox.type.Binary.Position.Settings) {}
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    ACCOUNT_UNKNOWN = 1;
+    ACCOUNT_NOT_FOUND = 2;
+    VIEW_POSITION_NOT_FOUND = 3;
+    VIEW_POSITION_NOT_ACCESS = 4;
+    POSITION_USER_SIDE_UNKNOWN = 5;
+    POSITION_USER_SIDE_NOT_FOUND = 6;
+  }
+  ID error_id = 1;
+}
+message PositionRequest {
+  uint32 account_id = 1;
+  uint32 view_position_id = 2;
+}
+message SettingsSideSetRequest {
+  uint32 account_id = 1;
+  uint32 user_side = 2;
+}
+message InfoResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Binary binary = 2;
+}
+message SettingsSideSetResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Binary.Position.Settings settings = 2;
+}
