@@ -21,8 +21,12 @@ service Network {
 message Error {
   enum ID {
     OK = 0;
-    LOCALE_UNKNOWN = 2;
-    LOCALE_NOT_FOUND = 3;
+    ACCOUNT_UNKNOWN = 1;
+    ACCOUNT_NOT_FOUND = 2;
+    VIEW_PARTNER_UNKNOWN = 3;
+    VIEW_PARTNER_NOT_FOUND = 4;
+    VIEW_PARTNER_NOT_ACCESS = 5;
+    BOOKING_CREATE_REACHED_LIMIT = 6;
   }
   ID error_id = 1;
 }
