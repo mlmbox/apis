@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package mlmbox.local.network;
+
+import "mlmbox/local/type/account.proto";
+import "mlmbox/type/partner.proto";
+import "mlmbox/type/limit.proto";
+import "mlmbox/type/sort.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/network;service_local_network_pb";
+
+service Network {
+  rpc PartnerGet (PartnerRequest) returns (PartnerResponse) {}
+  rpc TeamInfo (TeamRequest) returns (TeamResponse) {}
+  rpc TeamSearch (TeamSearchRequest) returns (PartnersResponse) {}
+  rpc TeamPartnerList (TeamPartnerListRequest) returns (PartnersResponse) {}
+  rpc BookingInfo (mlmbox.local.type.Account.ID) returns (BookingInfoResponse) {}
+  rpc BookingCreate (BookingCreateRequest) returns (BookingCreateResponse) {}
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    LOCALE_UNKNOWN = 2;
+    LOCALE_NOT_FOUND = 3;
+  }
+  ID error_id = 1;
+}
+message PartnerRequest {
+  uint32 account_id = 1;
+  uint32 view_partner_id = 2;
+}
+message PartnerResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Partner partner = 2;
+}
+message TeamRequest {
+  uint32 account_id = 1;
+  uint32 view_partner_id = 2;
+  mlmbox.type.Sort partners_sort = 3;
+}
+message TeamResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Partner partner = 2;
+  mlmbox.type.Partner referral = 3;
+  repeated mlmbox.type.Partner partners = 4;
+}
+message TeamSearchRequest {
+  uint32 account_id = 1;
+  string login_prefix = 2;
+  mlmbox.type.Limit limit = 3;
+}
+message PartnersResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.type.Partner partners = 2;
+}
+message TeamPartnerListRequest {
+  uint32 account_id = 1;
+  uint32 view_partner_id = 2;
+  uint32 step_partner_id = 3;
+  mlmbox.type.Sort partners_sort = 4;
+}
+message BookingInfoResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.type.Partner.Booking partners = 2;
+}
+message BookingCreateRequest {
+  uint32 account_id = 1;
+  string login = 2;
+}
+message BookingCreateResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Partner.Booking partner = 2;
+}
