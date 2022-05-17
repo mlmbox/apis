@@ -12,6 +12,7 @@ import "mlmbox/type/product.proto";
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/account;service_local_account_pb";
 
 service Account {
+  rpc LoginToID(mlmbox.local.type.Account.Login) returns (AccountLoginToIDResponse) {}
   rpc SignStateGetByID(mlmbox.local.type.Account.ID) returns (AccountSignStateResponse) {}
   rpc SignStateGetByLogin(mlmbox.local.type.Account.Login) returns (AccountSignStateResponse) {}
   rpc SignStateGetByEmail(mlmbox.local.type.Account.Email) returns (AccountSignStateResponse) {}
@@ -34,6 +35,10 @@ message Error {
     LOCALE_NOT_FOUND = 4;
   }
   ID error_id = 1;
+}
+message AccountLoginToIDResponse {
+  Error.ID error_id = 1;
+  uint32 account_id = 2;
 }
 message AccountSignStateResponse {
   Error.ID error_id = 1;
