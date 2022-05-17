@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package mlmbox.local.roulette;
+
+import "mlmbox/local/type/account.proto";
+import "mlmbox/type/roulette_ticket.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/roulette;service_local_roulette_pb";
+
+service RouletteTicket {
+  rpc Get (TicketRequest) returns (TicketResponse) {}
+  rpc All (mlmbox.local.type.Account.ID) returns (TicketAllResponse) {}
+  rpc Generate (TicketRequest) returns (TicketResponse) {}
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    ACCOUNT_UNKNOWN = 1;
+    ACCOUNT_NOT_FOUND = 2;
+    TICKET_UNKNOWN = 3;
+    TICKET_CLOSED = 4;
+    TICKET_NOT_FOUND = 5;
+  }
+  ID error_id = 1;
+}
+message TicketRequest {
+  uint32 account_id = 1;
+  uint32 ticket_id = 2;
+}
+message TicketResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.RouletteTicket roulette_ticket = 2;
+}
+message TicketAllResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.type.RouletteTicket roulette_tickets = 2;
+}
