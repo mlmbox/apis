@@ -24,10 +24,9 @@ message Confirmation {
     enum Kind {
       UNKNOWN = 0;
       PASSWORD = 1; // пароль
-      PASSWORD_NEW = 2; // новый пароль (используется при смене пароля)
-      GOOGLE_AUTHENTICATOR_CODE = 3; // 2FA код
-      EMAIL_CONFIRM_CODE = 4; // подтвердить код отправленный на указанный контакт
-      EMAIL_FILL = 5; // заполнить значение контакта (например: sm***el@gmail.com - требуется заполнить поле без маски с звездочками)
+      GOOGLE_AUTHENTICATOR_CODE = 2; // 2FA код
+      EMAIL_CONFIRM_CODE = 3; // подтвердить код отправленный на указанный контакт
+      EMAIL_FILL = 4; // заполнить значение контакта (например: sm***el@gmail.com - требуется заполнить поле без маски с звездочками)
     }
     message Status {
       enum ID {

@@ -19,6 +19,7 @@ service Account {
   rpc ExistByLogin(AccountExistByLoginRequest) returns (AccountExistAccountResponse) {}
   rpc ExistByEmail(AccountExistByEmailRequest) returns (AccountExistAccountResponse) {}
   rpc Info(mlmbox.local.type.Account.ID) returns (AccountInfoResponse) {}
+  rpc ShortInfo(mlmbox.local.type.Account.ID) returns (AccountShortInfoResponse) {}
   rpc ProfileSet(AccountProfileSetRequest) returns (Error) {}
   rpc LocaleSet(AccountLocaleSetRequest) returns (Error) {}
   rpc CareerInfo(mlmbox.local.type.Account.ID) returns (AccountCareerInfoResponse) {}
@@ -59,6 +60,18 @@ message AccountExistAccountResponse {
 message AccountInfoResponse {
   Error.ID error_id = 1;
   mlmbox.type.Account account = 2;
+}
+message AccountShortInfoResponse {
+  Error.ID error_id = 1;
+  uint32 account_id = 2;
+  string account_login = 3;
+  string referral_login = 4;
+  mlmbox.type.Profile profile = 5;
+  uint32 password_modified_at = 6;
+  string email = 7; // account email
+  string locale = 8; // language identifier (en-US, ...)
+  bool baned = 9;
+  bool activated = 10;
 }
 message AccountProfileSetRequest {
   uint32 account_id = 1;

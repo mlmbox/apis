@@ -32,6 +32,7 @@ message SignAttachRequest {
 }
 message PasswordRecoveryRequest {
   string email = 1; // account email
+  string password_new = 2;
 }
 message AuthResponse {
   enum Status {
