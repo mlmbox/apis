@@ -11,7 +11,9 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/confirmation;ser
 
 service Confirmation {
   rpc GetByID (mlmbox.local.type.Confirmation.ID) returns (Response) {}
+  rpc IncGetByID (mlmbox.local.type.Confirmation.ID) returns (Response) {}
   rpc GetByMethod (mlmbox.local.type.Confirmation.Method) returns (Response) {}
+  rpc IncGetByMethod (mlmbox.local.type.Confirmation.Method) returns (Response) {}
   rpc AllByAccountID (mlmbox.local.type.Account.ID) returns (AllByAccountIDResponse) {}
   rpc SetNextPasswordByEmail (SetNextPasswordRequest) returns (SetNextPasswordResponse) {}
   rpc StatusSet (StatusSetRequest) returns (Error) {}

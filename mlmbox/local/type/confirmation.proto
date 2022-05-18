@@ -66,8 +66,9 @@ message Confirmation {
       mlmbox.type.Agent agent = 5;
     }
     message PasswordRecovery {
-      string ip_init = 1;
-      mlmbox.type.Agent agent = 2;
+      string password_hash = 1;
+      string ip_init = 2;
+      mlmbox.type.Agent agent = 3;
     }
     message PasswordSet {
       string password_hash = 1;

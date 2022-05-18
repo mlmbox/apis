@@ -71,13 +71,19 @@ message Confirmation {
 
 message ConfirmationConfirmResponse {
   enum Status {
-    WRONG = 0;
-    APPROVED = 1;
-    REJECT = 2;
-    CANCELED = 3;
-    EXPIRED = 4;
+    REJECT = 0; // форма отклонена
+    APPROVED = 1; // форма успешно подтверждена
+    CONFIRMATION_NOT_FOUND = 3; // форма подтверждения не найдена
+    CONFIRMATION_NOT_ACTIVATED = 4; // форма подтверждения не активна
   }
+  message Data {
+    oneof unique_field {
+      string access_token = 1;
+      google.protobuf.Any any = 2;
+    }
+  }
+
   Status status = 1;
-  map<uint32, mlmbox.type.Confirmation.Field.Status> field_statuses = 2; // map key is "field_id"
-  google.protobuf.Any description = 3;
+  map<uint32, mlmbox.type.Confirmation.Field.Status> field_statuses = 3; // map key is "field_id"
+  Data data = 4;
 }

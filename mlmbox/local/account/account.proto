@@ -22,6 +22,10 @@ service Account {
   rpc ShortInfo(mlmbox.local.type.Account.ID) returns (AccountShortInfoResponse) {}
   rpc ProfileSet(AccountProfileSetRequest) returns (Error) {}
   rpc LocaleSet(AccountLocaleSetRequest) returns (Error) {}
+  rpc PasswordSet (AccountPasswordSetRequest) returns (Error) {}
+  rpc SignAttach (AccountSignAttachRequest) returns (Error) {}
+  rpc SignUp (AccountSignUpRequest) returns (Error) {}
+
   rpc CareerInfo(mlmbox.local.type.Account.ID) returns (AccountCareerInfoResponse) {}
   rpc PortfolioInfo(mlmbox.local.type.Account.ID) returns (AccountPortfolioInfoResponse) {}
   rpc BonusesInfo(mlmbox.local.type.Account.ID) returns (AccountBonusesInfoResponse) {}
@@ -34,6 +38,9 @@ message Error {
     ACCOUNT_NOT_FOUND = 2;
     LOCALE_UNKNOWN = 3;
     LOCALE_NOT_FOUND = 4;
+    REFERRAL_NOT_FOUND = 5;
+    LOGIN_BUSY = 6;
+    EMAIL_BUSY = 7;
   }
   ID error_id = 1;
 }
@@ -80,6 +87,23 @@ message AccountProfileSetRequest {
 message AccountLocaleSetRequest {
   uint32 account_id = 1;
   string locale = 2;
+}
+message AccountPasswordSetRequest {
+  uint32 account_id = 1;
+  string password_hash = 2;
+}
+message AccountSignAttachRequest {
+  uint32 account_id = 1;
+  string email = 2;
+  string password_hash = 3;
+  string locale = 4;
+}
+message AccountSignUpRequest {
+  uint32 referral_id = 1;
+  string login = 2;
+  string email = 3;
+  string password_hash = 4;
+  string locale = 5;
 }
 message AccountLocaleSetResponse {
   uint32 account_id = 1;
