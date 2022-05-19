@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+package mlmbox.local.finance;
+
+import "mlmbox/local/type/account.proto";
+import "mlmbox/type/sort.proto";
+import "mlmbox/type/wallet.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/finance;service_local_finance_pb";
+
+service Wallet {
+  rpc Info (mlmbox.local.type.Account.ID) returns (InfoResponse) {}
+  rpc AssetGet (WalletAssetGetRequest) returns (AssetGetResponse) {}
+  rpc AssetsAll (mlmbox.local.type.Account.ID) returns (AssetsAllResponse) {}
+  rpc AssetTransactionGet (AssetTransactionGetRequest) returns (AssetTransactionGetResponse) {}
+  rpc AssetTransactionList (WalletAssetTransactionListRequest) returns (AssetTransactionListResponse) {}
+  rpc ProcessingsGet (ProcessingsGetRequest) returns (ProcessingsGetResponse) {}
+  rpc ProcessingsAll (mlmbox.local.type.Account.ID) returns (ProcessingsAllResponse) {}
+  rpc DepositAddress (WalletDepositAddressRequest) returns (WalletDepositAddressResponse) {}
+  rpc ValidateAddress (WalletValidateAddressRequest) returns (WalletValidateAddressResponse) {}
+  rpc WithdrawalCreate (WalletWithdrawalCreateRequest) returns (AssetTransactionGetResponse) {}
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    ACCOUNT_UNKNOWN = 1;
+    ACCOUNT_NOT_FOUND = 2;
+    ASSET_UNKNOWN = 3;
+    ASSET_NOT_FOUND = 4;
+    TRANSACTION_UNKNOWN = 5;
+    TRANSACTION_NOT_FOUND = 6;
+    PROCESSING_UNKNOWN = 7;
+    PROCESSING_NOT_FOUND = 8;
+    PROCESSING_ADDRESS_UNKNOWN = 9;
+    PROCESSING_ADDRESS_WRONG = 10;
+    AMOUNT_VALUE_UNKNOWN = 11;
+    AMOUNT_VALUE_WRONG = 12;
+  }
+  ID error_id = 1;
+}
+message InfoResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Wallet wallet = 2;
+}
+message WalletAssetGetRequest {
+  uint32 account_id = 1;
+  uint32 asset_id = 2;
+  mlmbox.type.Sort sort_transactions = 3;
+}
+message AssetGetResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Wallet.Asset asset = 2;
+}
+message AssetsAllResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.type.Wallet.Asset assets = 2;
+}
+message AssetTransactionGetRequest {
+  uint32 account_id = 1;
+  uint32 asset_id = 2;
+  uint32 transaction_id = 3;
+}
+message AssetTransactionGetResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Wallet.Asset.Transaction transaction = 2;
+}
+message WalletAssetTransactionListRequest {
+  uint32 account_id = 1;
+  uint32 asset_id = 2;
+  uint32 step_transaction_id = 3;
+  mlmbox.type.Sort sort_transactions = 4;
+}
+message AssetTransactionListResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.type.Wallet.Asset.Transaction transactions = 2;
+}
+message ProcessingsGetRequest {
+  uint32 account_id = 1;
+  uint32 processing_id = 2;
+}
+message ProcessingsGetResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Wallet.Processing processing = 2;
+}
+message ProcessingsAllResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.type.Wallet.Processing processings = 2;
+}
+message WalletDepositAddressRequest {
+  uint32 account_id = 1;
+  uint32 processing_id = 2;
+  uint32 asset_id = 3;
+}
+message WalletDepositAddressResponse {
+  Error.ID error_id = 1;
+  string address = 2;
+}
+message WalletValidateAddressRequest {
+  uint32 account_id = 1;
+  uint32 processing_id = 2;
+  string address = 3;
+}
+message WalletValidateAddressResponse {
+  Error.ID error_id = 1;
+  string address = 2;
+  bool validated = 3;
+}
+message WalletWithdrawalCreateRequest {
+  uint32 account_id = 1;
+  uint32 processing_id = 2;
+  uint32 asset_id = 3;
+  string amount = 4;
+  string address = 5;
+}

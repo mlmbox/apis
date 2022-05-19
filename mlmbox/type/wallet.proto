@@ -14,7 +14,8 @@ message Wallet {
   message Asset {
     message Transaction {
       message ID {
-        uint32 transaction_id = 1;
+        uint32 asset_id = 1;
+        uint32 transaction_id = 2;
       }
       message Kind {
         enum ID {
