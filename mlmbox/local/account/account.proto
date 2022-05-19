@@ -23,9 +23,9 @@ service Account {
   rpc ProfileSet(AccountProfileSetRequest) returns (Error) {}
   rpc LocaleSet(AccountLocaleSetRequest) returns (Error) {}
   rpc PasswordSet (AccountPasswordSetRequest) returns (Error) {}
+  rpc EmailSet (AccountEmailSetRequest) returns (Error) {}
   rpc SignAttach (AccountSignAttachRequest) returns (Error) {}
   rpc SignUp (AccountSignUpRequest) returns (Error) {}
-
   rpc CareerInfo(mlmbox.local.type.Account.ID) returns (AccountCareerInfoResponse) {}
   rpc PortfolioInfo(mlmbox.local.type.Account.ID) returns (AccountPortfolioInfoResponse) {}
   rpc BonusesInfo(mlmbox.local.type.Account.ID) returns (AccountBonusesInfoResponse) {}
@@ -91,6 +91,10 @@ message AccountLocaleSetRequest {
 message AccountPasswordSetRequest {
   uint32 account_id = 1;
   string password_hash = 2;
+}
+message AccountEmailSetRequest {
+  uint32 account_id = 1;
+  string email = 2;
 }
 message AccountSignAttachRequest {
   uint32 account_id = 1;

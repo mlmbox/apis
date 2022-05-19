@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package mlmbox.local.plan;
+
+import "mlmbox/local/type/account.proto";
+import "mlmbox/type/plan.proto";
+import "mlmbox/type/product.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/plan;service_local_plan_pb";
+
+service Plan {
+  rpc FarmingPackageGet (PackageRequest) returns (FarmingPackageGetResponse) {}
+  rpc FarmingPackageBuy (PlanFarmingPackageBuyRequest) returns (Error) {}
+  rpc FarmingPackagesAll (mlmbox.local.type.Account.ID) returns (FarmingPackagesAllResponse) {}
+
+  rpc SubscribePackageGet (PackageRequest) returns (SubscribePackageGetResponse) {}
+  rpc SubscribePackageBuy (PlanSubscribePackageBuyRequest) returns (Error) {}
+  rpc SubscribePackagesAll (mlmbox.local.type.Account.ID) returns (SubscribePackagesAllResponse) {}
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    ACCOUNT_UNKNOWN = 1;
+    ACCOUNT_NOT_FOUND = 2;
+    ASSET_UNKNOWN = 3;
+    ASSET_NOT_FOUND = 4;
+    PACKAGE_UNKNOWN = 5;
+    PACKAGE_NOT_FOUND = 6;
+    PRICE_VALUE_WRONG = 7;
+    BALANCE_NOT_ENOUGH = 8;
+  }
+  ID error_id = 1;
+}
+message PlanFarmingPackage {
+  mlmbox.type.PlanFarming.Package package = 1;
+  repeated mlmbox.type.Product.Object objects = 2;
+}
+message PackageRequest {
+  uint32 account_id = 1;
+  uint32 package_id = 2;
+}
+message FarmingPackageGetResponse {
+  Error.ID error_id = 1;
+  PlanFarmingPackage package = 2;
+}
+message PlanFarmingPackageBuyRequest {
+  uint32 account_id = 1;
+  uint32 package_id = 2;
+  uint32 asset_id = 3;
+  string price_value = 4;
+}
+message FarmingPackagesAllResponse {
+  Error.ID error_id = 1;
+  repeated PlanFarmingPackage packages = 2;
+}
+
+message PlanSubscribePackage {
+  mlmbox.type.PlanSubscribe.Package package = 1;
+  repeated mlmbox.type.Product.Object objects = 2;
+}
+message SubscribePackageGetResponse {
+  Error.ID error_id = 1;
+  PlanSubscribePackage package = 2;
+}
+message PlanSubscribePackageBuyRequest {
+  uint32 account_id = 1;
+  uint32 package_id = 2;
+  uint32 asset_id = 3;
+  string price_value = 4;
+  bool auto_activate = 5;
+}
+message SubscribePackagesAllResponse {
+  Error.ID error_id = 1;
+  repeated PlanSubscribePackage packages = 2;
+}
