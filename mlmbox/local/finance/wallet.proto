@@ -10,15 +10,14 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/finance;service_
 
 service Wallet {
   rpc Info (mlmbox.local.type.Account.ID) returns (InfoResponse) {}
-  rpc AssetGet (WalletAssetGetRequest) returns (AssetGetResponse) {}
+  rpc AssetGet (AssetGetRequest) returns (AssetGetResponse) {}
+  rpc AssetBalanceGet (AssetBalanceGetRequest) returns (AssetBalanceGetResponse) {}
   rpc AssetsAll (mlmbox.local.type.Account.ID) returns (AssetsAllResponse) {}
   rpc AssetTransactionGet (AssetTransactionGetRequest) returns (AssetTransactionGetResponse) {}
-  rpc AssetTransactionList (WalletAssetTransactionListRequest) returns (AssetTransactionListResponse) {}
+  rpc AssetTransactionList (AssetTransactionListRequest) returns (AssetTransactionListResponse) {}
   rpc ProcessingsGet (ProcessingsGetRequest) returns (ProcessingsGetResponse) {}
   rpc ProcessingsAll (mlmbox.local.type.Account.ID) returns (ProcessingsAllResponse) {}
-  rpc DepositAddress (WalletDepositAddressRequest) returns (WalletDepositAddressResponse) {}
-  rpc ValidateAddress (WalletValidateAddressRequest) returns (WalletValidateAddressResponse) {}
-  rpc WithdrawalCreate (WalletWithdrawalCreateRequest) returns (AssetTransactionGetResponse) {}
+  rpc WithdrawalCreate (WithdrawalCreateRequest) returns (AssetTransactionGetResponse) {}
 }
 
 message Error {
@@ -43,7 +42,7 @@ message InfoResponse {
   Error.ID error_id = 1;
   mlmbox.type.Wallet wallet = 2;
 }
-message WalletAssetGetRequest {
+message AssetGetRequest {
   uint32 account_id = 1;
   uint32 asset_id = 2;
   mlmbox.type.Sort sort_transactions = 3;
@@ -51,6 +50,14 @@ message WalletAssetGetRequest {
 message AssetGetResponse {
   Error.ID error_id = 1;
   mlmbox.type.Wallet.Asset asset = 2;
+}
+message AssetBalanceGetRequest {
+  uint32 account_id = 1;
+  uint32 asset_id = 2;
+}
+message AssetBalanceGetResponse {
+  Error.ID error_id = 1;
+  string asset_balance = 2;
 }
 message AssetsAllResponse {
   Error.ID error_id = 1;
@@ -65,7 +72,7 @@ message AssetTransactionGetResponse {
   Error.ID error_id = 1;
   mlmbox.type.Wallet.Asset.Transaction transaction = 2;
 }
-message WalletAssetTransactionListRequest {
+message AssetTransactionListRequest {
   uint32 account_id = 1;
   uint32 asset_id = 2;
   uint32 step_transaction_id = 3;
@@ -87,29 +94,10 @@ message ProcessingsAllResponse {
   Error.ID error_id = 1;
   repeated mlmbox.type.Wallet.Processing processings = 2;
 }
-message WalletDepositAddressRequest {
+message WithdrawalCreateRequest {
   uint32 account_id = 1;
   uint32 processing_id = 2;
   uint32 asset_id = 3;
-}
-message WalletDepositAddressResponse {
-  Error.ID error_id = 1;
-  string address = 2;
-}
-message WalletValidateAddressRequest {
-  uint32 account_id = 1;
-  uint32 processing_id = 2;
-  string address = 3;
-}
-message WalletValidateAddressResponse {
-  Error.ID error_id = 1;
-  string address = 2;
-  bool validated = 3;
-}
-message WalletWithdrawalCreateRequest {
-  uint32 account_id = 1;
-  uint32 processing_id = 2;
-  uint32 asset_id = 3;
-  string amount = 4;
-  string address = 5;
+  string operation_amount = 4;
+  string address = 6;
 }

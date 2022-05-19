@@ -2,11 +2,7 @@ syntax = "proto3";
 
 package mlmbox.type;
 
-//import "mlmbox/type/account.proto";
-//import "mlmbox/type/asset.proto";
-//import "mlmbox/type/bonus.proto";
-//import "mlmbox/type/plan.proto";
-//import "google/protobuf/any.proto";
+import "mlmbox/type/asset.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/wallet;wallet_pb";
 
@@ -14,7 +10,7 @@ message Wallet {
   message Asset {
     message Transaction {
       message ID {
-        uint32 asset_id = 1;
+        mlmbox.type.Asset.ID asset = 1;
         uint32 transaction_id = 2;
       }
       message Kind {
@@ -82,9 +78,7 @@ message Wallet {
 
     uint32 asset_id = 1;
     string asset_balance = 2;
-    bool settings_deposit_enabled = 3;
-    bool settings_withdrawal_enabled = 4;
-    repeated Transaction transactions = 5;
+    repeated Transaction transactions = 3;
   }
 
   message Processing {
@@ -96,10 +90,12 @@ message Wallet {
       bool settings_deposit_enabled = 2;
       bool settings_withdrawal_enabled = 3;
       string settings_withdrawal_fee_base = 4;
-      double settings_withdrawal_fee_percent = 5;
+      float settings_withdrawal_fee_percent = 5;
+      string settings_withdrawal_operation_value_min = 6;
+      string settings_withdrawal_operation_value_max = 7;
     }
     uint32 processing_id = 1;
-    string processing_title = 2;
+    string processing_name = 2;
     repeated Asset assets = 3;
   }
 

@@ -18,7 +18,7 @@ service Wallet {
   rpc AssetTransactionList (WalletAssetTransactionListRequest) returns (stream mlmbox.type.Wallet.Asset.Transaction) {}
   rpc ProcessingsGet (mlmbox.type.Wallet.Processing.ID) returns (mlmbox.type.Wallet.Processing) {}
   rpc ProcessingsAll (google.protobuf.Empty) returns (stream mlmbox.type.Wallet.Processing) {}
-  rpc DepositAddress (WalletDepositAddressRequest) returns (WalletDepositAddressResponse) {}
+  rpc DepositAddress (mlmbox.type.Wallet.Processing.ID) returns (WalletDepositAddressResponse) {}
   rpc ValidateAddress (WalletValidateAddressRequest) returns (WalletValidateAddressResponse) {}
   rpc WithdrawalCreate (WalletWithdrawalCreateRequest) returns (mlmbox.type.Confirmation) {}
 }
@@ -31,10 +31,6 @@ message WalletAssetTransactionListRequest {
   mlmbox.type.Asset.ID asset = 1;
   uint32 step_transaction_id = 2;
   mlmbox.type.Sort sort_transactions = 3;
-}
-message WalletDepositAddressRequest {
-  uint32 processing_id = 1;
-  mlmbox.type.Asset.ID asset = 2;
 }
 message WalletDepositAddressResponse {
   string address = 1;
@@ -50,6 +46,6 @@ message WalletValidateAddressResponse {
 message WalletWithdrawalCreateRequest {
   uint32 processing_id = 1;
   mlmbox.type.Asset.ID asset = 2;
-  string amount = 3;
+  string operation_amount = 3;
   string address = 4;
 }

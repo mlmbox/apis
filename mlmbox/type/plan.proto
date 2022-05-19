@@ -13,15 +13,15 @@ message PlanFarming {
     }
     uint32 package_id = 1;
     uint32 package_title = 2;
-    double farming_percent = 3;
+    float farming_percent = 3;
     uint32 farming_duration = 4;
     uint32 lockup_duration = 5;
-    double lockup_bonus_percent = 6;
-    double direct_bonus = 7;
-    double binary_bonus = 8;
+    float lockup_bonus_percent = 6;
+    float direct_bonus = 7;
+    float binary_bonus = 8;
     uint32 binary_limit_asset_id = 9;
     string binary_limit_value = 10;
-    map<uint32, double> matching_bonus = 11; // key is 'level'
+    map<uint32, float> matching_bonus = 11; // key is 'level'
     mlmbox.type.PaymentPriceRange payment_price_range = 12;
   }
 }

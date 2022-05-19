@@ -24,6 +24,7 @@ message Confirmation {
       EMAIL_CHANGE = 6; // изменить пароль
       GOOGLE_AUTHENTICATOR_ACTIVATE = 7; // активировать 2FA
       GOOGLE_AUTHENTICATOR_DEACTIVATE = 8; // деактивировать 2FA
+      WITHDRAWAL_CREATE = 9; // заявка на вывод
     }
     uint32 account_id = 1;
     ID method_id = 2;
@@ -80,6 +81,13 @@ message Confirmation {
       string ip_init = 2;
       mlmbox.type.Agent agent = 3;
     }
+    message WithdrawalCreate {
+      uint32 processing_id = 1;
+      uint32 asset_id = 2;
+      string operation_amount = 3;
+      string fee_amount = 4;
+      string address = 5;
+    }
 
     oneof unique_field {
       SignIn sign_in = 1;
@@ -88,6 +96,7 @@ message Confirmation {
       PasswordRecovery password_recovery = 4;
       PasswordSet password_set = 5;
       EmailSet email_set = 6;
+      WithdrawalCreate withdrawal_create = 7;
     }
   }
 

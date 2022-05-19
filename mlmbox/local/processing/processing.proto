@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package mlmbox.local.processing;
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/processing;service_local_processing_pb";
+
+service Processing {
+  rpc DepositAddress (DepositAddressRequest) returns (DepositAddressResponse) {}
+  rpc ValidateAddress (ValidateAddressRequest) returns (ValidateAddressResponse) {}
+}
+
+message DepositAddressRequest {
+  uint32 account_id = 1;
+}
+message DepositAddressResponse {
+  string address = 1;
+}
+message ValidateAddressRequest {
+  string address = 1;
+}
+message ValidateAddressResponse {
+  string address = 1;
+  bool validated = 2;
+}

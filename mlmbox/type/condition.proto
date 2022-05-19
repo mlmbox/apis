@@ -10,7 +10,7 @@ message Condition {
       uint32 rank_id = 1;
     }
     message TeamSubscribeActivatedBranch {
-      double filter_percent = 1;
+      float filter_percent = 1;
       uint32 filter_total_quantity = 2;
     }
   }
