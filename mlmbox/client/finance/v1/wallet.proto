@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package mlmbox.admin.finance.v1;
+package mlmbox.client.finance.v1;
 
 import "mlmbox/type/asset.proto";
 import "mlmbox/type/confirmation.proto";
