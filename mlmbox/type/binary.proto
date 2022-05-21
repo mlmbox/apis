@@ -26,12 +26,12 @@ message Binary {
     uint32 position_width = 4;
     uint32 position_level = 5;
     Settings settings = 6;
-    map<uint32, Line> lines = 7; // key is "position_line"
+    repeated Line lines = 7;
     mlmbox.type.Partner partner = 8;
   }
 
   repeated mlmbox.type.Bonus self_bonuses = 1;
   uint32 self_position_id = 2;
   uint32 view_position_id = 3;
-  map<uint32, Position> positions = 4; // key is "position_id"
+  repeated Position positions = 4;
 }

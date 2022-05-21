@@ -28,16 +28,6 @@ message Confirmation {
       EMAIL_CONFIRM_CODE = 3; // подтвердить код отправленный на указанный контакт
       EMAIL_FILL = 4; // заполнить значение контакта (например: sm***el@gmail.com - требуется заполнить поле без маски с звездочками)
     }
-    message Status {
-      enum ID {
-        OK = 0;
-        EMPTY = 1;
-        WRONG = 2;
-        EXPIRED = 3;
-      }
-      ID id = 1;
-      string comment = 2;
-    }
     message Notification {
       uint32 next_at = 1; // displays the allowed time after which it is possible to send a new code
       uint32 created_at = 2; // displays the creation time of the current code
@@ -47,9 +37,8 @@ message Confirmation {
     }
     uint32 field_id = 1; // идентификатор поля
     Kind kind_id = 2; // тип поля
-    Status status = 3; // статус поля
-    string email = 4; // контакт, используется при EMAIL_CONFIRM_CODE и EMAIL_FILL
-    Notification notification = 5; // используется при EMAIL_CONFIRM_CODE
+    string email = 3; // контакт, используется при EMAIL_CONFIRM_CODE и EMAIL_FILL
+    Notification notification = 4; // используется при EMAIL_CONFIRM_CODE
   }
   message Option {
     uint32 option_id = 1;
@@ -64,7 +53,7 @@ message Confirmation {
   uint32 modified_at = 6;
   uint32 counter_limit = 7;
   uint32 counter_value = 8;
-  map<uint32, Field> fields = 9; // map key is "field_id"
+  repeated Field fields = 9;
   repeated Option options = 10;
   google.protobuf.Any description = 11;
 }
@@ -82,8 +71,19 @@ message ConfirmationConfirmResponse {
       google.protobuf.Any any = 2;
     }
   }
+  message Field {
+    enum Status {
+      OK = 0;
+      EMPTY = 1;
+      WRONG = 2;
+      EXPIRED = 3;
+    }
+    uint32 field_id = 1;
+    Status status = 2;
+    string comment = 3;
+  }
 
   Status status = 1;
-  map<uint32, mlmbox.type.Confirmation.Field.Status> field_statuses = 3; // map key is "field_id"
-  Data data = 4;
+  repeated Field fields = 2;
+  Data data = 3;
 }

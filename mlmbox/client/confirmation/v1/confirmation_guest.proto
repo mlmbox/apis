@@ -18,6 +18,10 @@ message ConfirmationGuestGenerateOneTimePasswordRequest {
   uint32 field_id = 1;
 }
 message ConfirmationGuestConfirmRequest {
+  message Field {
+    uint32 field_id = 1;
+    string value = 2;
+  }
   uint32 option_id = 1;
-  map<uint32, string> field_values = 2; // map key is "field_id"
+  repeated Field fields = 2;
 }

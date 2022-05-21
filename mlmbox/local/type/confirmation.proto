@@ -40,9 +40,8 @@ message Confirmation {
     }
     uint32 field_id = 1; // идентификатор поля
     mlmbox.type.Confirmation.Field.Kind kind_id = 2; // тип поля
-    mlmbox.type.Confirmation.Field.Status.ID status_id = 3; // статус поля
-    string email = 4; // контакт, используется при EMAIL_CONFIRM_CODE и EMAIL_FILL
-    Notification notification = 5; // используется при EMAIL_CONFIRM_CODE
+    string email = 3; // контакт, используется при EMAIL_CONFIRM_CODE и EMAIL_FILL
+    Notification notification = 4; // используется при EMAIL_CONFIRM_CODE
   }
 
   message Data {

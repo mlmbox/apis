@@ -20,6 +20,10 @@ message Bonus {
     string counter_value = 3;
     uint32 start_at = 4;
   }
+  message LevelPercent {
+    uint32 level = 1;
+    float percent = 2;
+  }
   Kind bonus_id = 1;
   string earned_value = 2;
   string burned_value = 3;
