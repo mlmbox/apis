@@ -20,6 +20,6 @@ message Account {
     string login = 4;
     string email = 5;
     string password_hash_confirmed = 6;
-    string password_hash_temporary = 7;
+    string password_temporary = 7;
   }
 }
