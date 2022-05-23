@@ -17,12 +17,12 @@ message PlanFarming {
     }
     uint32 package_id = 1;
     uint32 package_title = 2;
-    float farming_percent = 3;
+    string farming_percent = 3;
     uint32 farming_duration = 4;
     uint32 lockup_duration = 5;
-    float lockup_bonus_percent = 6;
-    float direct_bonus = 7;
-    float binary_bonus = 8;
+    string lockup_bonus_percent = 6;
+    string direct_bonus = 7;
+    string binary_bonus = 8;
     uint32 binary_limit_asset_id = 9;
     string binary_limit_value = 10;
     repeated mlmbox.type.Bonus.LevelPercent matching_bonus = 11;

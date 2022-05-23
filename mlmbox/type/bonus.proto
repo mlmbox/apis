@@ -22,7 +22,7 @@ message Bonus {
   }
   message LevelPercent {
     uint32 level = 1;
-    float percent = 2;
+    string percent = 2;
   }
   Kind bonus_id = 1;
   string earned_value = 2;

@@ -90,7 +90,7 @@ message Wallet {
       bool settings_deposit_enabled = 2;
       bool settings_withdrawal_enabled = 3;
       string settings_withdrawal_fee_base = 4;
-      float settings_withdrawal_fee_percent = 5;
+      string settings_withdrawal_fee_percent = 5;
       string settings_withdrawal_operation_value_min = 6;
       string settings_withdrawal_operation_value_max = 7;
     }
