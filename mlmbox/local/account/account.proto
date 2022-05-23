@@ -5,6 +5,7 @@ import "mlmbox/local/type/account.proto";
 import "mlmbox/type/account.proto";
 import "mlmbox/type/bonus.proto";
 import "mlmbox/type/career.proto";
+import "mlmbox/type/farming.proto";
 import "mlmbox/type/limit.proto";
 import "mlmbox/type/locale.proto";
 import "mlmbox/type/partner.proto";
@@ -39,6 +40,10 @@ service Account {
   rpc NetworkTeamPartnerList (NetworkTeamPartnerListRequest) returns (NetworkPartnersResponse) {}
   rpc NetworkBookingInfo (mlmbox.local.type.Account.ID) returns (NetworkBookingInfoResponse) {}
   rpc NetworkBookingCreate (NetworkBookingCreateRequest) returns (NetworkBookingCreateResponse) {}
+
+  rpc FarmingInfo (mlmbox.local.type.Account.ID) returns (FarmingInfoResponse) {}
+  rpc FarmingContractGet (FarmingContractRequest) returns (FarmingContractGetResponse) {}
+  rpc FarmingContractEventsAll (FarmingContractRequest) returns (FarmingContractEventsAllResponse) {}
 }
 
 message Error {
@@ -57,6 +62,8 @@ message Error {
     VIEW_PARTNER_NOT_FOUND = 11;
     VIEW_PARTNER_NOT_ACCESS = 12;
     BOOKING_CREATE_REACHED_LIMIT = 13;
+    FARMING_CONTRACT_UNKNOWN = 14;
+    FARMING_CONTRACT_NOT_FOUND = 15;
   }
   ID error_id = 1;
 }
@@ -192,4 +199,21 @@ message NetworkBookingCreateRequest {
 message NetworkBookingCreateResponse {
   Error.ID error_id = 1;
   mlmbox.type.Partner.Booking partner = 2;
+}
+
+message FarmingContractRequest {
+  uint32 account_id = 1;
+  uint32 contract_id = 2;
+}
+message FarmingInfoResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Farming farming = 2;
+}
+message FarmingContractGetResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Farming.Contract contract = 2;
+}
+message FarmingContractEventsAllResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.type.Farming.Contract.Event events = 2;
 }
