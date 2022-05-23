@@ -61,11 +61,9 @@ protoc -I $MLMBOX_API_PATH --go_out=. --go_opt=paths=source_relative --go-grpc_o
 protoc -I $MLMBOX_API_PATH --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative mlmbox/local/binary/binary.proto
 protoc -I $MLMBOX_API_PATH --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative mlmbox/local/career/career.proto
 protoc -I $MLMBOX_API_PATH --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative mlmbox/local/confirmation/confirmation.proto
-protoc -I $MLMBOX_API_PATH --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative mlmbox/local/farming/farming.proto
 protoc -I $MLMBOX_API_PATH --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative mlmbox/local/finance/wallet.proto
 protoc -I $MLMBOX_API_PATH --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative mlmbox/local/google_authenticator/google_authenticator.proto
 protoc -I $MLMBOX_API_PATH --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative mlmbox/local/locale/locale.proto
-protoc -I $MLMBOX_API_PATH --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative mlmbox/local/network/network.proto
 protoc -I $MLMBOX_API_PATH --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative mlmbox/local/plan/plan.proto
 protoc -I $MLMBOX_API_PATH --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative mlmbox/local/processing/processing.proto
 protoc -I $MLMBOX_API_PATH --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative mlmbox/local/quest/quest.proto
