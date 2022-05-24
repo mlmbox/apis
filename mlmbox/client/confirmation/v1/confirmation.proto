@@ -9,12 +9,15 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/confirmation/v1
 
 service Confirmation {
   rpc Get (mlmbox.type.Confirmation.ID) returns (mlmbox.type.Confirmation) {} // display the data of the selected confirmation form
-  rpc All (google.protobuf.Empty) returns (stream mlmbox.type.Confirmation) {} // list of confirmation forms
+  rpc All (google.protobuf.Empty) returns (ConfirmationAllResponse) {} // list of confirmation forms
   rpc GenerateOneTimePassword (ConfirmationGenerateOneTimePasswordRequest) returns (mlmbox.type.Confirmation.Field.Notification) {} // generate "One Time Password" for the selected confirmation form field
   rpc Confirm (ConfirmationConfirmRequest) returns (mlmbox.type.ConfirmationConfirmResponse) {} // verify the selected confirmation form
   rpc Cancel (mlmbox.type.Confirmation.ID) returns (google.protobuf.Empty) {} // cancel the selected confirmation form
 }
 
+message ConfirmationAllResponse {
+  repeated mlmbox.type.Confirmation confirmations = 1;
+}
 message ConfirmationGenerateOneTimePasswordRequest {
   mlmbox.type.Confirmation.ID confirmation = 1; // confirmation form ID
   uint32 field_id = 2; // field identifier

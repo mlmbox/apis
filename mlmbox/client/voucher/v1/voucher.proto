@@ -12,12 +12,15 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/voucher/v1;serv
 service Voucher {
   rpc Get (mlmbox.type.Voucher.ID) returns (mlmbox.type.Voucher) {} // display selected owner voucher
   rpc Find (mlmbox.type.Voucher.ID) returns (mlmbox.type.Voucher) {} // display selected voucher available for activation
-  rpc All (google.protobuf.Empty) returns (stream mlmbox.type.Voucher) {} // list of owner's vouchers
+  rpc All (google.protobuf.Empty) returns (VoucherAllResponse) {} // list of owner's vouchers
   rpc Create (VoucherCreateRequest) returns (mlmbox.type.Voucher) {} // create a voucher
   rpc Reject (mlmbox.type.Voucher.ID) returns (mlmbox.type.Confirmation) {} // cancel the generated voucher
   rpc Activate (VoucherActivateRequest) returns (mlmbox.type.Confirmation) {} // activate voucher
 }
 
+message VoucherAllResponse {
+  repeated mlmbox.type.Voucher vouchers = 1;
+}
 message VoucherCreateRequest {
   repeated mlmbox.type.Voucher.Recipient recipients = 1;
   mlmbox.type.Voucher.Activation activation = 2;

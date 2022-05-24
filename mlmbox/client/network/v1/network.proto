@@ -13,9 +13,9 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/network/v1;serv
 service Network {
   rpc PartnerGet (mlmbox.type.Account.ID) returns (mlmbox.type.Partner) {}
   rpc TeamInfo (TeamRequest) returns (TeamResponse) {}
-  rpc TeamSearch (TeamSearchRequest) returns (stream mlmbox.type.Partner) {}
-  rpc TeamPartnerList (TeamPartnerListRequest) returns (stream mlmbox.type.Partner) {}
-  rpc BookingInfo (google.protobuf.Empty) returns (stream mlmbox.type.Partner.Booking) {}
+  rpc TeamSearch (TeamSearchRequest) returns (NetworkPartnersResponse) {}
+  rpc TeamPartnerList (TeamPartnerListRequest) returns (NetworkPartnersResponse) {}
+  rpc BookingInfo (google.protobuf.Empty) returns (NetworkBookingInfoResponse) {}
   rpc BookingCreate (BookingCreateRequest) returns (mlmbox.type.Partner.Booking) {}
 }
 
@@ -32,10 +32,16 @@ message TeamSearchRequest {
   string login_prefix = 1;
   mlmbox.type.Limit limit = 2;
 }
+message NetworkPartnersResponse {
+  repeated mlmbox.type.Partner partners = 1;
+}
 message TeamPartnerListRequest {
   mlmbox.type.Account.ID view_partner = 1;
   uint32 step_partner_id = 2;
   mlmbox.type.Sort partners_sort = 3;
+}
+message NetworkBookingInfoResponse {
+  repeated mlmbox.type.Partner.Booking bookings = 1;
 }
 message BookingCreateRequest {
   string login = 1;

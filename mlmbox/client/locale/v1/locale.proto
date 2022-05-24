@@ -9,5 +9,9 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/locale/v1;servi
 
 service Locale {
   rpc Get (mlmbox.type.Locale.ID) returns (mlmbox.type.Locale) {} // display language of communication
-  rpc List (google.protobuf.Empty) returns (stream mlmbox.type.Locale) {} // list of communication languages
+  rpc List (google.protobuf.Empty) returns (LocaleListResponse) {} // list of communication languages
+}
+
+message LocaleListResponse {
+  repeated mlmbox.type.Locale locales = 1;
 }

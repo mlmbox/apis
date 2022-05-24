@@ -10,5 +10,9 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/farming/v1;serv
 service Farming {
   rpc Info (google.protobuf.Empty) returns (mlmbox.type.Farming) {} // display data about all contracts
   rpc ContractGet (mlmbox.type.Farming.Contract.ID) returns (mlmbox.type.Farming.Contract) {} // display data about the selected contract
-  rpc ContractEventsAll (mlmbox.type.Farming.Contract.ID) returns (stream mlmbox.type.Farming.Contract.Event) {} // display events in the selected contract
+  rpc ContractEventsAll (mlmbox.type.Farming.Contract.ID) returns (FarmingContractEventsAllResponse) {} // display events in the selected contract
+}
+
+message FarmingContractEventsAllResponse {
+  repeated mlmbox.type.Farming.Contract.Event events = 1;
 }

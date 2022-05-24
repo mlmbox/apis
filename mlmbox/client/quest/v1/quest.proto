@@ -9,5 +9,9 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/quest/v1;servic
 
 service Quest {
   rpc Get (mlmbox.type.Quest.ID) returns (mlmbox.type.Quest) {} // display quest info
-  rpc All (google.protobuf.Empty) returns (stream mlmbox.type.Quest) {} // list of user's quests
+  rpc All (google.protobuf.Empty) returns (QuestAllResponse) {} // list of user's quests
+}
+
+message QuestAllResponse {
+  repeated mlmbox.type.Quest quests = 1;
 }

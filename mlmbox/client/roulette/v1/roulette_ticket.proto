@@ -9,6 +9,10 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/roulette_ticket
 
 service RouletteTicket {
   rpc Get (mlmbox.type.RouletteTicket.ID) returns (mlmbox.type.RouletteTicket) {} // display card details
-  rpc All (google.protobuf.Empty) returns (stream mlmbox.type.RouletteTicket) {} // list of all available cards
+  rpc All (google.protobuf.Empty) returns (RouletteTicketAllResponse) {} // list of all available cards
   rpc Generate (mlmbox.type.RouletteTicket.ID) returns (mlmbox.type.RouletteTicket) {} // generate gift for card
+}
+
+message RouletteTicketAllResponse {
+  repeated mlmbox.type.RouletteTicket tickets = 1;
 }

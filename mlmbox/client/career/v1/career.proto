@@ -9,5 +9,9 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/career/v1;servi
 
 service Career {
   rpc RankGet (mlmbox.type.Career.Rank.ID) returns (mlmbox.type.Career.Rank) {} // display ranking system
-  rpc RankAll (google.protobuf.Empty) returns (stream mlmbox.type.Career.Rank) {} // display list of ranking system
+  rpc RankAll (google.protobuf.Empty) returns (CareerRankAllResponse) {} // display list of ranking system
+}
+
+message CareerRankAllResponse {
+  repeated mlmbox.type.Career.Rank ranks = 1;
 }

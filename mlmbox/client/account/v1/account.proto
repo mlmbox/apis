@@ -25,8 +25,8 @@ service Account {
   rpc LocaleSet (mlmbox.type.Locale.ID) returns (google.protobuf.Empty) {} // update the language of communication
 
   rpc CareerInfo (google.protobuf.Empty) returns (mlmbox.type.Career) {} // display ranking system
-  rpc PortfolioInfo (google.protobuf.Empty) returns (stream mlmbox.type.Product.Object) {} // display list of portfolio products
-  rpc BonusesInfo (google.protobuf.Empty) returns (stream mlmbox.type.Bonus) {} // display a list of bonuses
+  rpc PortfolioInfo (google.protobuf.Empty) returns (AccountPortfolioInfoResponse) {} // display list of portfolio products
+  rpc BonusesInfo (google.protobuf.Empty) returns (AccountBonusesInfoResponse) {} // display a list of bonuses
 }
 
 message AccountPasswordSetRequest {
@@ -34,4 +34,10 @@ message AccountPasswordSetRequest {
 }
 message AccountEmailSetRequest {
   string email_new = 1;
+}
+message AccountPortfolioInfoResponse {
+  repeated mlmbox.type.Product.Object objects = 1;
+}
+message AccountBonusesInfoResponse {
+  repeated mlmbox.type.Bonus bonuses = 1;
 }

@@ -11,11 +11,11 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/plan/v1;service
 service Plan {
   rpc FarmingPackageGet (mlmbox.type.PlanFarming.Package.ID) returns (PlanFarmingPackage) {}
   rpc FarmingPackageBuy (PlanFarmingPackageBuyRequest) returns (google.protobuf.Empty) {}
-  rpc FarmingPackagesAll (google.protobuf.Empty) returns (stream PlanFarmingPackage) {}
+  rpc FarmingPackagesAll (google.protobuf.Empty) returns (PlanFarmingPackagesAllResponse) {}
 
   rpc SubscribePackageGet (mlmbox.type.PlanSubscribe.Package.ID) returns (PlanSubscribePackage) {}
   rpc SubscribePackageBuy (PlanSubscribePackageBuyRequest) returns (google.protobuf.Empty) {}
-  rpc SubscribePackagesAll (google.protobuf.Empty) returns (stream PlanSubscribePackage) {}
+  rpc SubscribePackagesAll (google.protobuf.Empty) returns (PlanSubscribePackagesAllResponse) {}
 }
 
 message PlanFarmingPackage {
@@ -27,6 +27,9 @@ message PlanFarmingPackageBuyRequest {
   uint32 asset_id = 2;
   string price_value = 3;
 }
+message PlanFarmingPackagesAllResponse {
+  repeated PlanFarmingPackage packages = 1;
+}
 message PlanSubscribePackage {
   mlmbox.type.PlanSubscribe.Package package = 1;
   repeated mlmbox.type.Product.Object objects = 2;
@@ -36,4 +39,7 @@ message PlanSubscribePackageBuyRequest {
   uint32 asset_id = 2;
   string price_value = 3;
   bool auto_activate = 4;
+}
+message PlanSubscribePackagesAllResponse {
+  repeated PlanSubscribePackage packages = 1;
 }

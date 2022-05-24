@@ -9,5 +9,9 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/asset/v1;servic
 
 service Asset {
   rpc Get (mlmbox.type.Asset.ID) returns (mlmbox.type.Asset) {} // display currency
-  rpc All (google.protobuf.Empty) returns (stream mlmbox.type.Asset) {} // list of currencies
+  rpc All (google.protobuf.Empty) returns (AssetAllResponse) {} // list of currencies
+}
+
+message AssetAllResponse {
+  repeated mlmbox.type.Asset assets = 1;
 }

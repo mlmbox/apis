@@ -9,5 +9,8 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/asset/v1;servic
 
 service AssetPair {
   rpc ExchangerRateGet (mlmbox.type.AssetPair.ID) returns (mlmbox.type.ExchangerRate) {} // display the rate of the selected currency pair
-  rpc ExchangerRateAll (google.protobuf.Empty) returns (stream mlmbox.type.ExchangerRate) {} // list of exchange rates
+  rpc ExchangerRateAll (google.protobuf.Empty) returns (AssetPairExchangerRateAllResponse) {} // list of exchange rates
+}
+message AssetPairExchangerRateAllResponse {
+  repeated mlmbox.type.ExchangerRate exchanger_rates = 1;
 }
