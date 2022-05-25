@@ -11,6 +11,7 @@ service RouletteTicket {
   rpc Get (mlmbox.type.RouletteTicket.ID) returns (mlmbox.type.RouletteTicket) {} // display card details
   rpc All (google.protobuf.Empty) returns (RouletteTicketAllResponse) {} // list of all available cards
   rpc Generate (mlmbox.type.RouletteTicket.ID) returns (mlmbox.type.RouletteTicket) {} // generate gift for card
+  rpc Take (mlmbox.type.RouletteTicket.ID) returns (mlmbox.type.RouletteTicket) {} // take generated gift for card
 }
 
 message RouletteTicketAllResponse {
