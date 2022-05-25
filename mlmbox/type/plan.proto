@@ -12,15 +12,12 @@ message PlanFarming {
     message ID {
       uint32 package_id = 1;
     }
-    message LevelBonus {
-
-    }
     uint32 package_id = 1;
-    uint32 package_title = 2;
+    string package_title = 2;
     string farming_percent = 3;
     uint32 farming_duration = 4;
     uint32 lockup_duration = 5;
-    string lockup_bonus_percent = 6;
+    string lockup_addition_bonus_percent = 6;
     string direct_bonus = 7;
     string binary_bonus = 8;
     uint32 binary_limit_asset_id = 9;
@@ -35,7 +32,7 @@ message PlanSubscribe {
       uint32 package_id = 1;
     }
     uint32 package_id = 1;
-    uint32 package_title = 2;
+    string package_title = 2;
     uint32 duration = 3;
     mlmbox.type.PaymentPrice payment_price = 4;
   }
