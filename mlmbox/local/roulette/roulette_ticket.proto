@@ -11,6 +11,7 @@ service RouletteTicket {
   rpc Get (TicketRequest) returns (TicketResponse) {}
   rpc All (mlmbox.local.type.Account.ID) returns (TicketAllResponse) {}
   rpc Generate (TicketRequest) returns (TicketResponse) {}
+  rpc Take (TicketRequest) returns (TicketResponse) {}
 }
 
 message Error {
@@ -21,6 +22,8 @@ message Error {
     TICKET_UNKNOWN = 3;
     TICKET_CLOSED = 4;
     TICKET_NOT_FOUND = 5;
+    TICKET_GENERATE_UNAVAILABLE = 6;
+    TICKET_TAKE_UNAVAILABLE = 7;
   }
   ID error_id = 1;
 }
