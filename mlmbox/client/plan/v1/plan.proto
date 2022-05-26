@@ -23,9 +23,8 @@ message PlanFarmingPackage {
   repeated mlmbox.type.Product.Object objects = 2;
 }
 message PlanFarmingPackageBuyRequest {
-  uint32 package_id = 1;
-  uint32 asset_id = 2;
-  string price_value = 3;
+  uint32 asset_id = 1;
+  string price_value = 2;
 }
 message PlanFarmingPackagesAllResponse {
   repeated PlanFarmingPackage packages = 1;
