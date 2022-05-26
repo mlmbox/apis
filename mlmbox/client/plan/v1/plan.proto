@@ -36,8 +36,7 @@ message PlanSubscribePackage {
 message PlanSubscribePackageBuyRequest {
   uint32 package_id = 1;
   uint32 asset_id = 2;
-  string price_value = 3;
-  bool auto_activate = 4;
+  bool auto_activate = 3;
 }
 message PlanSubscribePackagesAllResponse {
   repeated PlanSubscribePackage packages = 1;
