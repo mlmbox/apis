@@ -15,16 +15,17 @@ message Wallet {
       }
       message Kind {
         enum ID {
-          EARNED = 0; // заработано
-          SPENT_PLAN_FARMING = 1; // потрачено
-          SPENT_PLAN_SUBSCRIBE = 2; // потрачено
-          SPENT_PLAN_CINEMA = 3; // потрачено
-          DEPOSIT = 4; // пополнение
-          WITHDRAWAL = 5; // вывод
-          DEPOSIT_VOUCHER = 6; // пополнение через ваучер
-          WITHDRAWAL_VOUCHER = 7; // вывод через создание ваучера
-          DEPOSIT_WALLET_TRANSFER = 8; // перевод между кошельками (получение)
-          WITHDRAWAL_WALLET_TRANSFER = 9; // перевод между кошельками (отправка)
+          UNKNOWN = 0;
+          EARNED = 1; // заработано
+          SPENT_PLAN_FARMING = 2; // потрачено
+          SPENT_PLAN_SUBSCRIBE = 3; // потрачено
+          SPENT_PLAN_CINEMA = 4; // потрачено
+          DEPOSIT = 5; // пополнение
+          WITHDRAWAL = 6; // вывод
+          DEPOSIT_VOUCHER = 7; // пополнение через ваучер
+          WITHDRAWAL_VOUCHER = 8; // вывод через создание ваучера
+          DEPOSIT_WALLET_TRANSFER = 9; // перевод между кошельками (получение)
+          WITHDRAWAL_WALLET_TRANSFER = 10; // перевод между кошельками (отправка)
         }
         ID kind_id = 1;
       }

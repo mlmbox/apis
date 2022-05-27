@@ -4,6 +4,7 @@ package mlmbox.type;
 
 import "mlmbox/type/plan.proto";
 import "mlmbox/type/nft.proto";
+import "mlmbox/type/roulette_ticket.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/product;product_pb";
 
@@ -19,6 +20,7 @@ message Product {
         uint32 plan_cinema_ticket_id = 2;
         mlmbox.type.NFT.ID nft = 3;
         Money money = 4;
+        mlmbox.type.RouletteTicket.ID roulette_ticket = 5;
       }
     }
 
@@ -28,6 +30,7 @@ message Product {
         mlmbox.type.PlanCinema.Ticket plan_cinema_ticket = 2;
         mlmbox.type.NFT nft = 3;
         Money money = 4;
+        mlmbox.type.RouletteTicket roulette_ticket = 5;
       }
     }
     message Settings {

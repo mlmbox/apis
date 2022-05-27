@@ -40,16 +40,52 @@ message PlanSubscribe {
     uint32 ticket_id = 1;
     uint32 package_id = 2;
     uint32 duration = 3;
-    uint32 expired_at = 4;
-    bool is_gift = 5;
+    uint32 created_at = 4;
+    uint32 expires_at = 5;
   }
 }
 message PlanCinema {
+  message Package {
+    message ID {
+      uint32 package_id = 1;
+    }
+    uint32 package_id = 1;
+    string package_title = 2;
+    uint32 duration = 3;
+    mlmbox.type.PaymentPrice payment_price = 4;
+  }
   message Ticket {
     uint32 ticket_id = 1;
     uint32 package_id = 2;
     uint32 duration = 3;
-    uint32 expired_at = 4;
-    bool is_gift = 5;
+    uint32 created_at = 4;
+    uint32 expires_at = 5;
+    string password = 6;
   }
+}
+message PlanPackageObject {
+  message Value {
+    message PlanSubscribeTicket {
+      uint32 package_id = 1;
+      bool auto_activate = 2;
+    }
+    message PlanCinemaTicket {
+      uint32 package_id = 1;
+    }
+    message RouletteTicketCard {
+      uint32 counter_limit = 1; // displays the limit of available
+    }
+    message Money {
+      uint32 asset_id = 1;
+      string value = 2;
+    }
+    oneof unique_field {
+      PlanCinemaTicket plan_cinema_ticket = 1;
+      PlanSubscribeTicket plan_subscribe_ticket = 2;
+      RouletteTicketCard roulette_card = 3;
+      Money money = 4;
+    }
+  }
+  Value value = 1;
+  uint32 quantity = 2;
 }

@@ -3,7 +3,6 @@ syntax = "proto3";
 package mlmbox.client.plan.v1;
 
 import "mlmbox/type/plan.proto";
-import "mlmbox/type/product.proto";
 import "google/protobuf/empty.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/plan/v1;service_client_plan_pb";
@@ -16,11 +15,15 @@ service Plan {
   rpc SubscribePackageGet (mlmbox.type.PlanSubscribe.Package.ID) returns (PlanSubscribePackage) {}
   rpc SubscribePackageBuy (PlanSubscribePackageBuyRequest) returns (google.protobuf.Empty) {}
   rpc SubscribePackagesAll (google.protobuf.Empty) returns (PlanSubscribePackagesAllResponse) {}
+  rpc SubscribeTicketActivate (mlmbox.type.PlanSubscribe.Package.ID) returns (google.protobuf.Empty) {}
+
+  rpc CinemaPackageGet (mlmbox.type.PlanCinema.Package.ID) returns (PlanCinemaPackage) {}
+  rpc CinemaPackagesAll (google.protobuf.Empty) returns (PlanCinemaPackagesAllResponse) {}
 }
 
 message PlanFarmingPackage {
   mlmbox.type.PlanFarming.Package package = 1;
-  repeated mlmbox.type.Product.Object objects = 2;
+  repeated mlmbox.type.PlanPackageObject objects = 2;
 }
 message PlanFarmingPackageBuyRequest {
   uint32 asset_id = 1;
@@ -31,7 +34,7 @@ message PlanFarmingPackagesAllResponse {
 }
 message PlanSubscribePackage {
   mlmbox.type.PlanSubscribe.Package package = 1;
-  repeated mlmbox.type.Product.Object objects = 2;
+  repeated mlmbox.type.PlanPackageObject objects = 2;
 }
 message PlanSubscribePackageBuyRequest {
   uint32 package_id = 1;
@@ -40,4 +43,11 @@ message PlanSubscribePackageBuyRequest {
 }
 message PlanSubscribePackagesAllResponse {
   repeated PlanSubscribePackage packages = 1;
+}
+message PlanCinemaPackage {
+  mlmbox.type.PlanCinema.Package package = 1;
+  repeated mlmbox.type.PlanPackageObject objects = 2;
+}
+message PlanCinemaPackagesAllResponse {
+  repeated PlanCinemaPackage packages = 1;
 }
