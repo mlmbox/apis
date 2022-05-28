@@ -60,3 +60,8 @@ protoc -I=$MLMBOX_API_PATH --js_out=import_style=commonjs,binary:. --grpc-web_ou
 protoc -I=$MLMBOX_API_PATH --js_out=import_style=commonjs,binary:. --grpc-web_out=import_style=typescript,mode=grpcwebtext:. google/protobuf/type.proto
 protoc -I=$MLMBOX_API_PATH --js_out=import_style=commonjs,binary:. --grpc-web_out=import_style=typescript,mode=grpcwebtext:. google/protobuf/wrappers.proto
 ```
+
+```bash
+npm install -g grpc-tools
+grpc_tools_node_protoc -I $MLMBOX_API_PATH --js_out=import_style=commonjs,binary:. --grpc_out=grpc_js:. mlmbox/bot/cinema/v1/ticket.proto
+```
