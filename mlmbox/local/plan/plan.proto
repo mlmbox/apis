@@ -19,6 +19,8 @@ service Plan {
 
   rpc CinemaPackageGet (PackageRequest) returns (CinemaPackageGetResponse) {}
   rpc CinemaPackagesAll (mlmbox.local.type.Account.ID) returns (CinemaPackagesAllResponse) {}
+  rpc CinemaTicketGet (CinemaTicketRequest) returns (CinemaTicketResponse) {}
+  rpc CinemaTicketActivateByPassword (CinemaTicketActivateByPasswordRequest) returns (CinemaTicketResponse) {}
 }
 
 message Error {
@@ -88,4 +90,34 @@ message CinemaPackageGetResponse {
 message CinemaPackagesAllResponse {
   Error.ID error_id = 1;
   repeated PlanCinemaPackage packages = 2;
+}
+
+message CinemaTicketRequest {
+  uint32 ticket_id = 1;
+}
+message CinemaTicketActivateByPasswordRequest {
+  uint32 ticket_id = 1;
+  string password = 2;
+}
+message CinemaTicketResponse {
+  enum Status {
+    OK = 0;
+    NOT_FOUND = 1; // тикет не найден
+    PASSWORD_WRONG = 2; // пароль для активации не верный
+    NOT_UNAVAILABLE = 3; // тикет временно не доступен (в режиме блокировки)
+    ACTIVATED = 4; // уже активный
+    EXPIRED = 5; // срок действия истек
+  }
+  message Ticket {
+    uint32 ticket_id = 1;
+    bool locked = 2; // тикет заблокирован
+    bool activated = 3; // состояние активации
+    uint32 activated_at = 4; // дата активации
+    bool expired = 5; // состояние не действительного тикета по причине истечении доступного времени для активации
+    uint32 expires_at = 6; // дата в которой тикет будет считаться не доступным по истечении времени
+    uint32 created_at = 7; // дата создания
+    uint32 duration = 8; // время в секундах на которое активируется подписка
+  }
+  Status status_id = 1;
+  Ticket ticket = 2;
 }

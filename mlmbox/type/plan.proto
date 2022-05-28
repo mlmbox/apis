@@ -55,6 +55,9 @@ message PlanCinema {
     mlmbox.type.PaymentPrice payment_price = 4;
   }
   message Ticket {
+    message ID {
+      uint32 ticket_id = 1;
+    }
     uint32 ticket_id = 1;
     uint32 package_id = 2;
     uint32 duration = 3;

@@ -3,6 +3,7 @@ syntax = "proto3";
 package mlmbox.type;
 
 import "mlmbox/type/asset.proto";
+import "google/protobuf/struct.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/wallet;wallet_pb";
 
@@ -16,16 +17,17 @@ message Wallet {
       message Kind {
         enum ID {
           UNKNOWN = 0;
-          EARNED = 1; // заработано
-          SPENT_PLAN_FARMING = 2; // потрачено
-          SPENT_PLAN_SUBSCRIBE = 3; // потрачено
-          SPENT_PLAN_CINEMA = 4; // потрачено
-          DEPOSIT = 5; // пополнение
-          WITHDRAWAL = 6; // вывод
-          DEPOSIT_VOUCHER = 7; // пополнение через ваучер
-          WITHDRAWAL_VOUCHER = 8; // вывод через создание ваучера
-          DEPOSIT_WALLET_TRANSFER = 9; // перевод между кошельками (получение)
-          WITHDRAWAL_WALLET_TRANSFER = 10; // перевод между кошельками (отправка)
+          CANCELED = 1;
+          EARNED = 2; // заработано
+          SPENT_PLAN_FARMING = 3; // потрачено
+          SPENT_PLAN_SUBSCRIBE = 4; // потрачено
+          SPENT_PLAN_CINEMA = 5; // потрачено
+          DEPOSIT = 6; // пополнение
+          WITHDRAWAL = 7; // вывод
+          DEPOSIT_VOUCHER = 8; // пополнение через ваучер
+          WITHDRAWAL_VOUCHER = 9; // вывод через создание ваучера
+          DEPOSIT_WALLET_TRANSFER = 10; // перевод между кошельками (получение)
+          WITHDRAWAL_WALLET_TRANSFER = 11; // перевод между кошельками (отправка)
         }
         ID kind_id = 1;
       }
@@ -37,33 +39,6 @@ message Wallet {
         }
         ID status_id = 1;
       }
-      /*message Description {
-        message Deposit {
-          string txid = 1;
-        }
-        message Withdrawal {
-          string txid = 1;
-          string address = 2;
-        }
-        message DepositTransfer {
-          string sender_account_login = 1;
-        }
-        message WithdrawalTransfer {
-          string recipient_account_login = 1;
-        }
-        oneof unique_field {
-          mlmbox.type.Bonus.Kind earned_bonus = 1;
-          uint32 spent_plan_farming_package_id = 2;
-          uint32 spent_plan_subscribe_package_id = 3;
-          uint32 spent_plan_cinema_package_id = 4;
-          Deposit deposit = 5;
-          Withdrawal withdrawal = 6;
-          uint32 deposit_voucher_id = 7;
-          uint32 withdrawal_voucher_id = 8;
-          DepositTransfer deposit_wallet_transfer = 9;
-          WithdrawalTransfer withdrawal_wallet_transfer = 10;
-        }
-      }*/
 
       uint32 transaction_id = 1;
       Kind.ID kind_id = 2;
@@ -74,7 +49,7 @@ message Wallet {
       uint32 operation_asset_id = 7;
       string operation_amount = 8;
       uint32 created_at = 9;
-      string description = 10; // json object
+      google.protobuf.Struct description = 10;
     }
 
     uint32 asset_id = 1;
