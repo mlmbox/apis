@@ -10,6 +10,8 @@ message Bonus {
     BINARY = 1;
     BINARY_MATCHING = 2;
     FARMING = 3;
+    FARMING_UNLOCKUP = 4;
+    GIFT = 5;
   }
   message ID {
     Kind bonus_id = 1;
