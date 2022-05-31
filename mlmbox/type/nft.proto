@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package mlmbox.type;
 
-import "google/protobuf/struct.proto";
-
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/nft;nft_pb";
 
 message NFT {
@@ -18,5 +16,5 @@ message NFT {
   Collection collection = 1;
   uint32 object_id = 2;
   string img_src = 3;
-  google.protobuf.Struct properties = 4;
+  string properties = 4;
 }

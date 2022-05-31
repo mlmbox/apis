@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package mlmbox.client.finance.v1;
 
-import "mlmbox/type/asset.proto";
 import "mlmbox/type/confirmation.proto";
 import "mlmbox/type/sort.proto";
 import "mlmbox/type/wallet.proto";
@@ -24,14 +23,14 @@ service Wallet {
 }
 
 message WalletAssetGetRequest {
-  mlmbox.type.Asset.ID asset = 1;
+  uint32 asset_id = 1;
   mlmbox.type.Sort sort_transactions = 2;
 }
 message WalletAssetsAllResponse {
   repeated mlmbox.type.Wallet.Asset assets = 1;
 }
 message WalletAssetTransactionListRequest {
-  mlmbox.type.Asset.ID asset = 1;
+  uint32 asset_id = 1;
   uint32 step_transaction_id = 2;
   mlmbox.type.Sort sort_transactions = 3;
 }
@@ -54,7 +53,7 @@ message WalletValidateAddressResponse {
 }
 message WalletWithdrawalCreateRequest {
   uint32 processing_id = 1;
-  mlmbox.type.Asset.ID asset = 2;
+  uint32 asset_id = 2;
   string operation_amount = 3;
   string address = 4;
 }

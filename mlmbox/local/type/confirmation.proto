@@ -84,7 +84,7 @@ message Confirmation {
       uint32 processing_id = 1;
       uint32 asset_id = 2;
       string operation_amount = 3;
-      string fee_amount = 4;
+      string operation_fee = 4;
       string address = 5;
     }
 

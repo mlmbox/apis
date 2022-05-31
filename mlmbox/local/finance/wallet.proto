@@ -17,6 +17,8 @@ service Wallet {
   rpc AssetTransactionList (AssetTransactionListRequest) returns (AssetTransactionListResponse) {}
   rpc ProcessingsGet (ProcessingsGetRequest) returns (ProcessingsGetResponse) {}
   rpc ProcessingsAll (mlmbox.local.type.Account.ID) returns (ProcessingsAllResponse) {}
+  rpc ProcessingShortInfo (mlmbox.type.Wallet.Processing.ID) returns (ProcessingsGetResponse) {}
+  rpc WithdrawalCheck (WithdrawalCheckRequest) returns (WithdrawalCheckResponse) {}
   rpc WithdrawalCreate (WithdrawalCreateRequest) returns (AssetTransactionGetResponse) {}
 }
 
@@ -35,8 +37,9 @@ message Error {
     PROCESSING_ADDRESS_WRONG = 10;
     AMOUNT_VALUE_UNKNOWN = 11;
     AMOUNT_VALUE_WRONG = 12;
-    BALANCE_NOT_ENOUGH = 13;
-    OPERATION_UNAVAILABLE = 14;
+    FEE_VALUE_WRONG = 13;
+    BALANCE_NOT_ENOUGH = 14;
+    OPERATION_UNAVAILABLE = 15;
   }
   ID error_id = 1;
 }
@@ -96,10 +99,23 @@ message ProcessingsAllResponse {
   Error.ID error_id = 1;
   repeated mlmbox.type.Wallet.Processing processings = 2;
 }
+message WithdrawalCheckRequest {
+  uint32 account_id = 1;
+  uint32 processing_id = 2;
+  uint32 asset_id = 3;
+  string operation_amount = 4;
+}
+message WithdrawalCheckResponse {
+  Error.ID error_id = 1;
+  string operation_amount = 2;
+  string operation_fee = 3;
+  string operation_total = 4;
+}
 message WithdrawalCreateRequest {
   uint32 account_id = 1;
   uint32 processing_id = 2;
   uint32 asset_id = 3;
   string operation_amount = 4;
+  string operation_fee = 5;
   string address = 6;
 }
