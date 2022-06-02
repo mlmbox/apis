@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+package mlmbox.local.processing;
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/processing;service_local_processing_pb";
+
+service Tron {
+  rpc DepositAddress (TronDepositAddressRequest) returns (TronDepositAddressResponse) {}
+  rpc ValidateAddress (TronValidateAddressRequest) returns (TronValidateAddressResponse) {}
+
+  rpc WithdrawalCreate (TronWithdrawalCreateRequest) returns (TronError) {}
+  rpc WithdrawalTransactionList (TronWithdrawalTransactionListRequest) returns (TronWithdrawalTransactionListResponse) {}
+  rpc IncomeTransactionList (TronIncomeTransactionListRequest) returns (TronIncomeTransactionListResponse) {}
+
+  rpc TRC20WithdrawalCreate (TronTRC20WithdrawalCreateRequest) returns (TronError) {}
+  rpc TRC20WithdrawalTransactionList (TronTRC20WithdrawalTransactionListRequest) returns (TronTRC20WithdrawalTransactionListResponse) {}
+  rpc TRC20IncomeTransactionList (TronTRC20IncomeTransactionListRequest) returns (TronTRC20IncomeTransactionListResponse) {}
+}
+
+message TronError {
+  enum ID {
+    OK = 0;
+    UNAVAILABLE = 5;
+    WRONG_ACCOUNT_ID = 6;
+    WRONG_WITHDRAWAL_ID = 1;
+    WRONG_WITHDRAWAL_CONTRACT = 2;
+    WRONG_WITHDRAWAL_ADDRESS = 3;
+    WRONG_WITHDRAWAL_AMOUNT = 4;
+  }
+  ID error_id = 1;
+}
+message TronDepositAddressRequest {
+  uint32 account_id = 1;
+}
+message TronDepositAddressResponse {
+  TronError.ID error_id = 1;
+  string address = 2;
+}
+message TronValidateAddressRequest {
+  string address = 1;
+}
+message TronValidateAddressResponse {
+  TronError.ID error_id = 1;
+  string address = 2;
+  bool validated = 3;
+}
+message TronWithdrawalCreateRequest {
+  uint32 withdrawal_id = 1;
+  string address = 2;
+  string amount = 3;
+}
+message TronTRC20WithdrawalCreateRequest {
+  uint32 withdrawal_id = 1;
+  string contract = 2;
+  string address = 3;
+  string amount = 4;
+}
+
+message TronWithdrawalTransaction {
+  enum Status {
+    PADDING = 0;
+    APPROVED = 1;
+    REJECT = 2;
+  }
+  uint32 withdrawal_id = 1; //идентификатор заявки на вывод
+  string txid = 2; // хэш транзакции
+  string trace_id = 3; // идентификатор операции в пределах транзакции (txid)
+  string amount = 4; // сумма
+  string address = 5; // адрес получателя
+  uint64 block_num = 6; // порядковый номер блока
+  Status status_id = 7; // статус транзакции
+  uint32 modification_id = 8; // идентификатор изменения (актуальным состоянием, является наибольшее значение "log_id"
+}
+message TronWithdrawalTransactionListRequest {
+  uint32 last_modification_id = 1;
+  uint32 limit = 2;
+}
+message TronWithdrawalTransactionListResponse {
+  TronError.ID error_id = 1;
+  repeated TronWithdrawalTransaction transactions = 2;
+}
+message TronTRC20WithdrawalTransactionListRequest {
+  string contract = 1;
+  uint32 last_modification_id = 2;
+  uint32 limit = 3;
+}
+message TronTRC20WithdrawalTransactionListResponse {
+  TronError.ID error_id = 1;
+  repeated TronWithdrawalTransaction transactions = 2;
+}
+
+message TronIncomeTransaction {
+  enum Status {
+    PADDING = 0;
+    APPROVED = 1;
+    REJECT = 2;
+  }
+  uint32 account_id = 1; // идентификатор пользователя
+  string txid = 2; // хэш транзакции
+  string trace_id = 3; // идентификатор операции в пределах транзакции (txid)
+  string amount = 4; // сумма
+  string address = 5; // адрес получателя
+  uint64 block_num = 6; // порядковый номер блока
+  Status status_id = 7; // статус транзакции
+  uint32 modification_id = 8; // идентификатор изменения (актуальным состоянием, является наибольшее значение "log_id"
+}
+message TronIncomeTransactionListRequest {
+  uint32 last_modification_id = 1;
+  uint32 limit = 2;
+}
+message TronIncomeTransactionListResponse {
+  TronError.ID error_id = 1;
+  repeated TronIncomeTransaction transactions = 2;
+}
+message TronTRC20IncomeTransactionListRequest {
+  string contract = 1;
+  uint32 last_modification_id = 2;
+  uint32 limit = 3;
+}
+message TronTRC20IncomeTransactionListResponse {
+  TronError.ID error_id = 1;
+  repeated TronIncomeTransaction transactions = 2;
+}

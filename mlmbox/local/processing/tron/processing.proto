@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package mlmbox.local.processing.tron;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/processing/tron;service_local_processing_tron_pb";
+
+service Processing {
+  rpc GetUserAddress (GetUserAddressRequest) returns (GetUserAddressResponse) {}
+  rpc SetUserAddress (SetUserAddressRequest) returns (Error) {}
+  rpc GetLastBlockNum (google.protobuf.Empty) returns (BlockNum) {}
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    NOT_FOUND = 1;
+    UNAVAILABLE = 2;
+  }
+  ID error_id = 1;
+}
+message GetUserAddressRequest {
+  uint32 account_id = 1;
+  bool use_private_key = 2;
+}
+message GetUserAddressResponse {
+  Error.ID error_id = 1;
+  string private_key = 2;
+  string address = 3;
+}
+message SetUserAddressRequest {
+  uint32 account_id = 1;
+  string private_key = 2;
+  string address = 3;
+  bool ignore_exists = 4;
+}
+message BlockNum {
+  Error.ID error_id = 1;
+  uint64 block_num = 2;
+}
