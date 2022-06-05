@@ -60,10 +60,8 @@ message Voucher {
       string price = 2;
     }
     Method.ID method_id = 1;
-    oneof unique_field {
-      string activation_code = 2;
-      PaymentValue payment_value = 3;
-    }
+    string activation_code = 2;
+    PaymentValue payment_value = 3;
   }
   message ViewFields {
     enum ID {
