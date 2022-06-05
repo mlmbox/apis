@@ -6,8 +6,7 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/nft;nft_pb";
 
 message NFT {
   message ID {
-    uint32 collection_id = 1;
-    uint32 object_id = 2;
+    uint32 object_id = 1;
   }
   message Collection {
     uint32 id = 1;

@@ -16,8 +16,8 @@ message Product {
     }
     message ID {
       oneof unique_field {
-        uint32 plan_subscribe_ticket_id = 1;
-        uint32 plan_cinema_ticket_id = 2;
+        mlmbox.type.PlanSubscribe.Ticket.ID plan_subscribe_ticket = 1;
+        mlmbox.type.PlanCinema.Ticket.ID plan_cinema_ticket = 2;
         mlmbox.type.NFT.ID nft = 3;
         Money money = 4;
         mlmbox.type.RouletteTicket.ID roulette_ticket = 5;

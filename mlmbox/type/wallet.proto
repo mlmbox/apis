@@ -26,6 +26,9 @@ message Wallet {
           DEPOSIT_WALLET_TRANSFER = 10; // перевод между кошельками (получение)
           WITHDRAWAL_WALLET_TRANSFER = 11; // перевод между кошельками (отправка)
           EXCHANGE = 12; // обмен валюты
+          VOUCHER_WRAP = 13; // заморожено в ваучере
+          VOUCHER_UNWRAP = 14; // разморожено из ваучера
+          VOUCHER_PURCHASE = 15; // активация ваучера через платеж
         }
         ID kind_id = 1;
       }

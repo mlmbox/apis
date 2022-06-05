@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package mlmbox.client.voucher.v1;
 
-import "mlmbox/type/confirmation.proto";
 import "mlmbox/type/voucher.proto";
 import "mlmbox/type/product.proto";
 import "google/protobuf/empty.proto";
@@ -14,19 +13,19 @@ service Voucher {
   rpc Find (mlmbox.type.Voucher.ID) returns (mlmbox.type.Voucher) {} // display selected voucher available for activation
   rpc All (google.protobuf.Empty) returns (VoucherAllResponse) {} // list of owner's vouchers
   rpc Create (VoucherCreateRequest) returns (mlmbox.type.Voucher) {} // create a voucher
-  rpc Reject (mlmbox.type.Voucher.ID) returns (mlmbox.type.Confirmation) {} // cancel the generated voucher
-  rpc Activate (VoucherActivateRequest) returns (mlmbox.type.Confirmation) {} // activate voucher
+  rpc Reject (mlmbox.type.Voucher.ID) returns (google.protobuf.Empty) {} // cancel the generated voucher
+  rpc Activate (VoucherActivateRequest) returns (google.protobuf.Empty) {} // activate voucher
 }
 
 message VoucherAllResponse {
   repeated mlmbox.type.Voucher vouchers = 1;
 }
 message VoucherCreateRequest {
-  repeated mlmbox.type.Voucher.Recipient recipients = 1;
+  repeated mlmbox.type.Voucher.Recipient.ID recipients = 1;
   mlmbox.type.Voucher.Activation activation = 2;
-  repeated mlmbox.type.Product.Object product_objects = 3;
+  repeated mlmbox.type.Product.Object.ID product_objects = 3;
 }
 message VoucherActivateRequest {
-  mlmbox.type.Voucher.ID voucher = 1;
+  uint32 voucher_id = 1;
   string activation_code = 2;
 }
