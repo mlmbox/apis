@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package mlmbox.client.finance.v1;
 
+import "mlmbox/type/asset.proto";
 import "mlmbox/type/confirmation.proto";
 import "mlmbox/type/sort.proto";
 import "mlmbox/type/wallet.proto";
@@ -20,6 +21,8 @@ service Wallet {
   rpc DepositAddress (mlmbox.type.Wallet.Processing.ID) returns (WalletDepositAddressResponse) {}
   rpc ValidateAddress (WalletValidateAddressRequest) returns (WalletValidateAddressResponse) {}
   rpc WithdrawalCreate (WalletWithdrawalCreateRequest) returns (mlmbox.type.Confirmation) {}
+  rpc ExchangeInfo (google.protobuf.Empty) returns (ExchangeInfoResponse) {}
+  rpc ExchangeCreate (ExchangeCreateRequest) returns (ExchangeCreateResponse) {}
 }
 
 message WalletAssetGetRequest {
@@ -56,4 +59,22 @@ message WalletWithdrawalCreateRequest {
   uint32 asset_id = 2;
   string operation_amount = 3;
   string address = 4;
+}
+message ExchangeInfoResponse {
+  message Asset {
+    uint32 source_asset_id = 1;
+    string source_asset_value_min = 2;
+    repeated uint32 target_asset_ids = 3;
+  }
+  repeated Asset assets = 1;
+  repeated mlmbox.type.ExchangerRate exchanger_rates = 2;
+}
+message ExchangeCreateRequest {
+  uint32 source_asset_id = 1;
+  string source_asset_value = 2;
+  uint32 target_asset_id = 3;
+}
+message ExchangeCreateResponse {
+  mlmbox.type.Wallet.Asset.Transaction source = 1;
+  mlmbox.type.Wallet.Asset.Transaction target = 2;
 }

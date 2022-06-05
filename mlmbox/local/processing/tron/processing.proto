@@ -9,7 +9,11 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/processing/tron;
 service Processing {
   rpc GetUserAddress (GetUserAddressRequest) returns (GetUserAddressResponse) {}
   rpc SetUserAddress (SetUserAddressRequest) returns (Error) {}
+  rpc SetContractTRC20 (SetContractTRC20Request) returns (SetContractTRC20Response) {}
+  rpc GetBlockNum (GetBlockNumRequest) returns (BlockNum) {}
   rpc GetLastBlockNum (google.protobuf.Empty) returns (BlockNum) {}
+  rpc SetBlock (SetBlockRequest) returns (BlockNum) {}
+  rpc SetBlockUnMark (SetBlockUnMarkRequest) returns (Error) {}
 }
 
 message Error {
@@ -17,6 +21,9 @@ message Error {
     OK = 0;
     NOT_FOUND = 1;
     UNAVAILABLE = 2;
+    BLOCK_NOT_FOUND = 3;
+    BLOCK_PREV_NOT_FOUND = 4;
+    CHAIN_BROKEN = 5;
   }
   ID error_id = 1;
 }
@@ -35,7 +42,50 @@ message SetUserAddressRequest {
   string address = 3;
   bool ignore_exists = 4;
 }
+message SetContractTRC20Request {
+  string address = 1;
+  string name = 2;
+  string symbol = 3;
+  uint32 decimals = 4;
+}
+message SetContractTRC20Response {
+  Error.ID error_id = 1;
+  uint32 contract_id = 2;
+}
+message GetBlockNumRequest {
+  uint64 block_height = 1;
+}
 message BlockNum {
   Error.ID error_id = 1;
-  uint64 block_num = 2;
+  string block_hash = 2;
+  uint64 block_height = 3;
+}
+message Transaction {
+  message TRX {
+    string owner_address = 1;
+    string to_address = 2;
+    string amount = 3;
+  }
+  message TRC20 {
+    string contract = 1;
+    string address_from = 2;
+    string address_to = 3;
+    string value = 4;
+  }
+  uint32 block_index = 1;
+  string transaction_hash = 2;
+  string owner = 3;
+  string fee = 4;
+  bool success = 5;
+  repeated TRX trx = 6;
+  repeated TRC20 trc20 = 7;
+}
+message SetBlockRequest {
+  string block_hash = 1;
+  string block_prev_hash = 2;
+  int64 block_timestamp = 3;
+  repeated Transaction transactions = 4;
+}
+message SetBlockUnMarkRequest {
+  uint64 block_height = 1;
 }

@@ -25,6 +25,7 @@ message Wallet {
           WITHDRAWAL_VOUCHER = 9; // вывод через создание ваучера
           DEPOSIT_WALLET_TRANSFER = 10; // перевод между кошельками (получение)
           WITHDRAWAL_WALLET_TRANSFER = 11; // перевод между кошельками (отправка)
+          EXCHANGE = 12; // обмен валюты
         }
         ID kind_id = 1;
       }

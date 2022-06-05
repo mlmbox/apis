@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package mlmbox.local.finance;
 
+import "mlmbox/type/asset.proto";
 import "mlmbox/local/type/account.proto";
 import "mlmbox/type/sort.proto";
 import "mlmbox/type/wallet.proto";
@@ -20,6 +21,8 @@ service Wallet {
   rpc ProcessingShortInfo (mlmbox.type.Wallet.Processing.ID) returns (ProcessingsGetResponse) {}
   rpc WithdrawalCheck (WithdrawalCheckRequest) returns (WithdrawalCheckResponse) {}
   rpc WithdrawalCreate (WithdrawalCreateRequest) returns (AssetTransactionGetResponse) {}
+  rpc ExchangeInfo (mlmbox.local.type.Account.ID) returns (ExchangeInfoResponse) {}
+  rpc ExchangeCreate (ExchangeCreateRequest) returns (ExchangeCreateResponse) {}
 }
 
 message Error {
@@ -40,6 +43,10 @@ message Error {
     FEE_VALUE_WRONG = 13;
     BALANCE_NOT_ENOUGH = 14;
     OPERATION_UNAVAILABLE = 15;
+    SOURCE_ASSET_UNKNOWN = 16;
+    SOURCE_ASSET_NOT_FOUND = 17;
+    TARGET_ASSET_UNKNOWN = 18;
+    TARGET_ASSET_NOT_FOUND = 19;
   }
   ID error_id = 1;
 }
@@ -118,4 +125,25 @@ message WithdrawalCreateRequest {
   string operation_amount = 4;
   string operation_fee = 5;
   string address = 6;
+}
+message ExchangeInfoResponse {
+  message Asset {
+    uint32 source_asset_id = 1;
+    string source_asset_value_min = 2;
+    repeated uint32 target_asset_ids = 3;
+  }
+  Error.ID error_id = 1;
+  repeated Asset assets = 2;
+  repeated mlmbox.type.ExchangerRate exchanger_rates = 3;
+}
+message ExchangeCreateRequest {
+  uint32 account_id = 1;
+  uint32 source_asset_id = 2;
+  string source_asset_value = 3;
+  uint32 target_asset_id = 4;
+}
+message ExchangeCreateResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Wallet.Asset.Transaction source = 2;
+  mlmbox.type.Wallet.Asset.Transaction target = 3;
 }
