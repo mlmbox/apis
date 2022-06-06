@@ -89,34 +89,42 @@ message TronTRC20WithdrawalTransactionListResponse {
   repeated TronWithdrawalTransaction transactions = 2;
 }
 
-message TronIncomeTransaction {
-  enum Status {
-    PADDING = 0;
-    APPROVED = 1;
-    REJECT = 2;
-  }
-  uint32 account_id = 1; // идентификатор пользователя
-  string txid = 2; // хэш транзакции
-  string trace_id = 3; // идентификатор операции в пределах транзакции (txid)
-  string amount = 4; // сумма
-  string address = 5; // адрес получателя
-  uint64 block_num = 6; // порядковый номер блока
-  Status status_id = 7; // статус транзакции
-  uint32 modification_id = 8; // идентификатор изменения (актуальным состоянием, является наибольшее значение "log_id"
-}
 message TronIncomeTransactionListRequest {
   uint32 last_modification_id = 1;
   uint32 limit = 2;
 }
 message TronIncomeTransactionListResponse {
+  message Transaction {
+    uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
+    uint64 block_height = 2; // порядковый номер блока
+    string transaction_hash = 3; // хэш транзакции
+    uint32 transaction_index = 5; // индекс для уникальной транзакции
+    uint32 account_id = 6; // идентификатор пользователя
+    string value = 7; // сумма
+    string value_formatted = 8; // сумма форматированная
+    bool success = 9; // результат успешной транзакции
+    bool main_chain = 10; // результат нахождения транзакции в основной цепи
+  }
   TronError.ID error_id = 1;
-  repeated TronIncomeTransaction transactions = 2;
+  repeated Transaction transactions = 2;
 }
 message TronTRC20IncomeTransactionListRequest {
   uint32 last_modification_id = 1;
   uint32 limit = 2;
 }
 message TronTRC20IncomeTransactionListResponse {
+  message Transaction {
+    uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
+    uint64 block_height = 2; // порядковый номер блока
+    string transaction_hash = 3; // хэш транзакции
+    string contract_address = 4; // адрес контракта
+    uint32 contract_index = 5; // индекс для уникальной транзакции
+    uint32 account_id = 6; // идентификатор пользователя
+    string value = 7; // сумма
+    string value_formatted = 8; // сумма форматированная
+    bool success = 9; // результат успешной транзакции
+    bool main_chain = 10; // результат нахождения транзакции в основной цепи
+  }
   TronError.ID error_id = 1;
-  repeated TronIncomeTransaction transactions = 2;
+  repeated Transaction transactions = 2;
 }
