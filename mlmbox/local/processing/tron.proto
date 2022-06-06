@@ -98,12 +98,12 @@ message TronIncomeTransactionListResponse {
     uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
     uint64 block_height = 2; // порядковый номер блока
     string transaction_hash = 3; // хэш транзакции
-    uint32 transaction_index = 5; // индекс для уникальной транзакции
-    uint32 account_id = 6; // идентификатор пользователя
-    string value = 7; // сумма
-    string value_formatted = 8; // сумма форматированная
-    bool success = 9; // результат успешной транзакции
-    bool main_chain = 10; // результат нахождения транзакции в основной цепи
+    uint32 transaction_index = 4; // индекс для уникальной транзакции
+    uint32 account_id = 5; // идентификатор пользователя
+    string value = 6; // сумма
+    string value_formatted = 7; // сумма форматированная
+    bool success = 8; // результат успешной транзакции
+    bool main_chain = 9; // результат нахождения транзакции в основной цепи
   }
   TronError.ID error_id = 1;
   repeated Transaction transactions = 2;
