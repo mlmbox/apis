@@ -113,9 +113,8 @@ message TronIncomeTransactionListResponse {
   repeated TronIncomeTransaction transactions = 2;
 }
 message TronTRC20IncomeTransactionListRequest {
-  string contract = 1;
-  uint32 last_modification_id = 2;
-  uint32 limit = 3;
+  uint32 last_modification_id = 1;
+  uint32 limit = 2;
 }
 message TronTRC20IncomeTransactionListResponse {
   TronError.ID error_id = 1;

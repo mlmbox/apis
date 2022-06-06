@@ -14,6 +14,9 @@ service Processing {
   rpc GetLastBlockNum (google.protobuf.Empty) returns (BlockNum) {}
   rpc SetBlock (SetBlockRequest) returns (BlockNum) {}
   rpc SetBlockUnMark (SetBlockUnMarkRequest) returns (Error) {}
+
+  rpc IncomeTransactionList (IncomeTransactionListRequest) returns (IncomeTransactionListResponse) {}
+  rpc TRC20IncomeTransactionList (TRC20IncomeTransactionListRequest) returns (TRC20IncomeTransactionListResponse) {}
 }
 
 message Error {
@@ -88,4 +91,44 @@ message SetBlockRequest {
 }
 message SetBlockUnMarkRequest {
   uint64 block_height = 1;
+}
+
+message IncomeTransactionListRequest {
+  uint32 last_modification_id = 1;
+  uint32 limit = 2;
+}
+message IncomeTransactionListResponse {
+  message Transaction {
+    uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
+    uint64 block_height = 2; // порядковый номер блока
+    string transaction_hash = 3; // хэш транзакции
+    uint32 transaction_index = 5; // индекс для уникальной транзакции
+    uint32 account_id = 6; // идентификатор пользователя
+    string value = 7; // сумма
+    string value_formatted = 8; // сумма форматированная
+    bool success = 9; // результат успешной транзакции
+    bool main_chain = 10; // результат нахождения транзакции в основной цепи
+  }
+  Error.ID error_id = 1;
+  repeated Transaction transactions = 2;
+}
+message TRC20IncomeTransactionListRequest {
+  uint32 last_modification_id = 1;
+  uint32 limit = 2;
+}
+message TRC20IncomeTransactionListResponse {
+  message Transaction {
+    uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
+    uint64 block_height = 2; // порядковый номер блока
+    string transaction_hash = 3; // хэш транзакции
+    string contract_address = 4; // адрес контракта
+    uint32 contract_index = 5; // индекс для уникальной транзакции
+    uint32 account_id = 6; // идентификатор пользователя
+    string value = 7; // сумма
+    string value_formatted = 8; // сумма форматированная
+    bool success = 9; // результат успешной транзакции
+    bool main_chain = 10; // результат нахождения транзакции в основной цепи
+  }
+  Error.ID error_id = 1;
+  repeated Transaction transactions = 2;
 }
