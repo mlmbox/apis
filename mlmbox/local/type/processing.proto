@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package mlmbox.local.type;
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/type/processing;local_processing_pb";
+
+message Processing {
+  message Tron {
+    message Deposit {
+      message TRX {
+        message Transaction {
+          string transaction_hash = 1; // хэш транзакции
+          uint32 transaction_index = 2; // индекс для уникальной транзакции
+          uint32 account_id = 3; // идентификатор пользователя
+          string amount = 4; // сумма форматированная
+          uint32 modification_id = 5; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
+          uint64 block_height = 6; // порядковый номер блока
+          bool success = 7; // результат успешной транзакции
+        }
+        message Block {
+          uint64 block_height = 1;
+          repeated Transaction transactions = 2;
+        }
+      }
+      message TRC20 {
+        message Transaction {
+          string transaction_hash = 1; // хэш транзакции
+          uint32 contract_index = 2; // индекс для уникальной транзакции
+          uint32 account_id = 3; // идентификатор пользователя
+          string asset_name = 4; // идентификатор валюты
+          string amount = 5; // сумма форматированная
+          uint32 modification_id = 6; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
+          uint64 block_height = 7; // порядковый номер блока
+          bool success = 8; // результат успешной транзакции
+        }
+        message Block {
+          uint64 block_height = 1;
+          repeated Transaction transactions = 2;
+        }
+      }
+//      message Modification {
+//        uint32 modification_id = 1;
+//      }
+    }
+  }
+}

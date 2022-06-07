@@ -106,7 +106,8 @@ message TronIncomeTransactionListResponse {
     bool main_chain = 9; // результат нахождения транзакции в основной цепи
   }
   TronError.ID error_id = 1;
-  repeated Transaction transactions = 2;
+  uint64 block_height = 2; // порядковый номер блока
+  repeated Transaction transactions = 3;
 }
 message TronTRC20IncomeTransactionListRequest {
   uint32 last_modification_id = 1;
@@ -126,5 +127,6 @@ message TronTRC20IncomeTransactionListResponse {
     bool main_chain = 10; // результат нахождения транзакции в основной цепи
   }
   TronError.ID error_id = 1;
-  repeated Transaction transactions = 2;
+  uint64 block_height = 2; // порядковый номер блока
+  repeated Transaction transactions = 3;
 }

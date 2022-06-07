@@ -4,8 +4,10 @@ package mlmbox.local.finance;
 
 import "mlmbox/type/asset.proto";
 import "mlmbox/local/type/account.proto";
+import "mlmbox/local/type/processing.proto";
 import "mlmbox/type/sort.proto";
 import "mlmbox/type/wallet.proto";
+import "google/protobuf/empty.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/finance;service_local_finance_pb";
 
@@ -18,12 +20,17 @@ service Wallet {
   rpc AssetTransactionList (AssetTransactionListRequest) returns (AssetTransactionListResponse) {}
   rpc ProcessingsGet (ProcessingsGetRequest) returns (ProcessingsGetResponse) {}
   rpc ProcessingsAll (mlmbox.local.type.Account.ID) returns (ProcessingsAllResponse) {}
+  rpc ProcessingTronDepositTRXLastModificationID (google.protobuf.Empty) returns (ProcessingTronDepositModificationResponse) {}
+  rpc ProcessingTronDepositTRX (mlmbox.local.type.Processing.Tron.Deposit.TRX.Block) returns (ProcessingTronDepositModificationResponse) {}
+  rpc ProcessingTronDepositTRC20LastModificationID (google.protobuf.Empty) returns (ProcessingTronDepositModificationResponse) {}
+  rpc ProcessingTronDepositTRC20 (mlmbox.local.type.Processing.Tron.Deposit.TRC20.Block) returns (ProcessingTronDepositModificationResponse) {}
   rpc ProcessingShortInfo (mlmbox.type.Wallet.Processing.ID) returns (ProcessingsGetResponse) {}
   rpc WithdrawalCheck (WithdrawalCheckRequest) returns (WithdrawalCheckResponse) {}
   rpc WithdrawalCreate (WithdrawalCreateRequest) returns (AssetTransactionGetResponse) {}
   rpc ExchangeInfo (mlmbox.local.type.Account.ID) returns (ExchangeInfoResponse) {}
   rpc ExchangeCreate (ExchangeCreateRequest) returns (ExchangeCreateResponse) {}
 }
+
 
 message Error {
   enum ID {
@@ -105,6 +112,10 @@ message ProcessingsGetResponse {
 message ProcessingsAllResponse {
   Error.ID error_id = 1;
   repeated mlmbox.type.Wallet.Processing processings = 2;
+}
+message ProcessingTronDepositModificationResponse {
+  Error.ID error_id = 1;
+  uint32 modification_id = 2;
 }
 message WithdrawalCheckRequest {
   uint32 account_id = 1;
