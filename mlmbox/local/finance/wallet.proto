@@ -20,17 +20,23 @@ service Wallet {
   rpc AssetTransactionList (AssetTransactionListRequest) returns (AssetTransactionListResponse) {}
   rpc ProcessingsGet (ProcessingsGetRequest) returns (ProcessingsGetResponse) {}
   rpc ProcessingsAll (mlmbox.local.type.Account.ID) returns (ProcessingsAllResponse) {}
-  rpc ProcessingTronDepositTRXLastModificationID (google.protobuf.Empty) returns (ProcessingTronDepositModificationResponse) {}
-  rpc ProcessingTronDepositTRX (mlmbox.local.type.Processing.Tron.Deposit.TRX.Block) returns (ProcessingTronDepositModificationResponse) {}
-  rpc ProcessingTronDepositTRC20LastModificationID (google.protobuf.Empty) returns (ProcessingTronDepositModificationResponse) {}
-  rpc ProcessingTronDepositTRC20 (mlmbox.local.type.Processing.Tron.Deposit.TRC20.Block) returns (ProcessingTronDepositModificationResponse) {}
+
+  rpc ProcessingTronDepositTRXLastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingTronDepositTRX (mlmbox.local.type.Processing.Block.Deposit.TRX) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingTronDepositTRC20LastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingTronDepositTRC20 (mlmbox.local.type.Processing.Block.Deposit.TRC20) returns (ProcessingTronModificationResponse) {}
+
+  rpc ProcessingTronWithdrawalTRXLastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingTronWithdrawalTRX (mlmbox.local.type.Processing.Block.Withdrawal.TRX) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingTronWithdrawalTRC20LastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingTronWithdrawalTRC20 (mlmbox.local.type.Processing.Block.Withdrawal.TRC20) returns (ProcessingTronModificationResponse) {}
+
   rpc ProcessingShortInfo (mlmbox.type.Wallet.Processing.ID) returns (ProcessingsGetResponse) {}
   rpc WithdrawalCheck (WithdrawalCheckRequest) returns (WithdrawalCheckResponse) {}
   rpc WithdrawalCreate (WithdrawalCreateRequest) returns (AssetTransactionGetResponse) {}
   rpc ExchangeInfo (mlmbox.local.type.Account.ID) returns (ExchangeInfoResponse) {}
   rpc ExchangeCreate (ExchangeCreateRequest) returns (ExchangeCreateResponse) {}
 }
-
 
 message Error {
   enum ID {
@@ -113,7 +119,7 @@ message ProcessingsAllResponse {
   Error.ID error_id = 1;
   repeated mlmbox.type.Wallet.Processing processings = 2;
 }
-message ProcessingTronDepositModificationResponse {
+message ProcessingTronModificationResponse {
   Error.ID error_id = 1;
   uint32 modification_id = 2;
 }

@@ -5,42 +5,82 @@ package mlmbox.local.type;
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/type/processing;local_processing_pb";
 
 message Processing {
-  message Tron {
+  message Block {
     message Deposit {
       message TRX {
-        message Transaction {
-          string transaction_hash = 1; // хэш транзакции
-          uint32 transaction_index = 2; // индекс для уникальной транзакции
-          uint32 account_id = 3; // идентификатор пользователя
-          string amount = 4; // сумма форматированная
-          uint32 modification_id = 5; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
-          uint64 block_height = 6; // порядковый номер блока
-          bool success = 7; // результат успешной транзакции
-        }
-        message Block {
-          uint64 block_height = 1;
-          repeated Transaction transactions = 2;
-        }
+        uint64 block_height = 1;
+        repeated Processing.Transaction.Deposit.TRX transactions = 2;
       }
       message TRC20 {
-        message Transaction {
-          string transaction_hash = 1; // хэш транзакции
-          uint32 contract_index = 2; // индекс для уникальной транзакции
-          uint32 account_id = 3; // идентификатор пользователя
-          string asset_name = 4; // идентификатор валюты
-          string amount = 5; // сумма форматированная
-          uint32 modification_id = 6; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
-          uint64 block_height = 7; // порядковый номер блока
-          bool success = 8; // результат успешной транзакции
-        }
-        message Block {
-          uint64 block_height = 1;
-          repeated Transaction transactions = 2;
-        }
+        uint64 block_height = 1;
+        repeated Processing.Transaction.Deposit.TRC20 transactions = 2;
       }
-//      message Modification {
-//        uint32 modification_id = 1;
-//      }
+    }
+    message Withdrawal {
+      message TRX {
+        uint64 block_height = 1;
+        repeated Processing.Transaction.Withdrawal.TRX transactions = 2;
+      }
+      message TRC20 {
+        uint64 block_height = 1;
+        repeated Processing.Transaction.Withdrawal.TRC20 transactions = 2;
+      }
+    }
+  }
+  message Transaction {
+    message Deposit {
+      message TRX {
+        uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
+        uint64 block_height = 2; // порядковый номер блока
+        string transaction_hash = 3; // хэш транзакции
+        uint32 transaction_index = 5; // индекс для уникальной транзакции
+        uint32 account_id = 6; // идентификатор пользователя
+        string value = 7; // сумма
+        string value_formatted = 8; // сумма форматированная
+        bool success = 9; // результат успешной транзакции
+        bool main_chain = 10; // результат нахождения транзакции в основной цепи
+      }
+      message TRC20 {
+        uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
+        uint64 block_height = 2; // порядковый номер блока
+        string transaction_hash = 3; // хэш транзакции
+        string contract_address = 4; // адрес контракта
+        uint32 contract_index = 5; // индекс для уникальной транзакции
+        uint32 account_id = 6; // идентификатор пользователя
+        string value = 7; // сумма
+        string value_formatted = 8; // сумма форматированная
+        bool success = 9; // результат успешной транзакции
+        bool main_chain = 10; // результат нахождения транзакции в основной цепи
+      }
+    }
+    message Withdrawal {
+      message TRX {
+        uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
+        uint32 withdrawal_id = 2; // идентификатор заявки на вывод
+        string address = 3; // адрес получателя
+        string value = 4; // сумма
+        string value_formatted = 5; // сумма форматированная
+        string transaction_hash = 6; // хэш транзакции
+        uint32 transaction_index = 7; // индекс для уникальной транзакции
+        bool transaction_expired = 8; // истек срок действия транзакции
+        uint64 block_height = 9; // порядковый номер блока
+        bool success = 10; // результат успешной транзакции
+        bool main_chain = 11; // результат нахождения транзакции в основной цепи
+      }
+      message TRC20 {
+        uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
+        uint32 withdrawal_id = 2; // идентификатор заявки на вывод
+        string address = 3; // адрес получателя
+        string value = 4; // сумма
+        string value_formatted = 5; // сумма форматированная
+        string transaction_hash = 6; // хэш транзакции
+        string contract_address = 7; // адрес контракта
+        uint32 contract_index = 8; // индекс для уникальной транзакции
+        bool transaction_expired = 9; // истек срок действия транзакции
+        uint64 block_height = 10; // порядковый номер блока
+        bool success = 11; // результат успешной транзакции
+        bool main_chain = 12; // результат нахождения транзакции в основной цепи
+      }
     }
   }
 }

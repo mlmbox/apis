@@ -2,21 +2,33 @@ syntax = "proto3";
 
 package mlmbox.local.processing.tron;
 
+import "mlmbox/local/type/processing.proto";
 import "google/protobuf/empty.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/processing/tron;service_local_processing_tron_pb";
 
 service Processing {
-  rpc GetUserAddress (GetUserAddressRequest) returns (GetUserAddressResponse) {}
-  rpc SetUserAddress (SetUserAddressRequest) returns (Error) {}
+  rpc GetUserAddress (GetAccountAddressRequest) returns (GetAccountAddressResponse) {}
+  rpc SetUserAddress (SetAccountAddressRequest) returns (Error) {}
+  rpc GetCompanyAddress (GetAccountAddressRequest) returns (GetAccountAddressResponse) {}
+  rpc SetCompanyAddress (SetAccountAddressRequest) returns (Error) {}
   rpc SetContractTRC20 (SetContractTRC20Request) returns (SetContractTRC20Response) {}
   rpc GetBlockNum (GetBlockNumRequest) returns (BlockNum) {}
   rpc GetLastBlockNum (google.protobuf.Empty) returns (BlockNum) {}
   rpc SetBlock (SetBlockRequest) returns (BlockNum) {}
   rpc SetBlockUnMark (SetBlockUnMarkRequest) returns (Error) {}
 
-  rpc IncomeTransactionList (IncomeTransactionListRequest) returns (IncomeTransactionListResponse) {}
-  rpc TRC20IncomeTransactionList (TRC20IncomeTransactionListRequest) returns (TRC20IncomeTransactionListResponse) {}
+  rpc DepositTransactionList (TransactionListRequest) returns (DepositTransactionListResponse) {}
+  rpc WithdrawalCreate (WithdrawalCreateRequest) returns (Error) {}
+  rpc WithdrawalNeedProcessedGet (google.protobuf.Empty) returns (WithdrawalNeedProcessedGetResponse) {}
+  rpc WithdrawalNeedProcessedSet (WithdrawalNeedProcessedSetRequest) returns (Error) {}
+  rpc WithdrawalTransactionList (TransactionListRequest) returns (WithdrawalTransactionListResponse) {}
+
+  rpc TRC20DepositTransactionList (TransactionListRequest) returns (TRC20DepositTransactionListResponse) {}
+  rpc TRC20WithdrawalCreate (TRC20WithdrawalCreateRequest) returns (Error) {}
+  rpc TRC20WithdrawalNeedProcessedGet (google.protobuf.Empty) returns (TRC20WithdrawalNeedProcessedGetResponse) {}
+  rpc TRC20WithdrawalNeedProcessedSet (TRC20WithdrawalNeedProcessedSetRequest) returns (Error) {}
+  rpc TRC20WithdrawalTransactionList (TransactionListRequest) returns (TRC20WithdrawalTransactionListResponse) {}
 }
 
 message Error {
@@ -27,19 +39,20 @@ message Error {
     BLOCK_NOT_FOUND = 3;
     BLOCK_PREV_NOT_FOUND = 4;
     CHAIN_BROKEN = 5;
+    WITHDRAWAL_EXISTS = 6;
   }
   ID error_id = 1;
 }
-message GetUserAddressRequest {
+message GetAccountAddressRequest {
   uint32 account_id = 1;
   bool use_private_key = 2;
 }
-message GetUserAddressResponse {
+message GetAccountAddressResponse {
   Error.ID error_id = 1;
   string private_key = 2;
   string address = 3;
 }
-message SetUserAddressRequest {
+message SetAccountAddressRequest {
   uint32 account_id = 1;
   string private_key = 2;
   string address = 3;
@@ -93,44 +106,68 @@ message SetBlockUnMarkRequest {
   uint64 block_height = 1;
 }
 
-message IncomeTransactionListRequest {
+message TransactionListRequest {
   uint32 last_modification_id = 1;
   uint32 limit = 2;
 }
-message IncomeTransactionListResponse {
-  message Transaction {
-    uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
-    uint64 block_height = 2; // порядковый номер блока
-    string transaction_hash = 3; // хэш транзакции
-    uint32 transaction_index = 5; // индекс для уникальной транзакции
-    uint32 account_id = 6; // идентификатор пользователя
-    string value = 7; // сумма
-    string value_formatted = 8; // сумма форматированная
-    bool success = 9; // результат успешной транзакции
-    bool main_chain = 10; // результат нахождения транзакции в основной цепи
-  }
+
+message DepositTransactionListResponse {
   Error.ID error_id = 1;
   uint64 block_height = 2; // порядковый номер блока
-  repeated Transaction transactions = 3;
+  repeated mlmbox.local.type.Processing.Transaction.Deposit.TRX transactions = 3;
 }
-message TRC20IncomeTransactionListRequest {
-  uint32 last_modification_id = 1;
-  uint32 limit = 2;
+message WithdrawalCreateRequest {
+  uint32 withdrawal_id = 1;
+  string address = 2;
+  string value_formatted = 3;
 }
-message TRC20IncomeTransactionListResponse {
-  message Transaction {
-    uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
-    uint64 block_height = 2; // порядковый номер блока
-    string transaction_hash = 3; // хэш транзакции
-    string contract_address = 4; // адрес контракта
-    uint32 contract_index = 5; // индекс для уникальной транзакции
-    uint32 account_id = 6; // идентификатор пользователя
-    string value = 7; // сумма
-    string value_formatted = 8; // сумма форматированная
-    bool success = 9; // результат успешной транзакции
-    bool main_chain = 10; // результат нахождения транзакции в основной цепи
-  }
+message WithdrawalNeedProcessedGetResponse {
+  Error.ID error_id = 1;
+  uint32 withdrawal_id = 2;
+  string address = 3;
+  string value = 4;
+}
+message WithdrawalNeedProcessedSetRequest {
+  uint32 withdrawal_id = 1;
+  string transaction_hash = 2;
+  uint32 transaction_index = 3;
+  uint32 transaction_expires_at = 4;
+  bytes transaction_data = 5;
+}
+message WithdrawalTransactionListResponse {
   Error.ID error_id = 1;
   uint64 block_height = 2; // порядковый номер блока
-  repeated Transaction transactions = 3;
+  repeated mlmbox.local.type.Processing.Transaction.Withdrawal.TRX transactions = 3;
+}
+
+message TRC20DepositTransactionListResponse {
+  Error.ID error_id = 1;
+  uint64 block_height = 2; // порядковый номер блока
+  repeated mlmbox.local.type.Processing.Transaction.Deposit.TRC20 transactions = 3;
+}
+message TRC20WithdrawalCreateRequest {
+  uint32 withdrawal_id = 1;
+  string contract_address = 2; // адрес контракта
+  string address = 3;
+  string value_formatted = 4;
+}
+message TRC20WithdrawalNeedProcessedGetResponse {
+  Error.ID error_id = 1;
+  uint32 withdrawal_id = 2;
+  string contract_address = 3; // адрес контракта
+  string address = 4;
+  string value = 5;
+}
+message TRC20WithdrawalNeedProcessedSetRequest {
+  uint32 withdrawal_id = 1;
+  string contract_address = 2; // адрес контракта
+  string transaction_hash = 3;
+  uint32 transaction_index = 4;
+  uint32 transaction_expires_at = 5;
+  bytes transaction_data = 6;
+}
+message TRC20WithdrawalTransactionListResponse {
+  Error.ID error_id = 1;
+  uint64 block_height = 2; // порядковый номер блока
+  repeated mlmbox.local.type.Processing.Transaction.Withdrawal.TRC20 transactions = 3;
 }
