@@ -162,7 +162,7 @@ message TRC20WithdrawalNeedProcessedSetRequest {
   uint32 withdrawal_id = 1;
   string contract_address = 2; // адрес контракта
   string transaction_hash = 3;
-  uint32 transaction_index = 4;
+  uint32 contract_index = 4;
   uint32 transaction_expires_at = 5;
   bytes transaction_data = 6;
 }
