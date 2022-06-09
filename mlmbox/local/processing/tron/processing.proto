@@ -29,6 +29,8 @@ service Processing {
   rpc TRC20WithdrawalNeedProcessedGet (google.protobuf.Empty) returns (TRC20WithdrawalNeedProcessedGetResponse) {}
   rpc TRC20WithdrawalNeedProcessedSet (TRC20WithdrawalNeedProcessedSetRequest) returns (Error) {}
   rpc TRC20WithdrawalTransactionList (TransactionListRequest) returns (TRC20WithdrawalTransactionListResponse) {}
+
+  rpc MigrationNeedProcessedSet (MigrationNeedProcessedSetRequest) returns (Error) {}
 }
 
 message Error {
@@ -170,4 +172,8 @@ message TRC20WithdrawalTransactionListResponse {
   Error.ID error_id = 1;
   uint64 block_height = 2; // порядковый номер блока
   repeated mlmbox.local.type.Processing.Transaction.Withdrawal.TRC20 transactions = 3;
+}
+message MigrationNeedProcessedSetRequest {
+  string transaction_hash = 1;
+  string transaction_data = 2;
 }
