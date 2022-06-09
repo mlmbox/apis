@@ -131,8 +131,8 @@ message WithdrawalNeedProcessedSetRequest {
   uint32 withdrawal_id = 1;
   string transaction_hash = 2;
   uint32 transaction_index = 3;
-  uint32 transaction_expires_at = 4;
-  bytes transaction_data = 5;
+  int64 transaction_expires_at = 4;
+  string transaction_data = 5;
 }
 message WithdrawalTransactionListResponse {
   Error.ID error_id = 1;
@@ -163,8 +163,8 @@ message TRC20WithdrawalNeedProcessedSetRequest {
   string contract_address = 2; // адрес контракта
   string transaction_hash = 3;
   uint32 contract_index = 4;
-  uint32 transaction_expires_at = 5;
-  bytes transaction_data = 6;
+  int64 transaction_expires_at = 5;
+  string transaction_data = 6;
 }
 message TRC20WithdrawalTransactionListResponse {
   Error.ID error_id = 1;
