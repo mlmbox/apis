@@ -45,6 +45,7 @@ message PlanSubscribe {
     uint32 duration = 3;
     uint32 created_at = 4;
     uint32 expires_at = 5;
+    bool gift = 6;
   }
 }
 message PlanCinema {
@@ -74,6 +75,7 @@ message PlanPackageObject {
     message PlanSubscribeTicket {
       uint32 package_id = 1;
       bool auto_activate = 2;
+      bool gift = 3;
     }
     message PlanCinemaTicket {
       uint32 package_id = 1;
