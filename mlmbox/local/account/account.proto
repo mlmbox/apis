@@ -44,6 +44,8 @@ service Account {
   rpc FarmingInfo (mlmbox.local.type.Account.ID) returns (FarmingInfoResponse) {}
   rpc FarmingContractGet (FarmingContractRequest) returns (FarmingContractGetResponse) {}
   rpc FarmingContractEventsAll (FarmingContractRequest) returns (FarmingContractEventsAllResponse) {}
+
+  rpc AdminAccessCheck (mlmbox.local.type.Account.ID) returns (Error) {}
 }
 
 message Error {
