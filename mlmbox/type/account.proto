@@ -34,4 +34,5 @@ message Account {
   mlmbox.type.Farming.State farming_state = 16;
   bool baned = 17;
   bool activated = 18;
+  bool is_admin = 19;
 }
