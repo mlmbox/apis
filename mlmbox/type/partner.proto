@@ -33,4 +33,6 @@ message Partner {
   uint32 team_subscribe_activated_quantity = 10;
   RelationType relation_type = 11;
   string email = 12; // account email
+  uint32 referral_id = 13;
+  string referral_login = 14;
 }
