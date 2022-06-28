@@ -11,9 +11,16 @@ message NFT {
   message Collection {
     uint32 id = 1;
     string title = 2;
+    string blockchain = 3;
+    string contract_address = 4;
   }
-  Collection collection = 1;
-  uint32 object_id = 2;
-  string img_src = 3;
-  string properties = 4;
+  uint32 object_id = 1;
+  Collection collection = 2;
+  bool locked = 3;
+  bool enabled = 4;
+  uint32 token_id = 5;
+  string name = 6;
+  string description = 7;
+  string img_src = 8;
+  string properties = 9;
 }
