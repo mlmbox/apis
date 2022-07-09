@@ -44,3 +44,10 @@ message ExchangerRate {
   string rate_buy = 4;
   uint32 modified_at = 5;
 }
+
+message ExchangerRateTask {
+  string asset_pair_name = 1;
+  string rate_sell = 2;
+  string rate_buy = 3;
+  uint32 created_at = 4;
+}
