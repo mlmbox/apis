@@ -13,6 +13,13 @@ message Partner {
     bool activated = 5;
     uint32 activated_at = 6;
   }
+  message ShortInfo {
+    uint32 account_id = 1;
+    string account_login = 2;
+    bool subscribe_activated = 3;
+    string profile_name = 4;
+    string profile_surname = 5;
+  }
   enum RelationType {
     UNKNOWN = 0;
     SELF = 1;
