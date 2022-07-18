@@ -21,14 +21,13 @@ message Wallet {
           SPENT_PLAN_CINEMA = 5; // потрачено
           DEPOSIT = 6; // пополнение
           WITHDRAWAL = 7; // вывод
-          DEPOSIT_VOUCHER = 8; // пополнение через ваучер
-          WITHDRAWAL_VOUCHER = 9; // вывод через создание ваучера
           DEPOSIT_WALLET_TRANSFER = 10; // перевод между кошельками (получение)
           WITHDRAWAL_WALLET_TRANSFER = 11; // перевод между кошельками (отправка)
           EXCHANGE = 12; // обмен валюты
           VOUCHER_WRAP = 13; // заморожено в ваучере
           VOUCHER_UNWRAP = 14; // разморожено из ваучера
           VOUCHER_PURCHASE = 15; // активация ваучера через платеж
+          VOUCHER_INCOME = 16; // доход от продажи ваучера
         }
         ID kind_id = 1;
       }
