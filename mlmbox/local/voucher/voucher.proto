@@ -4,6 +4,7 @@ package mlmbox.local.voucher;
 
 import "mlmbox/local/type/account.proto";
 import "mlmbox/local/type/product.proto";
+import "mlmbox/type/sort.proto";
 import "mlmbox/type/voucher.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/voucher;service_local_voucher_pb";
@@ -15,6 +16,7 @@ service Voucher {
   rpc Create (VoucherCreateRequest) returns (VoucherResponse) {} // create a voucher
   rpc Reject (VoucherRequest) returns (Error) {} // cancel the generated voucher
   rpc Activate (VoucherActivateRequest) returns (Error) {} // activate voucher
+  rpc MarketList (VoucherMarketListRequest) returns (VoucherAllResponse) {} // list of available vouchers
 }
 
 message Error {
@@ -53,4 +55,9 @@ message VoucherActivateRequest {
   uint32 account_id = 1;
   uint32 voucher_id = 2;
   string activation_code = 3;
+}
+message VoucherMarketListRequest {
+  uint32 account_id = 1;
+  uint32 step_voucher_id = 2;
+  mlmbox.type.Sort sort_vouchers = 3;
 }
