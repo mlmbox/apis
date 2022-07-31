@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+package mlmbox.local.processing.bitcoin;
+
+import "mlmbox/local/type/processing.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/processing/bitcoin;service_local_processing_bitcoin_pb";
+
+service Processing {
+  rpc GetUserAddress (GetAccountAddressRequest) returns (GetAccountAddressResponse) {}
+  rpc SetUserAddress (SetAccountAddressRequest) returns (Error) {}
+  rpc GetCompanyAddress (GetAccountAddressRequest) returns (GetAccountAddressResponse) {}
+  rpc SetCompanyAddress (SetAccountAddressRequest) returns (Error) {}
+
+  rpc GetBlockNum (GetBlockNumRequest) returns (BlockNum) {}
+  rpc GetLastBlockNum (google.protobuf.Empty) returns (BlockNum) {}
+  rpc SetBlock (SetBlockRequest) returns (BlockNum) {}
+  rpc SetBlockUnMark (SetBlockUnMarkRequest) returns (Error) {}
+
+  rpc DepositTransactionList (TransactionListRequest) returns (DepositTransactionListResponse) {}
+  rpc WithdrawalCreate (WithdrawalCreateRequest) returns (Error) {}
+  // rpc WithdrawalNeedProcessedGet (google.protobuf.Empty) returns (WithdrawalNeedProcessedGetResponse) {}
+  // rpc WithdrawalNeedProcessedSet (WithdrawalNeedProcessedSetRequest) returns (Error) {}
+  rpc WithdrawalTransactionList (TransactionListRequest) returns (WithdrawalTransactionListResponse) {}
+
+  // rpc MigrationNeedProcessedSet (MigrationNeedProcessedSetRequest) returns (Error) {}
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    NOT_FOUND = 1;
+    UNAVAILABLE = 2;
+    BLOCK_NOT_FOUND = 3;
+    BLOCK_PREV_NOT_FOUND = 4;
+    CHAIN_BROKEN = 5;
+    WITHDRAWAL_EXISTS = 6;
+  }
+  ID error_id = 1;
+}
+message GetAccountAddressRequest {
+  uint32 account_id = 1;
+  bool use_wif = 2;
+}
+message GetAccountAddressResponse {
+  Error.ID error_id = 1;
+  string wif = 2;
+  string address = 3;
+}
+message SetAccountAddressRequest {
+  uint32 account_id = 1;
+  string wif = 2;
+  string address = 3;
+  bool ignore_exists = 4;
+}
+message GetBlockNumRequest {
+  uint64 block_height = 1;
+}
+message BlockNum {
+  Error.ID error_id = 1;
+  string block_hash = 2;
+  uint64 block_height = 3;
+}
+message Transaction {
+  message Input {
+    string transaction_hash = 1;
+    uint32 transaction_index = 2;
+  }
+  message Output {
+    uint32 transaction_index = 1;
+    string address = 2;
+    string value = 3;
+  }
+  uint32 block_index = 1;
+  string transaction_hash = 2;
+  repeated Input inputs = 3;
+  repeated Output outputs = 4;
+}
+message SetBlockRequest {
+  string block_hash = 1;
+  string block_prev_hash = 2;
+  int64 block_timestamp = 3;
+  repeated Transaction transactions = 4;
+}
+message SetBlockUnMarkRequest {
+  uint64 block_height = 1;
+}
+message TransactionListRequest {
+  uint32 last_modification_id = 1;
+  uint32 limit = 2;
+}
+message DepositTransactionListResponse {
+  Error.ID error_id = 1;
+  uint64 block_height = 2; // порядковый номер блока
+  repeated mlmbox.local.type.Processing.Transaction.Deposit.BTC transactions = 3;
+}
+message WithdrawalCreateRequest {
+  uint32 withdrawal_id = 1;
+  string address = 2;
+  string value_formatted = 3;
+}
+/*message WithdrawalNeedProcessedGetResponse {
+  Error.ID error_id = 1;
+  uint32 withdrawal_id = 2;
+  string address = 3;
+  string value = 4;
+}*/
+/*message WithdrawalNeedProcessedSetRequest {
+  uint32 withdrawal_id = 1;
+  string transaction_hash = 2;
+  uint32 transaction_index = 3;
+  int64 transaction_expires_at = 4;
+  string transaction_data = 5;
+}*/
+message WithdrawalTransactionListResponse {
+  Error.ID error_id = 1;
+  uint64 block_height = 2; // порядковый номер блока
+  repeated mlmbox.local.type.Processing.Transaction.Withdrawal.BTC transactions = 3;
+}
+
+/*message MigrationNeedProcessedSetRequest {
+  string transaction_hash = 1;
+  string transaction_data = 2;
+}*/
