@@ -7,6 +7,10 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/type/processing;
 message Processing {
   message Block {
     message Deposit {
+      message BTC {
+        uint64 block_height = 1;
+        repeated Processing.Transaction.Deposit.BTC transactions = 2;
+      }
       message TRX {
         uint64 block_height = 1;
         repeated Processing.Transaction.Deposit.TRX transactions = 2;
@@ -17,6 +21,10 @@ message Processing {
       }
     }
     message Withdrawal {
+      message BTC {
+        uint64 block_height = 1;
+        repeated Processing.Transaction.Withdrawal.BTC transactions = 2;
+      }
       message TRX {
         uint64 block_height = 1;
         repeated Processing.Transaction.Withdrawal.TRX transactions = 2;

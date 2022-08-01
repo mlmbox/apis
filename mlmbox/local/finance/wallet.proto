@@ -21,11 +21,15 @@ service Wallet {
   rpc ProcessingsGet (ProcessingsGetRequest) returns (ProcessingsGetResponse) {}
   rpc ProcessingsAll (mlmbox.local.type.Account.ID) returns (ProcessingsAllResponse) {}
 
+  rpc ProcessingBitcoinDepositLastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingBitcoinDeposit (mlmbox.local.type.Processing.Block.Deposit.BTC) returns (ProcessingTronModificationResponse) {}
   rpc ProcessingTronDepositTRXLastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
   rpc ProcessingTronDepositTRX (mlmbox.local.type.Processing.Block.Deposit.TRX) returns (ProcessingTronModificationResponse) {}
   rpc ProcessingTronDepositTRC20LastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
   rpc ProcessingTronDepositTRC20 (mlmbox.local.type.Processing.Block.Deposit.TRC20) returns (ProcessingTronModificationResponse) {}
 
+  rpc ProcessingBitcoinWithdrawalLastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingBitcoinWithdrawal (mlmbox.local.type.Processing.Block.Withdrawal.BTC) returns (ProcessingTronModificationResponse) {}
   rpc ProcessingTronWithdrawalTRXLastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
   rpc ProcessingTronWithdrawalTRX (mlmbox.local.type.Processing.Block.Withdrawal.TRX) returns (ProcessingTronModificationResponse) {}
   rpc ProcessingTronWithdrawalTRC20LastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
