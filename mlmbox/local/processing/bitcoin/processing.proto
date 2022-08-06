@@ -76,6 +76,7 @@ message Transaction {
   string transaction_hash = 2;
   repeated Input inputs = 3;
   repeated Output outputs = 4;
+  int64 lock_time = 5;
 }
 message SetBlockRequest {
   string block_hash = 1;
