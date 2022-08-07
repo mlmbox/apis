@@ -45,8 +45,7 @@ message Processing {
         uint32 account_id = 6; // идентификатор пользователя
         string value = 7; // сумма
         string value_formatted = 8; // сумма форматированная
-        bool success = 9; // результат успешной транзакции
-        bool main_chain = 10; // результат нахождения транзакции в основной цепи
+        bool main_chain = 9; // результат нахождения транзакции в основной цепи
       }
       message TRX {
         uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
@@ -81,10 +80,8 @@ message Processing {
         string value_formatted = 5; // сумма форматированная
         string transaction_hash = 6; // хэш транзакции
         uint32 transaction_index = 7; // индекс для уникальной транзакции
-        bool transaction_expired = 8; // истек срок действия транзакции
-        uint64 block_height = 9; // порядковый номер блока
-        bool success = 10; // результат успешной транзакции
-        bool main_chain = 11; // результат нахождения транзакции в основной цепи
+        uint64 block_height = 8; // порядковый номер блока
+        bool main_chain = 9; // результат нахождения транзакции в основной цепи
       }
       message TRX {
         uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
