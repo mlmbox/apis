@@ -102,6 +102,7 @@ message WithdrawalCreateRequest {
 message WithdrawalNeedProcessedGetRequest {
   uint32 tasks_limit_quantity = 1;
   bool inputs_start_less = 2;
+  string extra_value = 3;
 }
 message WithdrawalNeedProcessedGetResponse {
   message Input {
