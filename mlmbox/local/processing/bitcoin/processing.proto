@@ -20,11 +20,9 @@ service Processing {
 
   rpc DepositTransactionList (TransactionListRequest) returns (DepositTransactionListResponse) {}
   rpc WithdrawalCreate (WithdrawalCreateRequest) returns (Error) {}
-  // rpc WithdrawalNeedProcessedGet (google.protobuf.Empty) returns (WithdrawalNeedProcessedGetResponse) {}
-  // rpc WithdrawalNeedProcessedSet (WithdrawalNeedProcessedSetRequest) returns (Error) {}
+  rpc WithdrawalNeedProcessedGet (WithdrawalNeedProcessedGetRequest) returns (WithdrawalNeedProcessedGetResponse) {}
+  rpc WithdrawalNeedProcessedSet (WithdrawalNeedProcessedSetRequest) returns (Error) {}
   rpc WithdrawalTransactionList (TransactionListRequest) returns (WithdrawalTransactionListResponse) {}
-
-  // rpc MigrationNeedProcessedSet (MigrationNeedProcessedSetRequest) returns (Error) {}
 }
 
 message Error {
@@ -101,26 +99,42 @@ message WithdrawalCreateRequest {
   string address = 2;
   string value_formatted = 3;
 }
-/*message WithdrawalNeedProcessedGetResponse {
+message WithdrawalNeedProcessedGetRequest {
+  uint32 tasks_limit_quantity = 1;
+  bool inputs_start_less = 2;
+}
+message WithdrawalNeedProcessedGetResponse {
+  message Input {
+    string transaction_hash = 1;
+    uint32 transaction_index = 2;
+    string wif = 3;
+    string value = 4;
+  }
+  message Task {
+    uint32 withdrawal_id = 1;
+    string address = 2;
+    string value = 3;
+  }
   Error.ID error_id = 1;
-  uint32 withdrawal_id = 2;
-  string address = 3;
-  string value = 4;
-}*/
-/*message WithdrawalNeedProcessedSetRequest {
-  uint32 withdrawal_id = 1;
-  string transaction_hash = 2;
-  uint32 transaction_index = 3;
-  int64 transaction_expires_at = 4;
-  string transaction_data = 5;
-}*/
+  repeated Input inputs = 2;
+  repeated Task tasks = 3;
+}
+message WithdrawalNeedProcessedSetRequest {
+  message Input {
+    string transaction_hash = 1;
+    uint32 transaction_index = 2;
+  }
+  message Output {
+    uint32 withdrawal_id = 1;
+    uint32 transaction_index = 2;
+  }
+  string transaction_hash = 1;
+  repeated Input inputs = 2;
+  repeated Output outputs = 3;
+  string transaction_data = 4;
+}
 message WithdrawalTransactionListResponse {
   Error.ID error_id = 1;
   uint64 block_height = 2; // порядковый номер блока
   repeated mlmbox.local.type.Processing.Transaction.Withdrawal.BTC transactions = 3;
 }
-
-/*message MigrationNeedProcessedSetRequest {
-  string transaction_hash = 1;
-  string transaction_data = 2;
-}*/
