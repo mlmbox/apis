@@ -30,6 +30,7 @@ message Account {
   uint32 partners_quantity = 12;
   uint32 team_quantity = 13;
   uint32 team_subscribe_activated_quantity = 14;
+  uint32 team_farming_contracts_quantity = 20;
   repeated mlmbox.type.Bonus bonuses = 15;
   mlmbox.type.Farming.State farming_state = 16;
   bool baned = 17;
