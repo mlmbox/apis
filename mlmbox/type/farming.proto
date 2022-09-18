@@ -19,6 +19,8 @@ message Farming {
       uint32 created_at = 4;
     }
     uint32 contract_id = 1;
+    uint32 package_id = 16;
+    string package_title = 17;
     string farming_percent = 2; // income percentage
     uint32 farming_duration = 3; // time range after which the reward is calculated in the amount of "farming_percent"
     uint32 lockup_duration = 4; // term of the contract
