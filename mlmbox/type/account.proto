@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package mlmbox.type;
+import "mlmbox/type/binary.proto";
 import "mlmbox/type/bonus.proto";
 import "mlmbox/type/farming.proto";
 import "mlmbox/type/google_authenticator.proto";
@@ -36,4 +37,5 @@ message Account {
   bool baned = 17;
   bool activated = 18;
   bool is_admin = 19;
+  mlmbox.type.Binary.Position binary_position = 21;
 }
