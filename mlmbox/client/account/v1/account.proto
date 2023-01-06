@@ -16,6 +16,7 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/account/v1;serv
 
 service Account {
   rpc Info (google.protobuf.Empty) returns (mlmbox.type.Account) {} // display account information
+  rpc BonusesAutoExchangeSet (BonusesAutoExchangeSetRequest) returns (google.protobuf.Empty) {} // update settings for auto exchange income bonuses to USDT
   rpc ProfileSet (mlmbox.type.Profile) returns (mlmbox.type.Profile) {} // update profile
   rpc GoogleAuthenticatorGenerate (google.protobuf.Empty) returns (mlmbox.type.GoogleAuthenticator.SecretCode) {} // generate 2FA
   rpc GoogleAuthenticatorActivate (mlmbox.type.GoogleAuthenticator.VerifiedCode) returns (mlmbox.type.GoogleAuthenticator.VerifiedCode.Status) {} // activate 2FA
@@ -29,6 +30,9 @@ service Account {
   rpc BonusesInfo (google.protobuf.Empty) returns (AccountBonusesInfoResponse) {} // display a list of bonuses
 }
 
+message BonusesAutoExchangeSetRequest {
+  bool enabled = 1;
+}
 message AccountPasswordSetRequest {
   string password_new = 1;
 }

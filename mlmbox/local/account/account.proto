@@ -33,6 +33,7 @@ service Account {
   rpc CareerInfo(mlmbox.local.type.Account.ID) returns (AccountCareerInfoResponse) {}
   rpc PortfolioInfo(mlmbox.local.type.Account.ID) returns (AccountPortfolioInfoResponse) {}
   rpc BonusesInfo(mlmbox.local.type.Account.ID) returns (AccountBonusesInfoResponse) {}
+  rpc BonusesAutoExchangeSet (BonusesAutoExchangeSetRequest) returns (Error) {}
 
   rpc NetworkPartnerGet (NetworkPartnerRequest) returns (NetworkPartnerResponse) {}
   rpc NetworkPartnerSearch (NetworkPartnerSearchRequest) returns (NetworkPartnersShortInfoResponse) {}
@@ -156,6 +157,10 @@ message AccountBonusesInfoResponse {
   repeated mlmbox.type.Bonus bonuses = 2;
 }
 
+message BonusesAutoExchangeSetRequest {
+  uint32 account_id = 1;
+  bool enabled = 2;
+}
 message NetworkPartnerRequest {
   uint32 account_id = 1;
   uint32 view_partner_id = 2;

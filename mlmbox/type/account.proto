@@ -38,4 +38,6 @@ message Account {
   bool activated = 18;
   bool is_admin = 19;
   mlmbox.type.Binary.Position binary_position = 21;
+  bool bonuses_auto_exchange_enabled = 22;
+  bool wallet_exchange_enabled = 23;
 }
