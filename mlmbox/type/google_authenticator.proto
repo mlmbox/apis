@@ -25,9 +25,28 @@ message GoogleAuthenticator {
         WRONG_CODE = 3;
       }
       ID status_id = 1;
+      mlmbox.type.GoogleAuthenticator result = 2; // not empty when [status_id == APPROVED]
     }
     string verified_code = 1;
   }
+  message UsageSettings {
+    message UpdateRequest {
+      message Field {
+        uint32 field_id = 1;
+        bool value = 4;
+      }
+      repeated Field fields = 1;
+    }
+    message Field {
+      uint32 field_id = 1;
+      string field_name = 2;
+      bool default_value = 3;
+      bool current_value = 4;
+      bool editable = 5;
+    }
+    repeated Field fields = 1;
+  }
   Status.ID status = 1;
   uint32 modified_at = 2;
+  UsageSettings usage_setting = 3;
 }

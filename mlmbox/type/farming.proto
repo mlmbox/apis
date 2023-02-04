@@ -9,38 +9,32 @@ message Farming {
     message ID {
       uint32 contract_id = 1;
     }
-    message Event {
-      message ID {
-        uint32 event_id = 1;
-      }
-      uint32 event_id = 1;
-      string unlocked_value = 2;
-      string earned_value = 3;
-      uint32 created_at = 4;
-    }
     uint32 contract_id = 1;
-    uint32 package_id = 16;
-    string package_title = 17;
-    string farming_percent = 2; // income percentage
-    uint32 farming_duration = 3; // time range after which the reward is calculated in the amount of "farming_percent"
-    uint32 lockup_duration = 4; // term of the contract
+    uint32 package_id = 2;
+    string package_title = 3;
+    string farming_percent = 4; // income percentage
     string lockup_init_bonus_value = 5; // bonus value
     string lockup_init_body_value = 6; // body value
     string lockup_value = 7; // current value of the body
     string earned_value = 8; // total earned
-    uint32 created_at = 9;
-    bool activated = 10;
-    uint32 activated_at = 11;
-    bool closed = 12;
-    uint32 closed_at = 13;
-    uint32 events_quantity = 14;
-    repeated Event events = 15;
+    string burned_value = 9; // total burned
+    string closing_fee_percent = 10;
+    string passive_income_per_day_value = 11;
+    uint32 created_at = 12;
+    bool activated = 13;
+    uint32 activated_at = 14;
+    bool closed = 15;
+    uint32 closed_at = 16;
+    bool unlocked = 17;
+    uint32 unlocked_at = 18;
   }
   message State {
     string lockup_init_total_value = 1;
     string lockup_hold_total_value = 2;
-    string earned_total_value = 3;
-    string earned_today_value = 4;
+    string lockup_locked_total_value = 3;
+    string earned_total_value = 4;
+    string burn_total_value = 5;
+    string passive_income_per_day_total_value = 6;
   }
   State state = 1;
   repeated Contract contracts = 2;

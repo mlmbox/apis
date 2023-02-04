@@ -3,15 +3,15 @@ syntax = "proto3";
 package mlmbox.client.auth.v1;
 
 import "mlmbox/type/confirmation.proto";
+import "google/protobuf/empty.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/auth/v1;service_client_auth_pb";
 
 service Auth {
   rpc SignIn (SignInRequest) returns (AuthResponse) {} // authorization
   rpc SignUp (SignUpRequest) returns (AuthResponse) {} // registration
-  rpc SignAttach (SignAttachRequest) returns (AuthResponse) {} // attach registration data
   rpc PasswordRecovery (PasswordRecoveryRequest) returns (AuthResponse) {} // recovery password
-  rpc TokenValidate (TokenValidateRequest) returns (TokenValidateResponse) {} // token validity check
+  rpc TokenValidate (google.protobuf.Empty) returns (TokenValidateResponse) {} // token validity check
 }
 
 message SignInRequest {
@@ -25,11 +25,6 @@ message SignUpRequest {
   string password = 4; // account password
   string locale = 5; // language identifier (en-US, ...)
 }
-message SignAttachRequest {
-  string email = 1; // account email
-  string password = 2; // account password
-  string locale = 3; // language identifier (en-US, ...)
-}
 message PasswordRecoveryRequest {
   string email = 1; // account email
   string password_new = 2;
@@ -37,20 +32,15 @@ message PasswordRecoveryRequest {
 message AuthResponse {
   enum Status {
     SUCCESS = 0; // Successfully. Redirect to dashboard page
-    ATTACH_STEP = 1; // go to the registration data binding stage
-    CONFIRMATION_STEP = 2; // go to the confirmation form validation stage
+    CONFIRMATION_STEP = 1; // go to the confirmation form validation stage
   }
   Status status = 1;
-  string access_token = 2; // the token is used in the "authorization: X.Y.Z" header to make authorized API requests
-  mlmbox.type.Confirmation confirmation = 3; // confirmation form
-}
-message TokenValidateRequest {
-  string access_token = 1;
+  mlmbox.type.Confirmation confirmation = 2; // confirmation form
 }
 message TokenValidateResponse {
   enum Kind {
-    SESSION = 0;
-    SIGN_ATTACH = 1;
+    UNKNOWN = 0;
+    SESSION = 1;
     CONFIRMATION_GUEST = 2;
   }
   Kind kind = 1;

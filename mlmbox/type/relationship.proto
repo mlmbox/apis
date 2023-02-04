@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package mlmbox.type;
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/relationship;relationship_pb";
+
+message Relationship {
+  enum Kind {
+    UNKNOWN = 0;
+    SELF = 1;
+    TEAM = 2;
+    REFERRAL = 3;
+    OUTSIDER = 4;
+  }
+  Kind kind = 1;
+  uint32 level = 2; // depth level
+  uint32 line = 3; // branch direction
+}

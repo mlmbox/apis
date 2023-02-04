@@ -4,6 +4,8 @@ package mlmbox.type;
 
 import "mlmbox/type/bonus.proto";
 import "mlmbox/type/payment.proto";
+import "mlmbox/type/time_point.proto";
+import "mlmbox/type/limit.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/plan;plan_pb";
 
@@ -16,84 +18,11 @@ message PlanFarming {
     string package_title = 2;
     string farming_percent = 3;
     uint32 farming_duration = 4;
-    uint32 lockup_duration = 5;
-    string lockup_addition_bonus_percent = 6;
-    string direct_bonus = 7;
-    string binary_bonus = 8;
-    uint32 binary_limit_asset_id = 9;
-    string binary_limit_value = 10;
-    repeated mlmbox.type.Bonus.LevelPercent matching_bonus = 11;
-    mlmbox.type.PaymentPriceRange payment_price_range = 12;
+    mlmbox.type.Limit quantity_limit = 5;
+    mlmbox.type.Limit quantity_available = 6;
+    mlmbox.type.DurationPoint lockup_duration = 7;
+    string lockup_addition_bonus_percent = 8;
+    repeated mlmbox.type.Bonus.LevelPercent direct_bonus = 9;
+    mlmbox.type.PaymentPriceRange payment_price_range = 10;
   }
-}
-message PlanSubscribe {
-  message Package {
-    message ID {
-      uint32 package_id = 1;
-    }
-    uint32 package_id = 1;
-    string package_title = 2;
-    uint32 duration = 3;
-    mlmbox.type.PaymentPrice payment_price = 4;
-  }
-  message Ticket {
-    message ID {
-      uint32 ticket_id = 1;
-    }
-    uint32 ticket_id = 1;
-    uint32 package_id = 2;
-    uint32 duration = 3;
-    uint32 created_at = 4;
-    uint32 expires_at = 5;
-    bool gift = 6;
-  }
-}
-message PlanCinema {
-  message Package {
-    message ID {
-      uint32 package_id = 1;
-    }
-    uint32 package_id = 1;
-    string package_title = 2;
-    uint32 duration = 3;
-    mlmbox.type.PaymentPrice payment_price = 4;
-  }
-  message Ticket {
-    message ID {
-      uint32 ticket_id = 1;
-    }
-    uint32 ticket_id = 1;
-    uint32 package_id = 2;
-    uint32 duration = 3;
-    uint32 created_at = 4;
-    uint32 expires_at = 5;
-    string password = 6;
-  }
-}
-message PlanPackageObject {
-  message Value {
-    message PlanSubscribeTicket {
-      uint32 package_id = 1;
-      bool auto_activate = 2;
-      bool gift = 3;
-    }
-    message PlanCinemaTicket {
-      uint32 package_id = 1;
-    }
-    message RouletteTicketCard {
-      uint32 counter_limit = 1; // displays the limit of available
-    }
-    message Money {
-      uint32 asset_id = 1;
-      string value = 2;
-    }
-    oneof unique_field {
-      PlanCinemaTicket plan_cinema_ticket = 1;
-      PlanSubscribeTicket plan_subscribe_ticket = 2;
-      RouletteTicketCard roulette_card = 3;
-      Money money = 4;
-    }
-  }
-  Value value = 1;
-  uint32 quantity = 2;
 }

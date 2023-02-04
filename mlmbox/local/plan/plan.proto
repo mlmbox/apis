@@ -11,16 +11,6 @@ service Plan {
   rpc FarmingPackageGet (PackageRequest) returns (FarmingPackageGetResponse) {}
   rpc FarmingPackageBuy (PlanFarmingPackageBuyRequest) returns (Error) {}
   rpc FarmingPackagesAll (mlmbox.local.type.Account.ID) returns (FarmingPackagesAllResponse) {}
-
-  rpc SubscribePackageGet (PackageRequest) returns (SubscribePackageGetResponse) {}
-  rpc SubscribePackageBuy (PlanSubscribePackageBuyRequest) returns (Error) {}
-  rpc SubscribePackagesAll (mlmbox.local.type.Account.ID) returns (SubscribePackagesAllResponse) {}
-  rpc SubscribeTicketActivate (PackageRequest) returns (Error) {}
-
-  rpc CinemaPackageGet (PackageRequest) returns (CinemaPackageGetResponse) {}
-  rpc CinemaPackagesAll (mlmbox.local.type.Account.ID) returns (CinemaPackagesAllResponse) {}
-  rpc CinemaTicketGet (CinemaTicketRequest) returns (CinemaTicketResponse) {}
-  rpc CinemaTicketActivateByPassword (CinemaTicketActivateByPasswordRequest) returns (CinemaTicketResponse) {}
 }
 
 message Error {
@@ -34,13 +24,8 @@ message Error {
     PACKAGE_NOT_FOUND = 6;
     PRICE_VALUE_WRONG = 7;
     BALANCE_NOT_ENOUGH = 8;
-    TICKET_UNAVAILABLE = 9;
   }
   ID error_id = 1;
-}
-message PlanFarmingPackage {
-  mlmbox.type.PlanFarming.Package package = 1;
-  repeated mlmbox.type.PlanPackageObject objects = 2;
 }
 message PackageRequest {
   uint32 account_id = 1;
@@ -48,7 +33,7 @@ message PackageRequest {
 }
 message FarmingPackageGetResponse {
   Error.ID error_id = 1;
-  PlanFarmingPackage package = 2;
+  mlmbox.type.PlanFarming.Package package = 2;
 }
 message PlanFarmingPackageBuyRequest {
   uint32 account_id = 1;
@@ -57,67 +42,6 @@ message PlanFarmingPackageBuyRequest {
 }
 message FarmingPackagesAllResponse {
   Error.ID error_id = 1;
-  repeated PlanFarmingPackage packages = 2;
+  repeated mlmbox.type.PlanFarming.Package packages = 2;
 }
 
-message PlanSubscribePackage {
-  mlmbox.type.PlanSubscribe.Package package = 1;
-  repeated mlmbox.type.PlanPackageObject objects = 2;
-}
-message SubscribePackageGetResponse {
-  Error.ID error_id = 1;
-  PlanSubscribePackage package = 2;
-}
-message PlanSubscribePackageBuyRequest {
-  uint32 account_id = 1;
-  uint32 package_id = 2;
-  uint32 asset_id = 3;
-  bool auto_activate = 4;
-}
-message SubscribePackagesAllResponse {
-  Error.ID error_id = 1;
-  repeated PlanSubscribePackage packages = 2;
-}
-
-message PlanCinemaPackage {
-  mlmbox.type.PlanCinema.Package package = 1;
-  repeated mlmbox.type.PlanPackageObject objects = 2;
-}
-message CinemaPackageGetResponse {
-  Error.ID error_id = 1;
-  PlanCinemaPackage package = 2;
-}
-message CinemaPackagesAllResponse {
-  Error.ID error_id = 1;
-  repeated PlanCinemaPackage packages = 2;
-}
-
-message CinemaTicketRequest {
-  uint32 ticket_id = 1;
-}
-message CinemaTicketActivateByPasswordRequest {
-  uint32 ticket_id = 1;
-  string password = 2;
-}
-message CinemaTicketResponse {
-  enum Status {
-    OK = 0;
-    NOT_FOUND = 1; // тикет не найден
-    PASSWORD_WRONG = 2; // пароль для активации не верный
-    NOT_UNAVAILABLE = 3; // тикет временно не доступен (в режиме блокировки)
-    ACTIVATED = 4; // уже активный
-    EXPIRED = 5; // срок действия истек
-  }
-  message Ticket {
-    uint32 ticket_id = 1;
-    bool locked = 2; // тикет заблокирован
-    bool activated = 3; // состояние активации
-    uint32 activated_at = 4; // дата активации
-    bool expired = 5; // состояние не действительного тикета по причине истечении доступного времени для активации
-    uint32 expires_at = 6; // дата в которой тикет будет считаться не доступным по истечении времени
-    uint32 created_at = 7; // дата создания
-    uint32 duration = 8; // время в секундах на которое активируется подписка
-  }
-  Status status_id = 1;
-  Ticket ticket = 2;
-}

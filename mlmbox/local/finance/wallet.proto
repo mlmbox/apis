@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package mlmbox.local.finance;
 
-import "mlmbox/type/asset.proto";
 import "mlmbox/local/type/account.proto";
 import "mlmbox/local/type/processing.proto";
 import "mlmbox/type/sort.proto";
@@ -38,8 +37,13 @@ service Wallet {
   rpc ProcessingShortInfo (mlmbox.type.Wallet.Processing.ID) returns (ProcessingsGetResponse) {}
   rpc WithdrawalCheck (WithdrawalCheckRequest) returns (WithdrawalCheckResponse) {}
   rpc WithdrawalCreate (WithdrawalCreateRequest) returns (AssetTransactionGetResponse) {}
-  rpc ExchangeInfo (mlmbox.local.type.Account.ID) returns (ExchangeInfoResponse) {}
-  rpc ExchangeCreate (ExchangeCreateRequest) returns (ExchangeCreateResponse) {}
+
+  rpc PoolGet (PoolGetRequest) returns (PoolGetResponse) {}
+  rpc PoolsAll (mlmbox.local.type.Account.ID) returns (PoolsAllResponse) {}
+  rpc PoolAssetGet (PoolAssetGetRequest) returns (PoolAssetGetResponse) {}
+  rpc PoolAssetsAll (PoolGetRequest) returns (PoolAssetsAllResponse) {}
+  rpc PoolAssetTransactionGet (PoolAssetTransactionGetRequest) returns (AssetTransactionGetResponse) {}
+  rpc PoolAssetTransactionList (PoolAssetTransactionListRequest) returns (AssetTransactionListResponse) {}
 }
 
 message Error {
@@ -147,24 +151,43 @@ message WithdrawalCreateRequest {
   string operation_fee = 5;
   string address = 6;
 }
-message ExchangeInfoResponse {
-  message Asset {
-    uint32 source_asset_id = 1;
-    string source_asset_value_min = 2;
-    repeated uint32 target_asset_ids = 3;
-  }
-  Error.ID error_id = 1;
-  repeated Asset assets = 2;
-  repeated mlmbox.type.ExchangerRate exchanger_rates = 3;
-}
-message ExchangeCreateRequest {
+
+message PoolGetRequest {
   uint32 account_id = 1;
-  uint32 source_asset_id = 2;
-  string source_asset_value = 3;
-  uint32 target_asset_id = 4;
+  uint32 pool_id = 2;
 }
-message ExchangeCreateResponse {
+message PoolGetResponse {
   Error.ID error_id = 1;
-  mlmbox.type.Wallet.Asset.Transaction source = 2;
-  mlmbox.type.Wallet.Asset.Transaction target = 3;
+  mlmbox.type.Wallet.Pool pool = 2;
+}
+message PoolsAllResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.type.Wallet.Pool pools = 2;
+}
+message PoolAssetGetRequest {
+  uint32 account_id = 1;
+  uint32 pool_id = 2;
+  uint32 asset_id = 3;
+  mlmbox.type.Sort sort_transactions = 4;
+}
+message PoolAssetGetResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Wallet.Pool.Asset asset = 2;
+}
+message PoolAssetsAllResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.type.Wallet.Pool.Asset assets = 2;
+}
+message PoolAssetTransactionGetRequest {
+  uint32 account_id = 1;
+  uint32 pool_id = 2;
+  uint32 asset_id = 3;
+  uint32 transaction_id = 4;
+}
+message PoolAssetTransactionListRequest {
+  uint32 account_id = 1;
+  uint32 pool_id = 2;
+  uint32 asset_id = 3;
+  uint32 step_transaction_id = 4;
+  mlmbox.type.Sort sort_transactions = 5;
 }

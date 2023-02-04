@@ -3,45 +3,30 @@ syntax = "proto3";
 package mlmbox.client.account.v1;
 
 import "mlmbox/type/account.proto";
-import "mlmbox/type/bonus.proto";
-import "mlmbox/type/career.proto";
 import "mlmbox/type/confirmation.proto";
 import "mlmbox/type/google_authenticator.proto";
 import "mlmbox/type/locale.proto";
-import "mlmbox/type/profile.proto";
-import "mlmbox/type/product.proto";
 import "google/protobuf/empty.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/account/v1;service_client_account_pb";
 
 service Account {
   rpc Info (google.protobuf.Empty) returns (mlmbox.type.Account) {} // display account information
-  rpc BonusesAutoExchangeSet (BonusesAutoExchangeSetRequest) returns (google.protobuf.Empty) {} // update settings for auto exchange income bonuses to USDT
-  rpc ProfileSet (mlmbox.type.Profile) returns (mlmbox.type.Profile) {} // update profile
+
+  rpc GoogleAuthenticatorInfo (google.protobuf.Empty) returns (mlmbox.type.GoogleAuthenticator) {} // view 2FA
   rpc GoogleAuthenticatorGenerate (google.protobuf.Empty) returns (mlmbox.type.GoogleAuthenticator.SecretCode) {} // generate 2FA
   rpc GoogleAuthenticatorActivate (mlmbox.type.GoogleAuthenticator.VerifiedCode) returns (mlmbox.type.GoogleAuthenticator.VerifiedCode.Status) {} // activate 2FA
   rpc GoogleAuthenticatorDeactivate (google.protobuf.Empty) returns (mlmbox.type.Confirmation) {} // deactivate 2FA
+  rpc GoogleAuthenticatorUsageSettingsUpdate (mlmbox.type.GoogleAuthenticator.UsageSettings.UpdateRequest) returns (mlmbox.type.Confirmation) {} // update 2FA usage settings
+
   rpc PasswordSet (AccountPasswordSetRequest) returns (mlmbox.type.Confirmation) {} // change password
   rpc EmailSet (AccountEmailSetRequest) returns (mlmbox.type.Confirmation) {} // replace the main contact with a new contact
   rpc LocaleSet (mlmbox.type.Locale.ID) returns (google.protobuf.Empty) {} // update the language of communication
-
-  rpc CareerInfo (google.protobuf.Empty) returns (mlmbox.type.Career) {} // display ranking system
-  rpc PortfolioInfo (google.protobuf.Empty) returns (AccountPortfolioInfoResponse) {} // display list of portfolio products
-  rpc BonusesInfo (google.protobuf.Empty) returns (AccountBonusesInfoResponse) {} // display a list of bonuses
 }
 
-message BonusesAutoExchangeSetRequest {
-  bool enabled = 1;
-}
 message AccountPasswordSetRequest {
   string password_new = 1;
 }
 message AccountEmailSetRequest {
   string email_new = 1;
-}
-message AccountPortfolioInfoResponse {
-  repeated mlmbox.type.Product.Object objects = 1;
-}
-message AccountBonusesInfoResponse {
-  repeated mlmbox.type.Bonus bonuses = 1;
 }

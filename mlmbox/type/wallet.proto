@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package mlmbox.type;
+import "mlmbox/type/time_point.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/wallet;wallet_pb";
 
@@ -17,17 +18,13 @@ message Wallet {
           CANCELED = 1;
           EARNED = 2; // заработано
           SPENT_PLAN_FARMING = 3; // потрачено
-          SPENT_PLAN_SUBSCRIBE = 4; // потрачено
-          SPENT_PLAN_CINEMA = 5; // потрачено
-          DEPOSIT = 6; // пополнение
-          WITHDRAWAL = 7; // вывод
-          DEPOSIT_WALLET_TRANSFER = 10; // перевод между кошельками (получение)
-          WITHDRAWAL_WALLET_TRANSFER = 11; // перевод между кошельками (отправка)
-          EXCHANGE = 12; // обмен валюты
-          VOUCHER_WRAP = 13; // заморожено в ваучере
-          VOUCHER_UNWRAP = 14; // разморожено из ваучера
-          VOUCHER_PURCHASE = 15; // активация ваучера через платеж
-          VOUCHER_INCOME = 16; // доход от продажи ваучера
+          DEPOSIT = 4; // пополнение
+          WITHDRAWAL = 5; // вывод
+          DEPOSIT_WALLET_TRANSFER = 6; // перевод между кошельками (получение)
+          WITHDRAWAL_WALLET_TRANSFER = 7; // перевод между кошельками (отправка)
+          EXCHANGE = 8; // обмен валюты
+          POOL_DEPOSIT = 9; // пополнение из pool
+          POOL_WITHDRAWAL = 10; // вывод от pool
         }
         ID kind_id = 1;
       }
@@ -50,6 +47,16 @@ message Wallet {
       string operation_amount = 8;
       uint32 created_at = 9;
       string description = 10;
+    }
+    message BalanceHistory {
+      message Transaction {
+        uint32 transaction_id = 1;
+        string balance = 2;
+        uint32 created_at = 3;
+      }
+      uint32 asset_id = 1;
+      string asset_balance = 2;
+      repeated Transaction transactions = 3;
     }
 
     uint32 asset_id = 1;
@@ -75,6 +82,27 @@ message Wallet {
     repeated Asset assets = 3;
   }
 
+  message Pool {
+    message ID {
+      uint32 pool_id = 1;
+    }
+    message Asset {
+      message State {
+        mlmbox.type.TimePoint init_at = 1;
+        mlmbox.type.TimePoint unlock_at = 2;
+      }
+      uint32 asset_id = 1;
+      string asset_balance = 2;
+      State state = 3;
+      repeated mlmbox.type.Wallet.Asset.Transaction transactions = 4;
+    }
+    uint32 pool_id = 1;
+    string pool_title = 2;
+    repeated Asset assets = 3;
+  }
+
   repeated Asset assets = 1;
   repeated Processing processings = 2;
+  repeated Pool pools = 3;
 }
+

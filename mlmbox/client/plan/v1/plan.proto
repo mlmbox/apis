@@ -3,51 +3,21 @@ syntax = "proto3";
 package mlmbox.client.plan.v1;
 
 import "mlmbox/type/plan.proto";
+import "mlmbox/type/farming.proto";
 import "google/protobuf/empty.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/plan/v1;service_client_plan_pb";
 
 service Plan {
-  rpc FarmingPackageGet (mlmbox.type.PlanFarming.Package.ID) returns (PlanFarmingPackage) {}
-  rpc FarmingPackageBuy (PlanFarmingPackageBuyRequest) returns (google.protobuf.Empty) {}
+  rpc FarmingPackageGet (mlmbox.type.PlanFarming.Package.ID) returns (mlmbox.type.PlanFarming.Package) {}
+  rpc FarmingPackageBuy (PlanFarmingPackageBuyRequest) returns (mlmbox.type.Farming.Contract) {}
   rpc FarmingPackagesAll (google.protobuf.Empty) returns (PlanFarmingPackagesAllResponse) {}
-
-  rpc SubscribePackageGet (mlmbox.type.PlanSubscribe.Package.ID) returns (PlanSubscribePackage) {}
-  rpc SubscribePackageBuy (PlanSubscribePackageBuyRequest) returns (google.protobuf.Empty) {}
-  rpc SubscribePackagesAll (google.protobuf.Empty) returns (PlanSubscribePackagesAllResponse) {}
-  rpc SubscribeTicketActivate (mlmbox.type.PlanSubscribe.Package.ID) returns (google.protobuf.Empty) {}
-
-  rpc CinemaPackageGet (mlmbox.type.PlanCinema.Package.ID) returns (PlanCinemaPackage) {}
-  rpc CinemaPackagesAll (google.protobuf.Empty) returns (PlanCinemaPackagesAllResponse) {}
 }
 
-message PlanFarmingPackage {
-  mlmbox.type.PlanFarming.Package package = 1;
-  repeated mlmbox.type.PlanPackageObject objects = 2;
-}
 message PlanFarmingPackageBuyRequest {
   uint32 asset_id = 1;
   string price_value = 2;
 }
 message PlanFarmingPackagesAllResponse {
-  repeated PlanFarmingPackage packages = 1;
-}
-message PlanSubscribePackage {
-  mlmbox.type.PlanSubscribe.Package package = 1;
-  repeated mlmbox.type.PlanPackageObject objects = 2;
-}
-message PlanSubscribePackageBuyRequest {
-  uint32 package_id = 1;
-  uint32 asset_id = 2;
-  bool auto_activate = 3;
-}
-message PlanSubscribePackagesAllResponse {
-  repeated PlanSubscribePackage packages = 1;
-}
-message PlanCinemaPackage {
-  mlmbox.type.PlanCinema.Package package = 1;
-  repeated mlmbox.type.PlanPackageObject objects = 2;
-}
-message PlanCinemaPackagesAllResponse {
-  repeated PlanCinemaPackage packages = 1;
+  repeated mlmbox.type.PlanFarming.Package packages = 1;
 }

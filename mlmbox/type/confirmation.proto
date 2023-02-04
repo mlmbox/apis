@@ -3,6 +3,7 @@ syntax = "proto3";
 package mlmbox.type;
 
 import "google/protobuf/any.proto";
+import "mlmbox/type/time_point.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/confirmation;confirmation_pb";
 
@@ -31,7 +32,7 @@ message Confirmation {
     message Notification {
       uint32 next_at = 1; // displays the allowed time after which it is possible to send a new code
       uint32 created_at = 2; // displays the creation time of the current code
-      uint32 expires_at = 3; // displays the time after which the sent token will not be valid
+      mlmbox.type.TimePoint expires_at = 3; // displays the time after which the sent token will not be valid
       uint32 counter_limit = 4; // displays the limit of available notifications
       uint32 counter_value = 5; // displays the number of sent notifications with confirmation code
     }
@@ -49,7 +50,7 @@ message Confirmation {
   string method_name = 2;
   Status status_id = 3;
   uint32 created_at = 4;
-  uint32 expires_at = 5;
+  mlmbox.type.TimePoint expires_at = 5;
   uint32 modified_at = 6;
   uint32 counter_limit = 7;
   uint32 counter_value = 8;
@@ -65,12 +66,6 @@ message ConfirmationConfirmResponse {
     CONFIRMATION_NOT_FOUND = 3; // форма подтверждения не найдена
     CONFIRMATION_NOT_ACTIVATED = 4; // форма подтверждения не активна
   }
-  message Data {
-    oneof unique_field {
-      string access_token = 1;
-      google.protobuf.Any any = 2;
-    }
-  }
   message Field {
     enum Status {
       OK = 0;
@@ -85,5 +80,5 @@ message ConfirmationConfirmResponse {
 
   Status status = 1;
   repeated Field fields = 2;
-  Data data = 3;
+  google.protobuf.Any data = 3;
 }

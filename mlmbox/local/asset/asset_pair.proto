@@ -13,9 +13,6 @@ service AssetPair {
   rpc ExchangerRateGetByAssetPairs(mlmbox.local.type.AssetPair.Assets) returns (AssetPairExchangerRateResponse) {}
   rpc ExchangerRateAll(google.protobuf.Empty) returns (AssetPairExchangerRateAllResponse) {}
   rpc ExchangerRateSetByName(AssetPairExchangerRateSetByNameRequest) returns (AssetPairExchangerRateResponse) {}
-  rpc ExchangerRateTaskGetMTSUSDT(google.protobuf.Empty) returns (AssetPairExchangerRateTaskResponse) {}
-  rpc ExchangerRateTaskSetMTSUSDT(AssetPairExchangerRateTaskSetMTSUSDTRequest) returns (AssetPairExchangerRateTaskResponse) {}
-  rpc ExchangerRateTaskDeleteMTSUSDT(google.protobuf.Empty) returns (AssetPairError) {}
 }
 
 message AssetPairError {
@@ -42,11 +39,4 @@ message AssetPairExchangerRateSetByNameRequest {
   string asset_pair_name = 1;
   string rate_buy = 2;
   string rate_sell = 3;
-}
-message AssetPairExchangerRateTaskResponse {
-  AssetPairError.ID error_id = 1;
-  mlmbox.type.ExchangerRateTask exchanger_rate_task = 2;
-}
-message AssetPairExchangerRateTaskSetMTSUSDTRequest {
-  string rate_buy = 1;
 }
