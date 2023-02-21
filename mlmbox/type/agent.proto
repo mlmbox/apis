@@ -2,12 +2,17 @@ syntax = "proto3";
 
 package mlmbox.type;
 
-import "mlmbox/type/device.proto";
-
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/agent;agent_pb";
 
 message Agent {
-  string name = 1;
-  string version = 2;
-  Device device = 3;
+  bool bot = 1;
+  bool mobile = 2;
+  string browser_name = 3;
+  string browser_version = 4;
+  string platform = 5;
+  string os_name = 6;
+  string os_version = 7;
+  string engine_name = 8;
+  string engine_version = 9;
+  string localization = 10;
 }

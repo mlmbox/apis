@@ -1,7 +1,8 @@
 syntax = "proto3";
 
 package mlmbox.local.type;
-import "mlmbox/type/agent.proto";
+
+import "mlmbox/type/session.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/type/session;local_session_pb";
 
@@ -10,13 +11,9 @@ message Session {
     uint32 account_id = 1;
     uint32 session_id = 2;
   }
-  message Description {
-    string ip_init = 1;
-    mlmbox.type.Agent agent = 2;
-  }
   uint32 account_id = 1;
   uint32 session_id = 2;
   uint32 created_at = 3;
   uint32 expires_at = 4;
-  Description description = 5;
+  mlmbox.type.Session.Description description = 5;
 }

@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+package mlmbox.bot.processing.v1;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/bot/processing/v1;service_bot_processing_pb";
+
+service Processing {
+  rpc DepositAddress (stream DepositAddressDone) returns (stream DepositAddressTask) {}
+  rpc ValidateAddress (stream ValidateAddressDone) returns (stream ValidateAddressTask) {}
+  rpc WithdrawalCreate (stream WithdrawalCreateDone) returns (stream WithdrawalCreateTask) {}
+  rpc WithdrawalContractCreate (stream WithdrawalContractCreateDone) returns (stream WithdrawalContractCreateTask) {}
+  rpc BlockUpdate (BlockUpdateRequest) returns (google.protobuf.Empty) {}
+}
+
+message DepositAddressTask {
+  uint64 task_id = 1;
+  uint32 account_id = 2;
+}
+message ValidateAddressTask {
+  uint64 task_id = 1;
+  string address = 2;
+}
+message WithdrawalCreateTask {
+  uint64 task_id = 1;
+  uint32 withdrawal_id = 2;
+  string address = 3;
+  string amount = 4;
+}
+message WithdrawalContractCreateTask {
+  uint64 task_id = 1;
+  uint32 withdrawal_id = 2;
+  string contract = 3;
+  string address = 4;
+  string amount = 5;
+}
+
+message DepositAddressDone {
+  enum Status {
+    OK = 0;
+    UNAVAILABLE = 1;
+  }
+  message Data {
+    Status status = 1;
+    string address = 2;
+  }
+  uint64 task_id = 1;
+  Data data = 2;
+}
+message ValidateAddressDone {
+  message Data {
+    string address = 1;
+    bool validated = 2;
+  }
+  uint64 task_id = 1;
+  Data data = 2;
+}
+message WithdrawalCreateDone {
+  enum Status {
+    OK = 0;
+    UNAVAILABLE = 1;
+    WRONG_WITHDRAWAL_ID = 2;
+    WRONG_WITHDRAWAL_ADDRESS = 3;
+    WRONG_WITHDRAWAL_AMOUNT = 4;
+    WRONG_WITHDRAWAL_EXISTS = 5;
+  }
+  uint64 task_id = 1;
+  Status status = 2;
+}
+message WithdrawalContractCreateDone {
+  enum Status {
+    OK = 0;
+    UNAVAILABLE = 1;
+    WRONG_WITHDRAWAL_ID = 2;
+    WRONG_WITHDRAWAL_CONTRACT = 3;
+    WRONG_WITHDRAWAL_ADDRESS = 4;
+    WRONG_WITHDRAWAL_AMOUNT = 5;
+    WRONG_WITHDRAWAL_EXISTS = 6;
+  }
+  uint64 task_id = 1;
+  Status status = 2;
+}
+
+message BlockUpdateRequest {
+  message DepositTransaction {
+    uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
+    uint64 block_height = 2; // порядковый номер блока
+    string transaction_hash = 3; // хэш транзакции
+    uint32 transaction_index = 4; // индекс для уникальной транзакции
+    string contract_address = 5; // адрес контракта
+    uint32 contract_index = 6; // индекс для уникальной транзакции
+    uint32 account_id = 7; // идентификатор пользователя
+    string amount = 8; // сумма
+    bool success = 9; // результат успешной транзакции
+    bool main_chain = 10; // результат нахождения транзакции в основной цепи
+  }
+  message WithdrawalTransaction {
+    uint32 modification_id = 1; // идентификатор изменения (актуальным состоянием, является наибольшее значение)
+    uint32 withdrawal_id = 2; // идентификатор заявки на вывод
+    string address = 3; // адрес получателя
+    string amount = 4; // сумма
+    string transaction_hash = 5; // хэш транзакции
+    uint32 transaction_index = 6; // индекс для уникальной транзакции
+    string contract_address = 7; // адрес контракта
+    uint32 contract_index = 8; // индекс для уникальной транзакции
+    bool transaction_expired = 9; // истек срок действия транзакции
+    uint64 block_height = 10; // порядковый номер блока
+    bool success = 11; // результат успешной транзакции
+    bool main_chain = 12; // результат нахождения транзакции в основной цепи
+  }
+  uint64 block_height = 1; // порядковый номер блока
+  repeated DepositTransaction deposit_transactions = 2;
+  repeated WithdrawalTransaction withdrawal_transactions = 3;
+}

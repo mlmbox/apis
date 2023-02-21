@@ -33,7 +33,7 @@ message GoogleAuthenticator {
     message UpdateRequest {
       message Field {
         uint32 field_id = 1;
-        bool value = 4;
+        bool value = 2;
       }
       repeated Field fields = 1;
     }

@@ -8,7 +8,7 @@ message Account {
     uint32 account_id = 1;
   }
   message Login {
-    string account_login = 1;
+    string login = 1;
   }
   message Email {
     string email = 1;
@@ -16,10 +16,8 @@ message Account {
   message SignState {
     uint32 account_id = 1;
     bool baned = 2;
-    bool confirmed = 3;
-    string login = 4;
-    string email = 5;
-    string password_hash_confirmed = 6;
-    string password_temporary = 7;
+    string login = 3;
+    string email = 4;
+    string password_hash_confirmed = 5;
   }
 }

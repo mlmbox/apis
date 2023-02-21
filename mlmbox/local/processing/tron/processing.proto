@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package mlmbox.local.processing.tron;
 
-import "mlmbox/local/type/processing.proto";
+import "mlmbox/bot/processing/v1/processing.proto";
 import "google/protobuf/empty.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/processing/tron;service_local_processing_tron_pb";
@@ -116,7 +116,7 @@ message TransactionListRequest {
 message DepositTransactionListResponse {
   Error.ID error_id = 1;
   uint64 block_height = 2; // порядковый номер блока
-  repeated mlmbox.local.type.Processing.Transaction.Deposit.TRX transactions = 3;
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.DepositTransaction transactions = 3;
 }
 message WithdrawalCreateRequest {
   uint32 withdrawal_id = 1;
@@ -139,13 +139,13 @@ message WithdrawalNeedProcessedSetRequest {
 message WithdrawalTransactionListResponse {
   Error.ID error_id = 1;
   uint64 block_height = 2; // порядковый номер блока
-  repeated mlmbox.local.type.Processing.Transaction.Withdrawal.TRX transactions = 3;
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.WithdrawalTransaction transactions = 3;
 }
 
 message TRC20DepositTransactionListResponse {
   Error.ID error_id = 1;
   uint64 block_height = 2; // порядковый номер блока
-  repeated mlmbox.local.type.Processing.Transaction.Deposit.TRC20 transactions = 3;
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.DepositTransaction transactions = 3;
 }
 message TRC20WithdrawalCreateRequest {
   uint32 withdrawal_id = 1;
@@ -171,7 +171,7 @@ message TRC20WithdrawalNeedProcessedSetRequest {
 message TRC20WithdrawalTransactionListResponse {
   Error.ID error_id = 1;
   uint64 block_height = 2; // порядковый номер блока
-  repeated mlmbox.local.type.Processing.Transaction.Withdrawal.TRC20 transactions = 3;
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.WithdrawalTransaction transactions = 3;
 }
 message MigrationNeedProcessedSetRequest {
   string transaction_hash = 1;

@@ -10,5 +10,5 @@ message TimePoint {
 }
 message DurationPoint {
   bool infinity = 1; // no limit
-  uint32 duration = 2; // duration limit value
+  uint32 value = 2; // duration limit value
 }

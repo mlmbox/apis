@@ -28,13 +28,12 @@ message TeamRequest {
   mlmbox.type.Sort partners_sort = 2;
 }
 message TeamResponse {
-  mlmbox.type.Account.FullInfo partner = 1;
-  mlmbox.type.Account.ShortInfo referral = 2;
-  repeated mlmbox.type.Account.FullInfo partners = 3;
+  mlmbox.type.Account.FullInfo account = 1;
+  repeated mlmbox.type.Account.FullInfo partners = 2;
 }
 message TeamPartnerListRequest {
   mlmbox.type.Account.ID view_partner = 1;
-  uint32 step_partner_id = 2;
+  uint32 step_referral_line = 2;
   mlmbox.type.Sort partners_sort = 3;
 }
 message NetworkTeamResponse {

@@ -3,8 +3,7 @@ syntax = "proto3";
 package mlmbox.local.finance;
 
 import "mlmbox/local/type/account.proto";
-import "mlmbox/local/type/processing.proto";
-import "mlmbox/type/sort.proto";
+import "mlmbox/bot/processing/v1/processing.proto";
 import "mlmbox/type/wallet.proto";
 import "google/protobuf/empty.proto";
 
@@ -17,26 +16,29 @@ service Wallet {
   rpc AssetsAll (mlmbox.local.type.Account.ID) returns (AssetsAllResponse) {}
   rpc AssetTransactionGet (AssetTransactionGetRequest) returns (AssetTransactionGetResponse) {}
   rpc AssetTransactionList (AssetTransactionListRequest) returns (AssetTransactionListResponse) {}
+  rpc AssetBalanceHistoryGet (AssetGetRequest) returns (AssetBalanceHistoryGetResponse) {}
+  rpc AssetBalanceHistoryList (AssetTransactionListRequest) returns (AssetBalanceHistoryListResponse) {}
   rpc ProcessingsGet (ProcessingsGetRequest) returns (ProcessingsGetResponse) {}
   rpc ProcessingsAll (mlmbox.local.type.Account.ID) returns (ProcessingsAllResponse) {}
+  rpc ProcessingShortInfo (mlmbox.type.Wallet.Processing.ID) returns (ProcessingsGetResponse) {}
 
   rpc ProcessingBitcoinDepositLastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
-  rpc ProcessingBitcoinDeposit (mlmbox.local.type.Processing.Block.Deposit.BTC) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingBitcoinDeposit (DepositTransaction) returns (ProcessingTronModificationResponse) {}
   rpc ProcessingTronDepositTRXLastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
-  rpc ProcessingTronDepositTRX (mlmbox.local.type.Processing.Block.Deposit.TRX) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingTronDepositTRX (DepositTransaction) returns (ProcessingTronModificationResponse) {}
   rpc ProcessingTronDepositTRC20LastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
-  rpc ProcessingTronDepositTRC20 (mlmbox.local.type.Processing.Block.Deposit.TRC20) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingTronDepositTRC20 (DepositTransaction) returns (ProcessingTronModificationResponse) {}
 
   rpc ProcessingBitcoinWithdrawalLastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
-  rpc ProcessingBitcoinWithdrawal (mlmbox.local.type.Processing.Block.Withdrawal.BTC) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingBitcoinWithdrawal (WithdrawalTransaction) returns (ProcessingTronModificationResponse) {}
   rpc ProcessingTronWithdrawalTRXLastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
-  rpc ProcessingTronWithdrawalTRX (mlmbox.local.type.Processing.Block.Withdrawal.TRX) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingTronWithdrawalTRX (WithdrawalTransaction) returns (ProcessingTronModificationResponse) {}
   rpc ProcessingTronWithdrawalTRC20LastModificationID (google.protobuf.Empty) returns (ProcessingTronModificationResponse) {}
-  rpc ProcessingTronWithdrawalTRC20 (mlmbox.local.type.Processing.Block.Withdrawal.TRC20) returns (ProcessingTronModificationResponse) {}
+  rpc ProcessingTronWithdrawalTRC20 (WithdrawalTransaction) returns (ProcessingTronModificationResponse) {}
 
-  rpc ProcessingShortInfo (mlmbox.type.Wallet.Processing.ID) returns (ProcessingsGetResponse) {}
   rpc WithdrawalCheck (WithdrawalCheckRequest) returns (WithdrawalCheckResponse) {}
   rpc WithdrawalCreate (WithdrawalCreateRequest) returns (AssetTransactionGetResponse) {}
+  rpc WithdrawalEnabledSet (WithdrawalEnabledSetRequest) returns (Error) {}
 
   rpc PoolGet (PoolGetRequest) returns (PoolGetResponse) {}
   rpc PoolsAll (mlmbox.local.type.Account.ID) returns (PoolsAllResponse) {}
@@ -68,6 +70,8 @@ message Error {
     SOURCE_ASSET_NOT_FOUND = 17;
     TARGET_ASSET_UNKNOWN = 18;
     TARGET_ASSET_NOT_FOUND = 19;
+    POOL_UNKNOWN = 20;
+    POOL_NOT_FOUND = 21;
   }
   ID error_id = 1;
 }
@@ -78,7 +82,8 @@ message InfoResponse {
 message AssetGetRequest {
   uint32 account_id = 1;
   uint32 asset_id = 2;
-  mlmbox.type.Sort sort_transactions = 3;
+  uint32 limit_value = 3;
+  bool is_sort_asc = 4;
 }
 message AssetGetResponse {
   Error.ID error_id = 1;
@@ -109,11 +114,24 @@ message AssetTransactionListRequest {
   uint32 account_id = 1;
   uint32 asset_id = 2;
   uint32 step_transaction_id = 3;
-  mlmbox.type.Sort sort_transactions = 4;
+  uint32 limit_value = 4;
+  bool is_sort_asc = 5;
 }
 message AssetTransactionListResponse {
   Error.ID error_id = 1;
   repeated mlmbox.type.Wallet.Asset.Transaction transactions = 2;
+}
+message AssetBalanceHistoryResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Wallet.Asset.BalanceHistory result = 2;
+}
+message AssetBalanceHistoryGetResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Wallet.Asset.BalanceHistory result = 2;
+}
+message AssetBalanceHistoryListResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Wallet.Asset.BalanceHistory.Transaction result = 2;
 }
 message ProcessingsGetRequest {
   uint32 account_id = 1;
@@ -151,6 +169,10 @@ message WithdrawalCreateRequest {
   string operation_fee = 5;
   string address = 6;
 }
+message WithdrawalEnabledSetRequest {
+  uint32 account_id = 1;
+  bool enabled = 2;
+}
 
 message PoolGetRequest {
   uint32 account_id = 1;
@@ -168,7 +190,8 @@ message PoolAssetGetRequest {
   uint32 account_id = 1;
   uint32 pool_id = 2;
   uint32 asset_id = 3;
-  mlmbox.type.Sort sort_transactions = 4;
+  uint32 limit_value = 4;
+  bool is_sort_asc = 5;
 }
 message PoolAssetGetResponse {
   Error.ID error_id = 1;
@@ -189,5 +212,15 @@ message PoolAssetTransactionListRequest {
   uint32 pool_id = 2;
   uint32 asset_id = 3;
   uint32 step_transaction_id = 4;
-  mlmbox.type.Sort sort_transactions = 5;
+  uint32 limit_value = 5;
+  bool is_sort_asc = 6;
+}
+
+message DepositTransaction {
+  uint64 block_height = 1;
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.DepositTransaction transactions = 2;
+}
+message WithdrawalTransaction {
+  uint64 block_height = 1;
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.WithdrawalTransaction transactions = 2;
 }

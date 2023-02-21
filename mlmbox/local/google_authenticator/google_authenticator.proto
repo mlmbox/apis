@@ -11,6 +11,7 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/google_authentic
 service GoogleAuthenticator {
   rpc Get (mlmbox.local.type.Account.ID) returns (Response) {}
   rpc Set (SetRequest) returns (Error) {}
+  rpc UsageSettingsUpdate (UsageSettingsUpdateRequest) returns (Error) {}
 }
 
 message Error {
@@ -30,4 +31,8 @@ message SetRequest {
   uint32 account_id = 1;
   mlmbox.type.GoogleAuthenticator.Status.ID status = 2;
   string secret_code = 3;
+}
+message UsageSettingsUpdateRequest {
+  uint32 account_id = 1;
+  repeated mlmbox.type.GoogleAuthenticator.UsageSettings.UpdateRequest.Field fields = 2;
 }

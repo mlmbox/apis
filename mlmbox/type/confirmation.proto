@@ -63,8 +63,8 @@ message ConfirmationConfirmResponse {
   enum Status {
     REJECT = 0; // форма отклонена
     APPROVED = 1; // форма успешно подтверждена
-    CONFIRMATION_NOT_FOUND = 3; // форма подтверждения не найдена
-    CONFIRMATION_NOT_ACTIVATED = 4; // форма подтверждения не активна
+//    CONFIRMATION_NOT_FOUND = 3; // форма подтверждения не найдена
+//    CONFIRMATION_NOT_ACTIVATED = 4; // форма подтверждения не активна
   }
   message Field {
     enum Status {

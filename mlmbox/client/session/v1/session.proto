@@ -14,10 +14,11 @@ service Session {
   rpc DeactivateAll(google.protobuf.Empty) returns (google.protobuf.Empty) {} // deactivate all active sessions
   rpc DeactivateOther(google.protobuf.Empty) returns (google.protobuf.Empty) {} // deactivate all active sessions except the current one
   rpc DeactivateCurrent(google.protobuf.Empty) returns (google.protobuf.Empty) {} // deactivate the current session
-  rpc ExpireSet(mlmbox.type.DurationPoint) returns (SessionStateGetResponse) {} // set auto expire session
+  rpc ExpireDurationSet(mlmbox.type.DurationPoint) returns (google.protobuf.Empty) {} // set auto expire session
 }
 
 message SessionStateGetResponse {
   mlmbox.type.Session current = 1;
   repeated mlmbox.type.Session others = 2;
+  uint32 expire_duration = 3;
 }

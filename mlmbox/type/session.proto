@@ -3,7 +3,6 @@ syntax = "proto3";
 package mlmbox.type;
 
 import "mlmbox/type/agent.proto";
-import "mlmbox/type/time_point.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/session;session_pb";
 
@@ -18,14 +17,12 @@ message Session {
   }
   message Description {
     string ip_init = 1;
-    string country = 2;
-    string city = 3;
-    mlmbox.type.Agent agent = 4;
+    mlmbox.type.Agent agent = 2;
   }
 
   uint32 session_id = 1;
   Status status_id = 2;
   uint32 created_at = 3;
-  mlmbox.type.TimePoint expires_at = 4;
+  uint32 expires_at = 4;
   Description description = 5;
 }

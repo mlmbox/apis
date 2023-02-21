@@ -16,8 +16,8 @@ service Locale {
 message Error {
   enum ID {
     OK = 0;
-    LOCALE_UNKNOWN = 2;
-    LOCALE_NOT_FOUND = 3;
+    LOCALE_UNKNOWN = 1;
+    LOCALE_NOT_FOUND = 2;
   }
   ID error_id = 1;
 }

@@ -12,7 +12,17 @@ message Relationship {
     REFERRAL = 3;
     OUTSIDER = 4;
   }
+  message Filter {
+    repeated Kind kinds = 1;
+    uint32 team_max_level = 2;
+    uint32 referral_max_level = 3;
+  }
   Kind kind = 1;
   uint32 level = 2; // depth level
   uint32 line = 3; // branch direction
+}
+message RelationshipFilter {
+  repeated Relationship.Kind kinds = 1;
+  uint32 team_max_level = 2;
+  uint32 referral_max_level = 3;
 }

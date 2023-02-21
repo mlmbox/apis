@@ -12,46 +12,34 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/finance/v1;serv
 service Wallet {
   rpc Info (google.protobuf.Empty) returns (mlmbox.type.Wallet) {}
   rpc AssetGet (WalletAssetGetRequest) returns (mlmbox.type.Wallet.Asset) {}
-  rpc AssetsAll (google.protobuf.Empty) returns (WalletAssetsAllResponse) {}
+  rpc AssetsAll (google.protobuf.Empty) returns (stream mlmbox.type.Wallet.Asset) {}
   rpc AssetTransactionGet (mlmbox.type.Wallet.Asset.Transaction.ID) returns (mlmbox.type.Wallet.Asset.Transaction) {}
-  rpc AssetTransactionList (WalletAssetTransactionListRequest) returns (WalletAssetTransactionListResponse) {}
+  rpc AssetTransactionList (WalletAssetTransactionListRequest) returns (stream mlmbox.type.Wallet.Asset.Transaction) {}
   rpc AssetBalanceHistoryGet (WalletAssetGetRequest) returns (mlmbox.type.Wallet.Asset.BalanceHistory) {}
-  rpc AssetBalanceHistoryList (WalletAssetTransactionListRequest) returns (AssetBalanceHistoryListResponse) {}
+  rpc AssetBalanceHistoryList (WalletAssetTransactionListRequest) returns (stream mlmbox.type.Wallet.Asset.BalanceHistory.Transaction) {}
 
   rpc ProcessingsGet (mlmbox.type.Wallet.Processing.ID) returns (mlmbox.type.Wallet.Processing) {}
-  rpc ProcessingsAll (google.protobuf.Empty) returns (WalletProcessingsAllResponse) {}
+  rpc ProcessingsAll (google.protobuf.Empty) returns (stream mlmbox.type.Wallet.Processing) {}
   rpc DepositAddress (mlmbox.type.Wallet.Processing.ID) returns (WalletDepositAddressResponse) {}
   rpc ValidateAddress (WalletValidateAddressRequest) returns (WalletValidateAddressResponse) {}
   rpc WithdrawalCreate (WalletWithdrawalCreateRequest) returns (mlmbox.type.Confirmation) {}
 
   rpc PoolGet (mlmbox.type.Wallet.Pool.ID) returns (mlmbox.type.Wallet.Pool) {}
-  rpc PoolsAll (google.protobuf.Empty) returns (WalletPoolsAllResponse) {}
+  rpc PoolsAll (google.protobuf.Empty) returns (stream mlmbox.type.Wallet.Pool) {}
   rpc PoolAssetGet (WalletPoolAssetGetRequest) returns (mlmbox.type.Wallet.Pool.Asset) {}
-  rpc PoolAssetsAll (mlmbox.type.Wallet.Pool.ID) returns (WalletPoolAssetsAllResponse) {}
+  rpc PoolAssetsAll (mlmbox.type.Wallet.Pool.ID) returns (stream mlmbox.type.Wallet.Pool.Asset) {}
   rpc PoolAssetTransactionGet (WalletPoolAssetTransactionGetRequest) returns (mlmbox.type.Wallet.Asset.Transaction) {}
-  rpc PoolAssetTransactionList (WalletPoolAssetTransactionListRequest) returns (WalletAssetTransactionListResponse) {}
+  rpc PoolAssetTransactionList (WalletPoolAssetTransactionListRequest) returns (stream mlmbox.type.Wallet.Asset.Transaction) {}
 }
 
 message WalletAssetGetRequest {
   uint32 asset_id = 1;
   mlmbox.type.Sort sort_transactions = 2;
 }
-message WalletAssetsAllResponse {
-  repeated mlmbox.type.Wallet.Asset assets = 1;
-}
 message WalletAssetTransactionListRequest {
   uint32 asset_id = 1;
   uint32 step_transaction_id = 2;
   mlmbox.type.Sort sort_transactions = 3;
-}
-message AssetBalanceHistoryListResponse {
-  repeated mlmbox.type.Wallet.Asset.BalanceHistory.Transaction transactions = 1;
-}
-message WalletAssetTransactionListResponse {
-  repeated mlmbox.type.Wallet.Asset.Transaction transactions = 1;
-}
-message WalletProcessingsAllResponse {
-  repeated mlmbox.type.Wallet.Processing processings = 1;
 }
 message WalletDepositAddressResponse {
   string address = 1;
@@ -70,16 +58,10 @@ message WalletWithdrawalCreateRequest {
   string operation_amount = 3;
   string address = 4;
 }
-message WalletPoolsAllResponse {
-  repeated mlmbox.type.Wallet.Pool pools = 1;
-}
 message WalletPoolAssetGetRequest {
   uint32 pool_id = 1;
   uint32 asset_id = 2;
   mlmbox.type.Sort sort_transactions = 3;
-}
-message WalletPoolAssetsAllResponse {
-  repeated mlmbox.type.Wallet.Pool.Asset assets = 1;
 }
 message WalletPoolAssetTransactionGetRequest {
   uint32 pool_id = 1;

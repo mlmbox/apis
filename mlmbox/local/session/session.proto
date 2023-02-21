@@ -1,6 +1,8 @@
 syntax = "proto3";
 
 package mlmbox.local.session;
+
+import "mlmbox/type/session.proto";
 import "mlmbox/local/type/account.proto";
 import "mlmbox/local/type/session.proto";
 
@@ -14,6 +16,7 @@ service Session {
   rpc DeactivateByAccount (mlmbox.local.type.Session.ID) returns (DeactivateResponse) {}
   rpc DeactivateAllByAccount (mlmbox.local.type.Account.ID) returns (DeactivateResponse) {}
   rpc DeactivateOtherByAccount (mlmbox.local.type.Session.ID) returns (DeactivateResponse) {}
+  rpc ExpireDurationSet(ExpireDurationSetRequest) returns (Error) {}
 }
 
 message Error {
@@ -24,6 +27,11 @@ message Error {
     ACCOUNT_UNKNOWN = 3;
   }
   ID error_id = 1;
+}
+
+message SessionID {
+  uint32 account_id = 1;
+  uint32 session_id = 2;
 }
 message Request {
   uint32 account_id = 1;
@@ -37,9 +45,8 @@ message Response {
 message SessionCreateRequest {
   uint32 account_id = 1;
   uint32 created_at = 2;
-  uint32 expires_at = 3;
-  mlmbox.local.type.Session.Description description = 4;
-  bool show_description = 5;
+  mlmbox.type.Session.Description description = 3;
+  bool show_description = 4;
 }
 message IsActivatedResponse {
   Error.ID error_id = 1;
@@ -52,8 +59,13 @@ message AllByAccountRequest {
 message AllByAccountResponse {
   Error.ID error_id = 1;
   repeated mlmbox.local.type.Session sessions = 2;
+  uint32 expire_duration = 3;
 }
 message DeactivateResponse {
   Error.ID error_id = 1;
   uint32 quantity = 2;
+}
+message ExpireDurationSetRequest {
+  uint32 account_id = 1;
+  uint32 duration_value = 2;
 }

@@ -16,12 +16,12 @@ message Account {
   }
   message ShortInfo {
     uint32 account_id = 1;
-    string account_login = 2;
+    string login = 2;
     string email = 3;
     uint32 referral_id = 4;
     string referral_login = 5;
     uint32 current_rank_id = 6;
-    uint32 current_plan_id = 7;
+    uint32 current_package_id = 7;
     mlmbox.type.Relationship relationship = 8;
   }
   message FullInfo {
@@ -34,6 +34,7 @@ message Account {
       uint32 quantity = 1;
       Contract total = 2;
       Contract activated = 3;
+      string income_per_day = 4;
     }
     message LevelAccountsStatistics {
       message Contract {
@@ -45,14 +46,15 @@ message Account {
       uint32 quantity = 2;
       Contract total = 3;
       Contract activated = 4;
+      string income_per_day = 5;
     }
     uint32 account_id = 1;
-    string account_login = 2;
+    string login = 2;
     string email = 3;
     uint32 referral_id = 4;
     string referral_login = 5;
     uint32 current_rank_id = 6;
-    uint32 current_plan_id = 7;
+    uint32 current_package_id = 7;
     mlmbox.type.Relationship relationship = 8;
     AccountsStatistics self_statistics = 9;
     AccountsStatistics partners_statistics = 10;
@@ -71,4 +73,5 @@ message Account {
   string locale = 3; // language identifier (en-US, ...)
   IncomeForecast income_forecast = 4;
   mlmbox.type.Farming.State farming_state = 5;
+//  TODO: добавить статистику по заработку в бонусах
 }

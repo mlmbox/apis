@@ -1,7 +1,8 @@
 syntax = "proto3";
 
 package mlmbox.local.processing;
-import "mlmbox/local/type/processing.proto";
+
+import "mlmbox/bot/processing/v1/processing.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/processing;service_local_processing_pb";
 
@@ -55,12 +56,12 @@ message TronTransactionListRequest {
 message TronDepositTransactionListResponse {
   TronError.ID error_id = 1;
   uint64 block_height = 2; // порядковый номер блока
-  repeated mlmbox.local.type.Processing.Transaction.Deposit.TRX transactions = 3;
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.DepositTransaction transactions = 3;
 }
 message TronWithdrawalTransactionListResponse {
   TronError.ID error_id = 1;
   uint64 block_height = 2; // порядковый номер блока
-  repeated mlmbox.local.type.Processing.Transaction.Withdrawal.TRX transactions = 3;
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.WithdrawalTransaction transactions = 3;
 }
 message TronWithdrawalCreateRequest {
   uint32 withdrawal_id = 1;
@@ -71,12 +72,12 @@ message TronWithdrawalCreateRequest {
 message TronTRC20DepositTransactionListResponse {
   TronError.ID error_id = 1;
   uint64 block_height = 2; // порядковый номер блока
-  repeated mlmbox.local.type.Processing.Transaction.Deposit.TRC20 transactions = 3;
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.DepositTransaction transactions = 3;
 }
 message TronTRC20WithdrawalTransactionListResponse {
   TronError.ID error_id = 1;
   uint64 block_height = 2; // порядковый номер блока
-  repeated mlmbox.local.type.Processing.Transaction.Withdrawal.TRC20 transactions = 3;
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.WithdrawalTransaction transactions = 3;
 }
 message TronTRC20WithdrawalCreateRequest {
   uint32 withdrawal_id = 1;
