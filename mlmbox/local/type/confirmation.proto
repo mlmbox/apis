@@ -21,7 +21,7 @@ message Confirmation {
       SIGN_UP = 2; // регистрация
       PASSWORD_RECOVERY = 3; // восстановить пароль
       PASSWORD_CHANGE = 4; // изменить пароль
-      EMAIL_CHANGE = 5; // изменить пароль
+      EMAIL_CHANGE = 5; // изменить email
       GOOGLE_AUTHENTICATOR_ACTIVATE = 6; // активировать 2FA
       GOOGLE_AUTHENTICATOR_DEACTIVATE = 7; // деактивировать 2FA
       GOOGLE_AUTHENTICATOR_USAGE_SETTINGS_UPDATE = 8; // заявка на обновление настроек 2FA

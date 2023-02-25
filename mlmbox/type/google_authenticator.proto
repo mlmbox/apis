@@ -28,6 +28,7 @@ message GoogleAuthenticator {
       mlmbox.type.GoogleAuthenticator result = 2; // not empty when [status_id == APPROVED]
     }
     string verified_code = 1;
+    mlmbox.type.GoogleAuthenticator.UsageSettings.UpdateRequest usage_setting = 2;
   }
   message UsageSettings {
     message UpdateRequest {
