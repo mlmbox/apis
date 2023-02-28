@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package mlmbox.local.farming;
+
+import "mlmbox/local/type/account.proto";
+import "mlmbox/type/farming.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/farming;service_local_farming_pb";
+
+service Farming {
+  rpc PackageGet (PackageRequest) returns (PackageResponse) {}
+  rpc PackageBuy (PackageBuyRequest) returns (ContractResponse) {}
+  rpc PackagesAll (mlmbox.local.type.Account.ID) returns (PackagesAllResponse) {}
+
+  rpc Info (mlmbox.local.type.Account.ID) returns (InfoResponse) {} // display data about all contracts
+  rpc ContractGet (ContractRequest) returns (ContractResponse) {} // display data about the selected contract
+  rpc ContractDeactivate (ContractRequest) returns (ContractResponse) {} // deactivate selected contract
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    ACCOUNT_UNKNOWN = 1;
+    ACCOUNT_NOT_FOUND = 2;
+    ASSET_UNKNOWN = 3;
+    ASSET_NOT_FOUND = 4;
+    PACKAGE_UNKNOWN = 5;
+    PACKAGE_NOT_FOUND = 6;
+    PACKAGE_UNAVAILABLE = 7;
+    PRICE_VALUE_WRONG = 8;
+    BALANCE_NOT_ENOUGH = 9;
+    CONTRACT_UNKNOWN = 10;
+    CONTRACT_NOT_FOUND = 11;
+    CONTRACT_CLOSED = 12;
+  }
+  ID error_id = 1;
+}
+message PackageRequest {
+  uint32 account_id = 1;
+  uint32 package_id = 2;
+}
+message PackageResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Farming.Package package = 2;
+}
+message PackageBuyRequest {
+  uint32 account_id = 1;
+  uint32 package_id = 2;
+  uint32 asset_id = 3;
+  string price_value = 4;
+}
+message ContractResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Farming.Contract contract = 2;
+}
+message PackagesAllResponse {
+  Error.ID error_id = 1;
+  repeated mlmbox.type.Farming.Package packages = 2;
+}
+message InfoResponse {
+  Error.ID error_id = 1;
+  mlmbox.type.Farming.Account info = 2;
+}
+message ContractRequest {
+  uint32 account_id = 1;
+  uint32 contract_id = 2;
+}
+

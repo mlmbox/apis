@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package mlmbox.type;
+import "mlmbox/type/bonus.proto";
 import "mlmbox/type/farming.proto";
 import "mlmbox/type/google_authenticator.proto";
 import "mlmbox/type/relationship.proto";
@@ -72,6 +73,6 @@ message Account {
   mlmbox.type.GoogleAuthenticator google_authenticator = 2;
   string locale = 3; // language identifier (en-US, ...)
   IncomeForecast income_forecast = 4;
-  mlmbox.type.Farming.State farming_state = 5;
-//  TODO: добавить статистику по заработку в бонусах
+  mlmbox.type.Farming.Account farming_state = 5;
+  repeated mlmbox.type.IncomeBonus income_bonuses = 6;
 }

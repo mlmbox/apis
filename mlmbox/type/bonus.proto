@@ -7,10 +7,11 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/bonus;bonus_pb";
 
 message Bonus {
   enum Kind {
-    GIFT = 0;
-    RANK_DIRECT = 1;
-    PASSIVE_DIRECT = 2;
-    PASSIVE_FARMING = 3;
+    UNKNOWN = 0;
+    GIFT = 1;
+    RANK_DIRECT = 2;
+    PASSIVE_DIRECT = 3;
+    PASSIVE_FARMING = 4;
   }
   message ID {
     uint32 bonus_id = 1;
@@ -26,9 +27,14 @@ message Bonus {
     uint32 level = 1;
     string percent = 2;
   }
-  uint32 bonus_id = 1;
-  string bonus_title = 2;
-  string earned_value = 3;
-  string burned_value = 4;
-  repeated Limit limits = 5;
+  Kind bonus_id = 1;
+  string earned_value = 2;
+  string burned_value = 3;
+  repeated Limit limits = 4;
+}
+message IncomeBonus {
+  uint32 asset_id = 1;
+  string total_earned_value = 2;
+  string total_burned_value = 3;
+  repeated Bonus bonuses = 4;
 }

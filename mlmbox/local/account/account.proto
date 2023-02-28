@@ -3,7 +3,6 @@ syntax = "proto3";
 package mlmbox.local.account;
 import "mlmbox/local/type/account.proto";
 import "mlmbox/type/account.proto";
-//import "mlmbox/type/farming.proto";
 
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/account;service_local_account_pb";
 
@@ -27,10 +26,6 @@ service Account {
   rpc NetworkTeamInfo (NetworkTeamRequest) returns (NetworkTeamResponse) {}
   rpc NetworkTeamSearch (NetworkLoginSearchRequest) returns (NetworkLoginSearchResponse) {}
   rpc NetworkTeamPartnerList (NetworkTeamPartnerListRequest) returns (NetworkTeamPartnerListResponse) {}
-
-//  rpc FarmingInfo (mlmbox.local.type.Account.ID) returns (FarmingInfoResponse) {}
-//  rpc FarmingContractGet (FarmingContractRequest) returns (FarmingContractGetResponse) {}
-//  rpc FarmingContractDeactivate (FarmingContractRequest) returns (FarmingContractGetResponse) {}
 }
 
 message Error {
@@ -147,16 +142,3 @@ message NetworkTeamPartnerListResponse {
   Error.ID error_id = 1;
   repeated mlmbox.type.Account.FullInfo partners = 2;
 }
-
-/*message FarmingContractRequest {
-  uint32 account_id = 1;
-  uint32 contract_id = 2;
-}
-message FarmingInfoResponse {
-  Error.ID error_id = 1;
-  mlmbox.type.Farming farming = 2;
-}
-message FarmingContractGetResponse {
-  Error.ID error_id = 1;
-  mlmbox.type.Farming.Contract contract = 2;
-}*/

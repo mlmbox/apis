@@ -8,7 +8,17 @@ import "google/protobuf/empty.proto";
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/farming/v1;service_client_farming_pb";
 
 service Farming {
-  rpc Info (google.protobuf.Empty) returns (mlmbox.type.Farming) {} // display data about all contracts
+  rpc PackageGet (mlmbox.type.Farming.Package.ID) returns (mlmbox.type.Farming.Package) {}
+  rpc PackageBuy (PackageBuyRequest) returns (mlmbox.type.Farming.Contract) {}
+  rpc PackagesAll (google.protobuf.Empty) returns (stream mlmbox.type.Farming.Package) {}
+
+  rpc Info (google.protobuf.Empty) returns (mlmbox.type.Farming.Account) {} // display data about all contracts
   rpc ContractGet (mlmbox.type.Farming.Contract.ID) returns (mlmbox.type.Farming.Contract) {} // display data about the selected contract
   rpc ContractDeactivate (mlmbox.type.Farming.Contract.ID) returns (mlmbox.type.Farming.Contract) {} // deactivate selected contract
+}
+
+message PackageBuyRequest {
+  uint32 package_id = 1;
+  uint32 asset_id = 2;
+  string price_value = 3;
 }

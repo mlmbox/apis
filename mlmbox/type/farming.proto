@@ -2,40 +2,69 @@ syntax = "proto3";
 
 package mlmbox.type;
 
+import "mlmbox/type/bonus.proto";
+import "mlmbox/type/payment.proto";
+import "mlmbox/type/time_point.proto";
+import "mlmbox/type/limit.proto";
+
 option go_package = "github.com/mlmbox/go-genproto/mlmbox/type/farming;farming_pb";
 
 message Farming {
+  message Package {
+    message ID {
+      uint32 package_id = 1;
+    }
+    uint32 package_id = 1;
+    string package_title = 2;
+    string farming_percent = 3;
+    uint32 farming_duration = 4;
+    mlmbox.type.Limit quantity_limit = 5;
+    mlmbox.type.Limit quantity_available = 6;
+    mlmbox.type.DurationPoint lockup_duration = 7;
+    string lockup_addition_bonus_percent = 8;
+    repeated mlmbox.type.Bonus.LevelPercent direct_bonus = 9;
+    mlmbox.type.PaymentPriceRange payment_price_range = 10;
+  }
   message Contract {
     message ID {
       uint32 contract_id = 1;
     }
     uint32 contract_id = 1;
     uint32 package_id = 2;
-    string package_title = 3;
-    string farming_percent = 4; // income percentage
-    string lockup_init_bonus_value = 5; // bonus value
-    string lockup_init_body_value = 6; // body value
-    string lockup_value = 7; // current value of the body
-    string earned_value = 8; // total earned
-    string burned_value = 9; // total burned
-    string closing_fee_percent = 10;
-    string passive_income_per_day_value = 11;
-    uint32 created_at = 12;
-    bool activated = 13;
-    uint32 activated_at = 14;
-    bool closed = 15;
-    uint32 closed_at = 16;
-    bool unlocked = 17;
-    uint32 unlocked_at = 18;
+    uint32 asset_id = 3;
+    string package_title = 4;
+    string farming_percent = 5; // income percentage value
+    uint32 farming_duration = 6; // income percentage duration
+    mlmbox.type.DurationPoint lockup_duration = 7;
+    string lockup_init_body_value = 8; // body value
+    string lockup_init_bonus_value = 9; // bonus value
+    string lockup_value = 10; // current value of the body
+    string earned_value = 11; // total earned
+    string burned_value = 12; // total burned
+    string passive_income_per_day_value = 13;
+    uint32 created_at = 14;
+    bool activated = 15;
+    uint32 activated_at = 16;
+    bool closed = 17;
+    uint32 closed_at = 18;
+    string closing_fee_value = 19;
+    bool unlocked = 20;
+    uint32 unlocked_at = 21;
+    string unlocked_value = 22;
   }
-  message State {
-    string lockup_init_total_value = 1;
-    string lockup_hold_total_value = 2;
-    string lockup_locked_total_value = 3;
-    string earned_total_value = 4;
-    string burn_total_value = 5;
-    string passive_income_per_day_total_value = 6;
+  message Account {
+    message Asset {
+      uint32 asset_id = 1;
+      uint32 contracts_quantity = 2;
+      string lockup_init_body_total_value = 3;
+      string lockup_init_bonus_total_value = 4;
+      string lockup_total_value = 5;
+      string lockup_locked_total_value = 6;
+      string earned_total_value = 7;
+      string burned_total_value = 8;
+      string passive_income_per_day_total_value = 9;
+    }
+    repeated Asset assets = 1;
+    repeated Contract contracts = 2;
   }
-  State state = 1;
-  repeated Contract contracts = 2;
 }

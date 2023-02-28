@@ -10,18 +10,15 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/network/v1;serv
 
 service Network {
   rpc PartnerGet (mlmbox.type.Account.ID) returns (mlmbox.type.Account.ShortInfo) {}
-  rpc PartnerSearch (AccountsSearchRequest) returns (AccountsSearchResponse) {}
+  rpc PartnerSearch (AccountsSearchRequest) returns (stream mlmbox.type.Account.ShortInfo) {}
   rpc TeamInfo (TeamRequest) returns (TeamResponse) {}
-  rpc TeamSearch (AccountsSearchRequest) returns (AccountsSearchResponse) {}
-  rpc TeamPartnerList (TeamPartnerListRequest) returns (NetworkTeamResponse) {}
+  rpc TeamSearch (AccountsSearchRequest) returns (stream mlmbox.type.Account.ShortInfo) {}
+  rpc TeamPartnerList (TeamPartnerListRequest) returns (stream mlmbox.type.Account.FullInfo) {}
 }
 
 message AccountsSearchRequest {
   string login_prefix = 1;
   mlmbox.type.Limit limit = 2;
-}
-message AccountsSearchResponse {
-  repeated mlmbox.type.Account.ShortInfo partners = 1;
 }
 message TeamRequest {
   mlmbox.type.Account.ID view_partner = 1;
@@ -35,7 +32,4 @@ message TeamPartnerListRequest {
   mlmbox.type.Account.ID view_partner = 1;
   uint32 step_referral_line = 2;
   mlmbox.type.Sort partners_sort = 3;
-}
-message NetworkTeamResponse {
-  repeated mlmbox.type.Account.FullInfo partners = 1;
 }

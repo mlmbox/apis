@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package mlmbox.client.google_authenticator.v1;
+
+import "mlmbox/type/confirmation.proto";
+import "mlmbox/type/google_authenticator.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/client/google_authenticator/v1;service_client_google_authenticator_pb";
+
+service GoogleAuthenticator {
+  rpc Info (google.protobuf.Empty) returns (mlmbox.type.GoogleAuthenticator) {} // view 2FA
+  rpc Generate (google.protobuf.Empty) returns (mlmbox.type.GoogleAuthenticator.SecretCode) {} // generate 2FA
+  rpc Activate (mlmbox.type.GoogleAuthenticator.VerifiedCode) returns (mlmbox.type.GoogleAuthenticator.VerifiedCode.Status) {} // activate 2FA
+  rpc Deactivate (google.protobuf.Empty) returns (mlmbox.type.Confirmation) {} // deactivate 2FA
+  rpc UsageSettingsUpdate (mlmbox.type.GoogleAuthenticator.UsageSettings.UpdateRequest) returns (mlmbox.type.Confirmation) {} // update 2FA usage settings
+}
