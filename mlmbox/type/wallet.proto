@@ -62,6 +62,7 @@ message Wallet {
     uint32 asset_id = 1;
     string asset_balance = 2;
     repeated Transaction transactions = 3;
+    mlmbox.type.IncomeBonus income_bonus = 4;
   }
 
   message Processing {
@@ -98,11 +99,11 @@ message Wallet {
       string asset_balance = 2;
       State state = 3;
       repeated mlmbox.type.Wallet.Asset.Transaction transactions = 4;
+      mlmbox.type.IncomeBonus income_bonus = 5;
     }
     uint32 pool_id = 1;
     string pool_title = 2;
     repeated Asset assets = 3;
-    repeated mlmbox.type.IncomeBonus income_bonuses = 4;
   }
 
   repeated Asset assets = 1;

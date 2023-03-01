@@ -16,25 +16,25 @@ message Bonus {
   message ID {
     uint32 bonus_id = 1;
   }
-  message Limit {
-    mlmbox.type.DurationPoint duration = 1;
-    string counter_limit = 2;
-    string counter_value = 3;
-    mlmbox.type.TimePoint init_at = 4;
-    mlmbox.type.TimePoint expired_at = 5;
-  }
+  //message Limit {
+  //  mlmbox.type.DurationPoint duration = 1;
+  //  string counter_limit = 2;
+  //  string counter_value = 3;
+  //  mlmbox.type.TimePoint init_at = 4;
+  //  mlmbox.type.TimePoint expired_at = 5;
+  //}
   message LevelPercent {
     uint32 level = 1;
     string percent = 2;
   }
   Kind bonus_id = 1;
   string earned_value = 2;
-  string burned_value = 3;
-  repeated Limit limits = 4;
+  //string burned_value = 3;
+  //repeated Limit limits = 4;
 }
 message IncomeBonus {
   uint32 asset_id = 1;
   string total_earned_value = 2;
-  string total_burned_value = 3;
+  //string total_burned_value = 3;
   repeated Bonus bonuses = 4;
 }
