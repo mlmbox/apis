@@ -27,6 +27,7 @@ message Wallet {
           EXCHANGE = 8; // обмен валюты
           POOL_DEPOSIT = 9; // пополнение из pool
           POOL_WITHDRAWAL = 10; // вывод от pool
+          CONTRACT_UNLOCKED = 11; // вывод от pool
         }
         ID kind_id = 1;
       }
