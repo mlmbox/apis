@@ -14,7 +14,6 @@ protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/type/google_
 protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/type/limit.proto
 protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/type/locale.proto
 protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/type/payment.proto
-protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/type/plan.proto
 protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/type/relationship.proto
 protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/type/session.proto
 protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/type/sort.proto
@@ -28,9 +27,9 @@ protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/client/confi
 protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/client/confirmation/v1/confirmation_guest.proto
 protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/client/farming/v1/farming.proto
 protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/client/finance/v1/wallet.proto
+protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/client/google_authenticator/v1/google_authenticator.proto
 protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/client/locale/v1/locale.proto
 protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/client/network/v1/network.proto
-protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/client/plan/v1/plan.proto
 protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated mlmbox/client/session/v1/session.proto
 
 protoc -I=$MLMBOX_API_PATH --dart_out=grpc:lib/src/generated google/protobuf/any.proto
