@@ -63,8 +63,6 @@ message ConfirmationConfirmResponse {
   enum Status {
     REJECT = 0; // форма отклонена
     APPROVED = 1; // форма успешно подтверждена
-//    CONFIRMATION_NOT_FOUND = 3; // форма подтверждения не найдена
-//    CONFIRMATION_NOT_ACTIVATED = 4; // форма подтверждения не активна
   }
   message Field {
     enum Status {
@@ -81,4 +79,5 @@ message ConfirmationConfirmResponse {
   Status status = 1;
   repeated Field fields = 2;
   google.protobuf.Any data = 3;
+  string access_token = 4; // the token is used in the "authorization: X.Y.Z" header to make authorized API requests
 }

@@ -36,6 +36,7 @@ message AuthResponse {
   }
   Status status = 1;
   mlmbox.type.Confirmation confirmation = 2; // confirmation form
+  string access_token = 3; // the token is used in the "authorization: X.Y.Z" header to make authorized API requests
 }
 message TokenValidateResponse {
   enum Kind {
