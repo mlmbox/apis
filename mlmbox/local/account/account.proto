@@ -101,6 +101,9 @@ message AccountSignUpRequest {
 message AccountSignUpResponse {
   Error.ID error_id = 1;
   uint32 account_id = 2;
+  uint32 referral_id = 3;
+  string referral_login = 4;
+  string referral_email = 5;
 }
 
 message NetworkAccountRequest {

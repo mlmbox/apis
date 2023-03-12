@@ -15,9 +15,10 @@ message Account {
   }
   message SignState {
     uint32 account_id = 1;
-    bool baned = 2;
-    string login = 3;
-    string email = 4;
+    string login = 2;
+    string email = 3;
+    bool baned = 4;
     string password_hash_confirmed = 5;
+    string locale = 6;
   }
 }

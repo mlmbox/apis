@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package mlmbox.local.processing;
+
+import "mlmbox/bot/processing/v1/processing.proto";
+
+option go_package = "github.com/mlm-arbit-life/go-genproto/mlmbox/local/processing;service_local_processing_pb";
+
+service Bitcoin {
+  rpc DepositAddress (BitcoinDepositAddressRequest) returns (BitcoinDepositAddressResponse) {}
+  rpc ValidateAddress (BitcoinValidateAddressRequest) returns (BitcoinValidateAddressResponse) {}
+
+  rpc DepositTransactionList (BitcoinTransactionListRequest) returns (BitcoinDepositTransactionListResponse) {}
+  rpc WithdrawalTransactionList (BitcoinTransactionListRequest) returns (BitcoinWithdrawalTransactionListResponse) {}
+  rpc WithdrawalCreate (BitcoinWithdrawalCreateRequest) returns (BitcoinError) {}
+}
+
+message BitcoinError {
+  enum ID {
+    OK = 0;
+    UNAVAILABLE = 1;
+    WRONG_ACCOUNT_ID = 2;
+    WRONG_WITHDRAWAL_ID = 3;
+    WRONG_WITHDRAWAL_ADDRESS = 4;
+    WRONG_WITHDRAWAL_AMOUNT = 5;
+    WRONG_WITHDRAWAL_EXISTS = 6;
+  }
+  ID error_id = 1;
+}
+message BitcoinDepositAddressRequest {
+  uint32 account_id = 1;
+}
+message BitcoinDepositAddressResponse {
+  BitcoinError.ID error_id = 1;
+  string address = 2;
+}
+message BitcoinValidateAddressRequest {
+  string address = 1;
+}
+message BitcoinValidateAddressResponse {
+  BitcoinError.ID error_id = 1;
+  string address = 2;
+  bool validated = 3;
+}
+
+message BitcoinTransactionListRequest {
+  uint32 last_modification_id = 1;
+  uint32 limit = 2;
+}
+
+message BitcoinDepositTransactionListResponse {
+  BitcoinError.ID error_id = 1;
+  uint64 block_height = 2; // порядковый номер блока
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.DepositTransaction transactions = 3;
+}
+message BitcoinWithdrawalTransactionListResponse {
+  BitcoinError.ID error_id = 1;
+  uint64 block_height = 2; // порядковый номер блока
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.WithdrawalTransaction transactions = 3;
+}
+message BitcoinWithdrawalCreateRequest {
+  uint32 withdrawal_id = 1;
+  string address = 2;
+  string value_formatted = 3;
+}

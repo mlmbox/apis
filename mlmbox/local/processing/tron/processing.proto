@@ -5,7 +5,7 @@ package mlmbox.local.processing.tron;
 import "mlmbox/bot/processing/v1/processing.proto";
 import "google/protobuf/empty.proto";
 
-option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/processing/tron;service_local_processing_tron_pb";
+option go_package = "github.com/mlm-arbit-life/go-genproto/mlmbox/local/processing/tron;service_local_processing_tron_pb";
 
 service Processing {
   rpc GetUserAddress (GetAccountAddressRequest) returns (GetAccountAddressResponse) {}

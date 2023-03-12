@@ -1,0 +1,142 @@
+syntax = "proto3";
+
+package mlmbox.local.processing.bitcoin;
+
+import "mlmbox/bot/processing/v1/processing.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/processing/bitcoin;service_local_processing_bitcoin_pb";
+
+service Processing {
+  rpc GetUserAddress (GetAccountAddressRequest) returns (GetAccountAddressResponse) {}
+  rpc SetUserAddress (SetAccountAddressRequest) returns (Error) {}
+  rpc GetCompanyAddress (GetAccountAddressRequest) returns (GetAccountAddressResponse) {}
+  rpc SetCompanyAddress (SetAccountAddressRequest) returns (Error) {}
+
+  rpc GetBlockNum (GetBlockNumRequest) returns (BlockNum) {}
+  rpc GetLastBlockNum (google.protobuf.Empty) returns (BlockNum) {}
+  rpc SetBlock (SetBlockRequest) returns (BlockNum) {}
+  rpc SetBlockUnMark (SetBlockUnMarkRequest) returns (Error) {}
+
+  rpc DepositTransactionList (TransactionListRequest) returns (DepositTransactionListResponse) {}
+  rpc WithdrawalCreate (WithdrawalCreateRequest) returns (Error) {}
+  rpc WithdrawalNeedProcessedGet (WithdrawalNeedProcessedGetRequest) returns (WithdrawalNeedProcessedGetResponse) {}
+  rpc WithdrawalNeedProcessedSet (WithdrawalNeedProcessedSetRequest) returns (Error) {}
+  rpc WithdrawalTransactionList (TransactionListRequest) returns (WithdrawalTransactionListResponse) {}
+}
+
+message Error {
+  enum ID {
+    OK = 0;
+    NOT_FOUND = 1;
+    UNAVAILABLE = 2;
+    BLOCK_NOT_FOUND = 3;
+    BLOCK_PREV_NOT_FOUND = 4;
+    CHAIN_BROKEN = 5;
+    WITHDRAWAL_EXISTS = 6;
+  }
+  ID error_id = 1;
+}
+message GetAccountAddressRequest {
+  uint32 account_id = 1;
+  bool use_wif = 2;
+}
+message GetAccountAddressResponse {
+  Error.ID error_id = 1;
+  string wif = 2;
+  string address = 3;
+}
+message SetAccountAddressRequest {
+  uint32 account_id = 1;
+  string wif = 2;
+  string address = 3;
+  bool ignore_exists = 4;
+}
+message GetBlockNumRequest {
+  uint64 block_height = 1;
+}
+message BlockNum {
+  Error.ID error_id = 1;
+  string block_hash = 2;
+  uint64 block_height = 3;
+}
+message Transaction {
+  message Input {
+    string transaction_hash = 1;
+    uint32 transaction_index = 2;
+  }
+  message Output {
+    uint32 transaction_index = 1;
+    string address = 2;
+    string value = 3;
+  }
+  uint32 block_index = 1;
+  string transaction_hash = 2;
+  repeated Input inputs = 3;
+  repeated Output outputs = 4;
+  int64 lock_time = 5;
+}
+message SetBlockRequest {
+  string block_hash = 1;
+  string block_prev_hash = 2;
+  int64 block_timestamp = 3;
+  repeated Transaction transactions = 4;
+}
+message SetBlockUnMarkRequest {
+  uint64 block_height = 1;
+}
+message TransactionListRequest {
+  uint32 last_modification_id = 1;
+  uint32 limit = 2;
+}
+message DepositTransactionListResponse {
+  Error.ID error_id = 1;
+  uint64 block_height = 2; // порядковый номер блока
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.DepositTransaction transactions = 3;
+}
+message WithdrawalCreateRequest {
+  uint32 withdrawal_id = 1;
+  string address = 2;
+  string value_formatted = 3;
+}
+message WithdrawalNeedProcessedGetRequest {
+  uint32 tasks_limit_quantity = 1;
+  bool inputs_start_less = 2;
+  string extra_value_formatted = 3;
+}
+message WithdrawalNeedProcessedGetResponse {
+  message Input {
+    string transaction_hash = 1;
+    uint32 transaction_index = 2;
+    string wif = 3;
+    string value = 4;
+  }
+  message Task {
+    uint32 withdrawal_id = 1;
+    string address = 2;
+    string value = 3;
+  }
+  Error.ID error_id = 1;
+  repeated Input inputs = 2;
+  repeated Task tasks = 3;
+  double fee_rate = 4;
+}
+message WithdrawalNeedProcessedSetRequest {
+  message Input {
+    string transaction_hash = 1;
+    uint32 transaction_index = 2;
+  }
+  message Output {
+    uint32 withdrawal_id = 1;
+    uint32 transaction_index = 2;
+  }
+  string transaction_hash = 1;
+  repeated Input inputs = 2;
+  repeated Output outputs = 3;
+  string transaction_data = 4;
+}
+message WithdrawalTransactionListResponse {
+  Error.ID error_id = 1;
+  uint64 block_height = 2; // порядковый номер блока
+  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.WithdrawalTransaction transactions = 3;
+}
