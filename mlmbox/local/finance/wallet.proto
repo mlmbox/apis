@@ -3,7 +3,7 @@ syntax = "proto3";
 package mlmbox.local.finance;
 
 import "mlmbox/local/type/account.proto";
-import "mlmbox/bot/processing/v1/processing.proto";
+import "mlmboxmerch/type/block.proto";
 import "mlmbox/type/wallet.proto";
 import "google/protobuf/empty.proto";
 
@@ -218,9 +218,9 @@ message PoolAssetTransactionListRequest {
 
 message DepositTransaction {
   uint64 block_height = 1;
-  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.DepositTransaction transactions = 2;
+  repeated mlmboxmerch.type.BlockUpdateRequest.DepositTransaction transactions = 2;
 }
 message WithdrawalTransaction {
   uint64 block_height = 1;
-  repeated mlmbox.bot.processing.v1.BlockUpdateRequest.WithdrawalTransaction transactions = 2;
+  repeated mlmboxmerch.type.BlockUpdateRequest.WithdrawalTransaction transactions = 2;
 }
