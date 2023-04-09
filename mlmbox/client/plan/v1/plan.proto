@@ -28,6 +28,7 @@ message PlanFarmingPackage {
 message PlanFarmingPackageBuyRequest {
   uint32 asset_id = 1;
   string price_value = 2;
+  string addition_marketing_price_value = 3;
 }
 message PlanFarmingPackagesAllResponse {
   repeated PlanFarmingPackage packages = 1;

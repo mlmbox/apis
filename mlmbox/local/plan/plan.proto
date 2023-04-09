@@ -54,6 +54,7 @@ message PlanFarmingPackageBuyRequest {
   uint32 account_id = 1;
   uint32 asset_id = 2;
   string price_value = 3;
+  string addition_marketing_price_value = 4;
 }
 message FarmingPackagesAllResponse {
   Error.ID error_id = 1;
