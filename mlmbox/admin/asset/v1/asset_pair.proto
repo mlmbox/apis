@@ -9,9 +9,9 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/admin/asset/v1;service
 
 service AssetPair {
   rpc ExchangerRateSetByName (AssetPairExchangerRateSetByNameRequest) returns (mlmbox.type.ExchangerRate) {} // list of exchange rates
-  rpc ExchangerRateTaskGetMTSUSDT(google.protobuf.Empty) returns (mlmbox.type.ExchangerRateTask) {}
-  rpc ExchangerRateTaskSetMTSUSDT(AssetPairExchangerRateTaskSetMTSUSDTRequest) returns (mlmbox.type.ExchangerRateTask) {}
-  rpc ExchangerRateTaskDeleteMTSUSDT(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+  rpc ExchangerRateTaskGetMSGUSDT(google.protobuf.Empty) returns (mlmbox.type.ExchangerRateTask) {}
+  rpc ExchangerRateTaskSetMSGUSDT(AssetPairExchangerRateTaskSetMSGUSDTRequest) returns (mlmbox.type.ExchangerRateTask) {}
+  rpc ExchangerRateTaskDeleteMSGUSDT(google.protobuf.Empty) returns (google.protobuf.Empty) {}
 }
 
 message AssetPairExchangerRateSetByNameRequest {
@@ -19,6 +19,6 @@ message AssetPairExchangerRateSetByNameRequest {
   string rate_buy = 2;
   string rate_sell = 3;
 }
-message AssetPairExchangerRateTaskSetMTSUSDTRequest {
+message AssetPairExchangerRateTaskSetMSGUSDTRequest {
   string rate_buy = 1;
 }

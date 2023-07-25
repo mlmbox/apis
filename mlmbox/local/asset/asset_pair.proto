@@ -13,9 +13,9 @@ service AssetPair {
   rpc ExchangerRateGetByAssetPairs(mlmbox.local.type.AssetPair.Assets) returns (AssetPairExchangerRateResponse) {}
   rpc ExchangerRateAll(google.protobuf.Empty) returns (AssetPairExchangerRateAllResponse) {}
   rpc ExchangerRateSetByName(AssetPairExchangerRateSetByNameRequest) returns (AssetPairExchangerRateResponse) {}
-  rpc ExchangerRateTaskGetMTSUSDT(google.protobuf.Empty) returns (AssetPairExchangerRateTaskResponse) {}
-  rpc ExchangerRateTaskSetMTSUSDT(AssetPairExchangerRateTaskSetMTSUSDTRequest) returns (AssetPairExchangerRateTaskResponse) {}
-  rpc ExchangerRateTaskDeleteMTSUSDT(google.protobuf.Empty) returns (AssetPairError) {}
+  rpc ExchangerRateTaskGetMSGUSDT(google.protobuf.Empty) returns (AssetPairExchangerRateTaskResponse) {}
+  rpc ExchangerRateTaskSetMSGUSDT(AssetPairExchangerRateTaskSetMSGUSDTRequest) returns (AssetPairExchangerRateTaskResponse) {}
+  rpc ExchangerRateTaskDeleteMSGUSDT(google.protobuf.Empty) returns (AssetPairError) {}
 }
 
 message AssetPairError {
@@ -47,6 +47,6 @@ message AssetPairExchangerRateTaskResponse {
   AssetPairError.ID error_id = 1;
   mlmbox.type.ExchangerRateTask exchanger_rate_task = 2;
 }
-message AssetPairExchangerRateTaskSetMTSUSDTRequest {
+message AssetPairExchangerRateTaskSetMSGUSDTRequest {
   string rate_buy = 1;
 }
