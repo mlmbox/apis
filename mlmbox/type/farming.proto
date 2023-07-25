@@ -19,6 +19,7 @@ message Farming {
       uint32 created_at = 4;
     }
     uint32 contract_id = 1;
+    uint32 asset_id = 18;
     uint32 package_id = 16;
     string package_title = 17;
     string farming_percent = 2; // income percentage
@@ -37,6 +38,7 @@ message Farming {
     repeated Event events = 15;
   }
   message State {
+    uint32 asset_id = 5;
     string lockup_init_total_value = 1;
     string lockup_hold_total_value = 2;
     string earned_total_value = 3;

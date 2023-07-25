@@ -29,8 +29,13 @@ message Binary {
     repeated Line lines = 7;
     mlmbox.type.Partner partner = 8;
   }
+  message Assets {
+    uint32 asset_id = 1;
+    repeated mlmbox.type.Bonus self_bonuses = 2;
+  }
 
   repeated mlmbox.type.Bonus self_bonuses = 1;
+  repeated Assets assets = 5;
   uint32 self_position_id = 2;
   uint32 view_position_id = 3;
   repeated Position positions = 4;

@@ -7,6 +7,7 @@ option go_package = "github.com/mlmbox/go-genproto/mlmbox/local/binary;service_l
 
 service Binary {
   rpc Info (PositionRequest) returns (InfoResponse) {}
+  rpc InfoV2 (PositionRequest) returns (InfoResponse) {}
   rpc SettingsSideSet (SettingsSideSetRequest) returns (SettingsSideSetResponse) {}
 }
 

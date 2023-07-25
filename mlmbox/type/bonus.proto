@@ -27,6 +27,7 @@ message Bonus {
     string percent = 2;
   }
   Kind bonus_id = 1;
+  uint32 asset_id = 5;
   string earned_value = 2;
   string burned_value = 3;
   repeated Limit limits = 4;
